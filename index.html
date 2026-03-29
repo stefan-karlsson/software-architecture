@@ -543,11 +543,140 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect2">
 <h3 id="_requirements_overview"><a class="anchor" href="#_requirements_overview"></a>1.1. Requirements Overview</h3>
-
+<div class="sect3">
+<h4 id="_purpose"><a class="anchor" href="#_purpose"></a>1.1.1. Purpose</h4>
+<div class="paragraph">
+<p>The purpose of this initiative is to establish a product platform that provides a common foundation for current and future product capabilities. The platform should make it easier to deliver new functionality in a consistent, scalable, and efficient way, while reducing duplication across teams and solutions.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_platform_structure"><a class="anchor" href="#_platform_structure"></a>1.1.2. Platform Structure</h4>
+<div class="paragraph">
+<p>The platform is expected to consist of two main parts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a <strong>control plane</strong></p>
+</li>
+<li>
+<p>an <strong>application plane</strong></p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="_control_plane"><a class="anchor" href="#_control_plane"></a>Control Plane</h5>
+<div class="paragraph">
+<p>The <strong>control plane</strong> will provide the central capabilities needed to manage, configure, govern, and operate the platform. This includes responsibilities such as administration, account, workspace and environment management, configuration, access control, operational visibility, and other shared platform management capabilities.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_application_plane"><a class="anchor" href="#_application_plane"></a>Application Plane</h5>
+<div class="paragraph">
+<p>The <strong>application plane</strong> will contain the product-facing capabilities delivered on top of the platform. At this stage, the detailed scope of the application plane is not yet fully defined. This is intentional. The platform is being designed to support future product needs, even where all business capabilities are not yet known.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_key_requirement_incremental_growth"><a class="anchor" href="#_key_requirement_incremental_growth"></a>1.1.3. Key Requirement: Incremental Growth</h4>
+<div class="paragraph">
+<p>One of the main requirements is that the platform must support incremental growth. It should be possible to introduce new application capabilities over time without major redesign of the underlying foundation. The architecture should therefore promote clear separation of responsibilities, modular design, and the ability to evolve different parts of the platform independently.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_business_objectives"><a class="anchor" href="#_business_objectives"></a>1.1.4. Business Objectives</h4>
+<div class="paragraph">
+<p>From a business perspective, the platform should help the organization:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>reduce repeated work across products and teams</p>
+</li>
+<li>
+<p>improve consistency in how products are built and operated</p>
+</li>
+<li>
+<p>shorten the time from idea to delivered capability</p>
+</li>
+<li>
+<p>provide a stronger foundation for future growth</p>
+</li>
+<li>
+<p>support governance, security, and operational control in a consistent way</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_flexibility_and_long_term_evolution"><a class="anchor" href="#_flexibility_and_long_term_evolution"></a>1.1.5. Flexibility and Long-Term Evolution</h4>
+<div class="paragraph">
+<p>The most important expectation is not to fully define every future application capability from the start, but to create a platform foundation that is stable enough to support long-term use and flexible enough to accommodate change.</p>
+</div>
+<div class="paragraph">
+<p>At this point, the control plane is better understood than the application plane. The architecture should therefore reflect both what is already known and what is expected to emerge later. The application plane should be treated as an extensible area of the platform that will be shaped further as business needs become clearer.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_quality_goals"><a class="anchor" href="#_quality_goals"></a>1.2. Quality Goals</h3>
-
+<div class="paragraph">
+<p>The following quality goals describe the most important characteristics of the product platform. These goals guide architectural decisions and help ensure the platform supports long-term business needs.</p>
+</div>
+<div class="sect3">
+<h4 id="_scalability"><a class="anchor" href="#_scalability"></a>1.2.1. Scalability</h4>
+<div class="paragraph">
+<p>The platform must support growth in accounts, users, workspaces, environments, and application capabilities without requiring major redesign. Both the control plane and application plane should scale independently to handle increasing demand.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_modularity"><a class="anchor" href="#_modularity"></a>1.2.2. Modularity</h4>
+<div class="paragraph">
+<p>The platform must allow new capabilities to be added incrementally. Components should be loosely coupled so that teams can introduce, update, or replace functionality without impacting unrelated parts of the platform.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_evolvability"><a class="anchor" href="#_evolvability"></a>1.2.3. Evolvability</h4>
+<div class="paragraph">
+<p>The platform must support continuous evolution. Since the full scope of the application plane is not yet known, the architecture should enable future expansion while maintaining stability of existing capabilities.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consistency"><a class="anchor" href="#_consistency"></a>1.2.4. Consistency</h4>
+<div class="paragraph">
+<p>The platform should provide consistent patterns for identity, configuration, access control, observability, and operational management. This ensures that new capabilities follow the same principles and provide a unified experience.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reusability"><a class="anchor" href="#_reusability"></a>1.2.5. Reusability</h4>
+<div class="paragraph">
+<p>Shared capabilities should be designed for reuse across multiple products and services. This reduces duplication and speeds up delivery of new functionality.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_reliability"><a class="anchor" href="#_reliability"></a>1.2.6. Reliability</h4>
+<div class="paragraph">
+<p>The platform must provide stable and predictable behavior for both platform management and application capabilities. Failures in one part of the system should have minimal impact on other parts.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_security"><a class="anchor" href="#_security"></a>1.2.7. Security</h4>
+<div class="paragraph">
+<p>The platform must enforce consistent security controls, including access management, isolation between accounts, and protection of sensitive data across both planes.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_operational_visibility"><a class="anchor" href="#_operational_visibility"></a>1.2.8. Operational Visibility</h4>
+<div class="paragraph">
+<p>The platform should provide clear visibility into usage, configuration, and operational status. This enables teams to monitor the platform, understand behavior, and respond to issues effectively.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_maintainability"><a class="anchor" href="#_maintainability"></a>1.2.9. Maintainability</h4>
+<div class="paragraph">
+<p>The platform should be easy to understand, operate, and maintain. Clear boundaries, separation of concerns, and standard patterns should reduce complexity over time.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_stakeholders"><a class="anchor" href="#_stakeholders"></a>1.3. Stakeholders</h3>
@@ -566,14 +695,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Role-1&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Contact-1&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Expectation-1&gt;</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Role-2&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Contact-2&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Expectation-2&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Architects</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stefan Karlsson</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Define and maintain the platform architecture, ensure alignment with business goals, and support scalable and consistent design decisions.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1147,7 +1271,7 @@ Without shared standards and tooling, documentation drifts in structure and qual
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-03-29 12:33:09 UTC
+Last updated 2026-03-29 13:06:33 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
