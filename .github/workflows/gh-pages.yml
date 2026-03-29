@@ -17,6 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v6.0.2
       - uses: ruby/setup-ruby@v1.299.0
+        with:
+          ruby-version: "3.3"
       - name: Setup docToolchain
         run: chmod +x dtcw
       - name: Migrate Markdown based ADRs from adr-tools to AsciiDoc
