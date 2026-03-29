@@ -88,9 +88,23 @@ The platform should be easy to understand, operate, and maintain. Clear boundari
 
 === Stakeholders
 
+The following table lists the stakeholders of the product platform and what they can expect from this documentation.
 
-[options="header",cols="1,2,2"]
+[options="header",cols="1,2"]
 |===
-|Role/Name | Contact | Expectations
-| Architects | Stefan Karlsson | Define and maintain the platform architecture, ensure alignment with business goals, and support scalable and consistent design decisions.
+|Role | Expectations
+| Software Architects
+a|
+* Gain an overview of the product platform architecture
+* Understand the separation between control plane and application plane
+* Use shared architectural principles as a reference for decision-making
+* Align architectural work across teams
+* Support long-term scalability and evolution of the platform
+| Developers
+a|
+* Gain a clear understanding of the platform structure
+* Understand where to place new functionality
+* Follow consistent design principles when building solutions
+* Identify opportunities to reuse shared platform capabilities
+* Collaborate more effectively with architects and other teams
 |===
