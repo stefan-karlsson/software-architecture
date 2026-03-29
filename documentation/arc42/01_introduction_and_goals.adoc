@@ -1,14 +1,11 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
-This section introduces the task and describes the business objectives the product platform aims to achieve.
+The goal is to establish a scalable product platform that provides a shared foundation for product capabilities while separating platform management concerns from product-facing functionality.
 
 
 === Requirements Overview
 
-==== Purpose
-
-The purpose of this initiative is to establish a product platform that provides a common foundation for current and future product capabilities. The platform should make it easier to deliver new functionality in a consistent, scalable, and efficient way, while reducing duplication across teams and solutions.
 
 ==== Platform Structure
 
@@ -17,17 +14,19 @@ The platform is expected to consist of two main parts:
 * a *control plane*
 * an *application plane*
 
+The separation between control plane and application plane is a fundamental architectural decision that enables independent evolution, scalability, and clear ownership boundaries.
+
 ===== Control Plane
 
-The *control plane* will provide the central capabilities needed to manage, configure, govern, and operate the platform. This includes responsibilities such as administration, account, workspace and environment management, configuration, access control, operational visibility, and other shared platform management capabilities.
+The *control plane* will provide the central capabilities needed to manage, configure, govern, and operate the platform. This includes responsibilities such as administration, account, workspace and environment lifecycle management, configuration, access control, operational visibility, and other shared platform management capabilities.
 
 ===== Application Plane
 
-The *application plane* will contain the product-facing capabilities delivered on top of the platform. At this stage, the detailed scope of the application plane is not yet fully defined. This is intentional. The platform is being designed to support future product needs, even where all business capabilities are not yet known.
+The *application plane* will contain the product-facing capabilities built on top of the platform. At this stage, the detailed scope of the application plane is not yet fully defined. This is intentional. The platform is being designed to support future product needs, even where all business capabilities are not yet known.
 
 ==== Key Requirement: Incremental Growth
 
-One of the main requirements is that the platform must support incremental growth. It should be possible to introduce new application capabilities over time without major redesign of the underlying foundation. The architecture should therefore promote clear separation of responsibilities, modular design, and the ability to evolve different parts of the platform independently.
+A key requirement is that the platform must support incremental growth. It should be possible to introduce new application capabilities over time without major redesign of the underlying foundation. The architecture should therefore promote clear separation of responsibilities, modular design, and the ability to evolve different parts of the platform independently.
 
 ==== Business Objectives
 
@@ -48,7 +47,87 @@ At this point, the control plane is better understood than the application plane
 
 === Quality Goals
 
+The following quality goals describe the most important architectural characteristics of the product platform. These goals guide design decisions and ensure the platform supports long-term growth and evolution.
+
+The primary quality goals for this platform are evolvability, modularity, scalability, security, reliability, and observability.
+
+==== Evolvability
+
+The platform must support continuous evolution. New capabilities should be introduced without requiring major redesign. The architecture must accommodate future application plane functionality that is not yet defined.
+
+==== Modularity
+
+The platform must be composed of loosely coupled components with clear boundaries. This enables independent development, deployment, and replacement of capabilities across both the control plane and application plane.
+
+==== Scalability
+
+The platform must support growth in accounts, users, workspaces, environments, and application capabilities. The control plane and application plane should scale independently to handle increasing demand.
+
+==== Security
+
+The platform must enforce consistent security controls, including access management, isolation between accounts, and protection of sensitive data. Security must be applied uniformly across both planes.
+
+==== Reliability
+
+The platform must provide stable and predictable behavior. Failures in one part of the system should be isolated to minimize impact on other capabilities. The platform should support resilient operation under partial failure.
+
+==== Observability
+
+The platform must provide clear insight into system behavior, usage, and operational health. Metrics, logs, and traces should enable monitoring, troubleshooting, and informed decision-making.
+
+=== Stakeholders
+
+The following table lists the stakeholders of the product platform and what they can expect from this documentation.
+
+[[section-introduction-and-goals]]
+== Introduction and Goals
+
+The goal is to establish a scalable product platform that provides a shared foundation for product capabilities while separating platform management concerns from product-facing functionality. This enables incremental delivery of future products and supports long-term evolution.
+
+=== Requirements Overview
+
+==== Platform Structure
+
+The platform is expected to consist of two main parts:
+
+* a *control plane*
+* an *application plane*
+
+The separation between control plane and application plane is a fundamental architectural decision that enables independent evolution, scalability, and clear ownership boundaries.
+
+===== Control Plane
+
+The *control plane* will provide the central capabilities needed to manage, configure, govern, and operate the platform. This includes responsibilities such as administration, account, workspace and environment lifecycle management, configuration, access control, operational visibility, and other shared platform management capabilities.
+
+===== Application Plane
+
+The *application plane* will contain the product-facing capabilities built on top of the platform. At this stage, the detailed scope of the application plane is not yet fully defined. This is intentional. The platform is being designed to support future product needs, even where all business capabilities are not yet known.
+
+==== Key Requirement: Incremental Growth
+
+A key requirement is that the platform must support incremental growth. It should be possible to introduce new application capabilities over time without major redesign of the underlying foundation. The architecture should therefore promote clear separation of responsibilities, modular design, and the ability to evolve different parts of the platform independently.
+
+==== Business Objectives
+
+From a business perspective, the platform should help the organization:
+
+* reduce repeated work across products and teams
+* improve consistency in how products are built and operated
+* shorten the time from idea to delivered capability
+* provide a stronger foundation for future growth
+* support governance, security, and operational control in a consistent way
+
+==== Flexibility and Long-Term Evolution
+
+The most important expectation is not to fully define every future application capability from the start, but to create a platform foundation that is stable enough to support long-term use and flexible enough to accommodate change.
+
+At this point, the control plane is better understood than the application plane. The architecture should therefore reflect both what is already known and what is expected to emerge later. The application plane should be treated as an extensible area of the platform that will be shaped further as business needs become clearer.
+
+=== Quality Goals
+
 The following quality goals describe the most important characteristics of the product platform. These goals guide architectural decisions and help ensure the platform supports long-term business needs.
+
+The most important quality goals for this platform are evolvability, modularity, scalability, and consistency.
 
 ==== Scalability
 
@@ -106,5 +185,10 @@ a|
 * Understand where to place new functionality
 * Follow consistent design principles when building solutions
 * Identify opportunities to reuse shared platform capabilities
-* Collaborate more effectively with architects and other teams
+* Collaborate effectively with architects and other teams
+| Product Owners
+a|
+* Understand the purpose of the platform
+* See how future capabilities can be added incrementally
+* Align product planning with platform evolution
 |===
