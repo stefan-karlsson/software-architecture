@@ -1,4 +1,4 @@
-workspace "SaaS Platform" "Starter C4 workspace for a SaaS platform control-plane system." {
+workspace "Product Platform" "Starter C4 workspace for a Product platform control-plane system." {
 
     model {
         platformOperator = person "Platform Operator" "Configures and operates tenant environments." "Operator"
@@ -7,7 +7,7 @@ workspace "SaaS Platform" "Starter C4 workspace for a SaaS platform control-plan
         identityProvider = softwaresystem "Identity Provider" "Provides user authentication and identity claims." "External System"
         observabilityStack = softwaresystem "Observability Stack" "Collects logs, metrics, and traces from the control plane." "External System"
 
-        controlPlaneSystem = softwaresystem "SaaS Platform Control Plane" "Manages tenants, environments, and platform policies." {
+        controlPlaneSystem = softwaresystem "Product Platform Control Plane" "Manages tenants, environments, and platform policies." {
             controlPlanePortal = container "Control Plane Portal" "UI for operators and engineering users." "Web UI"
             controlPlaneApi = container "Control Plane API" "Public and internal API surface for control-plane capabilities." "HTTP API" {
                 authComponent = component "Auth Component" "Validates identity, session, and role context." "Service Component"

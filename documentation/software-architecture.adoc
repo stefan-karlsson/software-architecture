@@ -2,7 +2,7 @@
 include::arc42/_config.adoc[]
 :doctype: book
 
-= SaaS Platform Software Architecture
+= Product Platform Software Architecture
 :revnumber: 1.0
 :revdate: March 2026
 :revremark: (starter)

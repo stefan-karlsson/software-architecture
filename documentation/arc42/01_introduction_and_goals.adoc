@@ -1,6 +1,7 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
+This section introduces the task and describes the business objectives the product platform aims to achieve.
 
 
 === Requirements Overview

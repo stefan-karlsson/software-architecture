@@ -3,9 +3,9 @@
 :toclevels: 3
 :toc-title: Contents
 
-= SaaS Platform Architecture Documentation
+= Product Platform Architecture Documentation
 
-This repository is a documentation-as-code starter for capturing your SaaS Platform architecture with https://arc42.org/[arc42], https://c4model.com/[C4 model], and https://doctoolchain.org/[docToolchain].
+This repository is a documentation-as-code for capturing our Product Platform architecture with https://arc42.org/[arc42], https://c4model.com/[C4 model], and https://doctoolchain.org/[docToolchain].
 
 It is preconfigured to support:
 

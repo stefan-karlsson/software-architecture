@@ -1,7 +1,7 @@
 [[section-building-block-view]]
 == Building Block View
 
-=== SaaS Platform Control Plane
+=== Product Platform Control Plane
 
 [plantuml, format=svg, width=70%]
 ....

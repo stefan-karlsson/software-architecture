@@ -4,14 +4,14 @@
 
 * Status: accepted
 
-## Standardize architecture documentation approach for the SaaS Platform
+## Standardize architecture documentation approach for the Product Platform
 
 * Deciders: Architecture Team
 * Date: 2026-03-29
 
 ## Context and Problem Statement
 
-Our architecture documentation needs to stay consistent, reviewable, and easy to evolve as the SaaS Platform grows.  
+Our architecture documentation needs to stay consistent, reviewable, and easy to evolve as the Product Platform grows.
 Without shared standards and tooling, documentation drifts in structure and quality and becomes difficult to maintain.
 
 ## Decision Drivers
