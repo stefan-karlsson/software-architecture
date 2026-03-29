@@ -1,0 +1,4 @@
+[[section-design-decisions]]
+== Architecture Decisions
+
+include::../adrs/0001-adopt-architecture-documentation-standards-and-tooling.adoc[]

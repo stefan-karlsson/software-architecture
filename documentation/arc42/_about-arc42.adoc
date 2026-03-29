@@ -1,0 +1,8 @@
+:jbake-menu: About
+
+:homepage: https://arc42.org
+
+:keywords: software-architecture, documentation, arc42, c4-model, saas-platform
+
+[role="lead"]
+SaaS Platform architecture documentation with arc42, C4 model, and documentation as code.

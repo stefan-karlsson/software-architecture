@@ -1,0 +1,33 @@
+name: GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    env:
+      DTC_HEADLESS: true
+    steps:
+      - uses: actions/checkout@v6.0.2
+      - uses: ruby/setup-ruby@v1.299.0
+      - name: Setup docToolchain
+        run: chmod +x dtcw
+      - name: Migrate Markdown based ADRs from adr-tools to AsciiDoc
+        run: ./dtcw exportMarkdown && cp ./build/adrs/*.adoc ./documentation/adrs/
+      - name: Generate HTML site
+        run: ./dtcw exportStructurizr generateHTML
+      - name: Copy documentation to public
+        run: cp -r ./build/html5 ./public && mv ./public/software-architecture.html ./public/index.html
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4.0.0
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

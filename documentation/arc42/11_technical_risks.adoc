@@ -1,0 +1,6 @@
+[[section-technical-risks]]
+== Risks and Technical Debts
+
+=== Technical Debts
+
+include::../tdrs/0001-placeholder-technical-debt.adoc[]

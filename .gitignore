@@ -1,0 +1,14 @@
+diagrams/
+bin/structurizr-cli/
+bin/structurizr-cli/
+documentation/images/diag-*.png
+*.cache
+*.pdf
+*.html
+.DS_Store
+.idea/
+.iml
+.gradle/
+build/
+documentation/adrs/*.adoc
+c4-language-server.log

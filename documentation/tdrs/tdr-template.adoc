@@ -1,0 +1,23 @@
+==== TDR <ID>: <Title>
+
+Date: YYYY-MM-DD
+
+===== Status
+
+Open | Accepted | Mitigated | Deferred
+
+===== Description
+
+_<Describe the technical debt and where it exists.>_
+
+===== Impact
+
+_<Describe impact on delivery, reliability, security, performance, or cost.>_
+
+===== Possible Solutions
+
+_<List practical mitigation options and expected effort.>_
+
+===== Owner
+
+_<Team or person responsible for follow-up.>_

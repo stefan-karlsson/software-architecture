@@ -1,0 +1,23 @@
+==== TDR 0001: Placeholder Technical Debt Record
+
+Date: YYYY-MM-DD
+
+===== Status
+
+Open
+
+===== Description
+
+_<Replace this placeholder with a real technical debt item when identified.>_
+
+===== Impact
+
+_<Describe expected impact on delivery, reliability, security, performance, or cost.>_
+
+===== Possible Solutions
+
+_<List candidate mitigation options and rough effort.>_
+
+===== Owner
+
+_<Team or person responsible.>_

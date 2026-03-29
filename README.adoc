@@ -1,0 +1,107 @@
+:icons: font
+:toc: left
+:toclevels: 3
+:toc-title: Contents
+
+= SaaS Platform Architecture Documentation
+
+This repository is a documentation-as-code starter for capturing your SaaS Platform architecture with https://arc42.org/[arc42], https://c4model.com/[C4 model], and https://doctoolchain.org/[docToolchain].
+
+It is preconfigured to support:
+
+* arc42 chapter structure
+* Structurizr DSL to generate C4 diagrams
+* docToolchain build automation for HTML/PDF/site outputs
+* ADR workflow with `adr-tools` and Markdown-to-AsciiDoc migration
+
+== Quick Start
+
+[source,bash]
+----
+# 1) Export C4 diagrams from Structurizr DSL
+./dtcw exportStructurizr
+
+# 2) Build the HTML documentation
+./dtcw generateHTML
+
+# 3) Open the generated documentation
+open build/html5/software-architecture.html
+----
+
+== Included Tool Versions
+
+Pinned/target versions in this starter (validated on March 29, 2026):
+
+[cols="1,2"]
+|===
+|Tool |Version
+|docToolchain (`dtcw`) |`v3.4.2`
+|Structurizr CLI (manual setup reference) |`v2025.11.09`
+|GitHub Action `actions/checkout` |`v6.0.2`
+|GitHub Action `ruby/setup-ruby` |`v1.299.0`
+|GitHub Action `peaceiris/actions-gh-pages` |`v4.0.0`
+|===
+
+== Build Commands
+
+[cols="2,3"]
+|===
+|Command |Description
+
+|`./dtcw exportStructurizr`
+|Generate PlantUML diagrams from `documentation/workspace.dsl`
+
+|`./dtcw generateHTML`
+|Generate HTML documentation
+
+|`./dtcw generatePDF`
+|Generate PDF documentation
+
+|`./dtcw generateSite`
+|Generate documentation microsite
+
+|`./dtcw exportMarkdown`
+|Convert Markdown ADRs to AsciiDoc
+|===
+
+== ADR Setup
+
+If you use https://github.com/npryce/adr-tools[adr-tools], keep this repository's chapter-compatible Markdown ADR format:
+
+1. Install `adr-tools`
+2. Run `adr config` to find your active ADR format path
+3. Copy the content of link:./adr-template.md[`adr-template.md`] into your `adr-tools` format file
+
+If ADRs already exist in Markdown, migrate them with:
+
+[source,bash]
+----
+./dtcw exportMarkdown && cp ./build/adrs/*.adoc ./documentation/adrs/
+----
+
+== TDR Setup
+
+This repository starts with one placeholder Technical Debt Record (TDR).
+
+When you need to document technical debt:
+
+1. Replace `documentation/tdrs/0001-placeholder-technical-debt.adoc` with a real debt record, or add additional `000N-<slug>.adoc` files using `documentation/tdrs/tdr-template.adoc`
+2. Fill in the content
+3. Keep includes in `documentation/arc42/11_technical_risks.adoc` aligned with active records
+
+== Manual Setup (without `dtcw`)
+
+=== Export Structurizr diagrams with Docker
+
+[source,bash]
+----
+docker run -it --rm -v $PWD:/usr/local/structurizr structurizr/cli export -w documentation/workspace.dsl -format plantuml/structurizr -output documentation/diagrams
+----
+
+=== Export Structurizr diagrams with a local CLI
+
+[source,bash]
+----
+curl --show-error --location https://github.com/structurizr/cli/releases/download/v2025.11.09/structurizr-cli.zip -o tmp.zip && mkdir -p bin/structurizr-cli && unzip -d bin/structurizr-cli tmp.zip && rm tmp.zip
+./bin/structurizr-cli/structurizr.sh export -w documentation/workspace.dsl -format plantuml/structurizr -output documentation/diagrams
+----
