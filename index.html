@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.23">
-<title>SaaS Platform Software Architecture</title>
+<title>Product Platform Software Architecture</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -438,7 +438,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
-<h1>SaaS Platform Software Architecture</h1>
+<h1>Product Platform Software Architecture</h1>
 <div class="details">
 <span id="revnumber">version 1.0,</span>
 <span id="revdate">March 2026</span>
@@ -464,7 +464,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#section-solution-strategy">4. Solution Strategy</a></li>
 <li><a href="#section-building-block-view">5. Building Block View</a>
 <ul class="sectlevel2">
-<li><a href="#_saas_platform_control_plane">5.1. SaaS Platform Control Plane</a></li>
+<li><a href="#_product_platform_control_plane">5.1. Product Platform Control Plane</a></li>
 <li><a href="#_level_2">5.2. Level 2</a></li>
 <li><a href="#_level_3">5.3. Level 3</a></li>
 </ul>
@@ -492,7 +492,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_adopt_architecture_documentation_standards_and_tooling">Adopt architecture documentation standards and tooling</a>
 <ul class="sectlevel1">
 <li><a href="#_status">10. Status</a></li>
-<li><a href="#_standardize_architecture_documentation_approach_for_the_saas_platform">11. Standardize architecture documentation approach for the SaaS Platform</a></li>
+<li><a href="#_standardize_architecture_documentation_approach_for_the_product_platform">11. Standardize architecture documentation approach for the Product Platform</a></li>
 <li><a href="#_context_and_problem_statement">12. Context and Problem Statement</a></li>
 <li><a href="#_decision_drivers">13. Decision Drivers</a></li>
 <li><a href="#_considered_options">14. Considered Options</a></li>
@@ -529,7 +529,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph lead">
-<p>SaaS Platform architecture documentation with arc42, C4 model, and documentation as code.</p>
+<p>Product Platform architecture documentation with arc42, C4 model, and documentation as code.</p>
 </div>
 <hr>
 <div style="page-break-after: always;"></div>
@@ -538,6 +538,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="section-introduction-and-goals"><a class="anchor" href="#section-introduction-and-goals"></a>1. Introduction and Goals</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>This section introduces the task and describes the business objectives the product platform aims to achieve.</p>
+</div>
 <div class="sect2">
 <h3 id="_requirements_overview"><a class="anchor" href="#_requirements_overview"></a>1.1. Requirements Overview</h3>
 
@@ -591,7 +594,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_business_context"><a class="anchor" href="#_business_context"></a>3.1. Business Context</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-plantuml-md5-a6bb5e6b6e5a1c92d0c0981569b92681.svg" alt="Diagram" width="70%" height="617">
+<img src="./images/diag-plantuml-md5-2c2248ffa7e0acd0cf4d6138cd5de785.svg" alt="Diagram" width="70%" height="617">
 </div>
 </div>
 <div class="paragraph">
@@ -629,10 +632,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="section-building-block-view"><a class="anchor" href="#section-building-block-view"></a>5. Building Block View</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_saas_platform_control_plane"><a class="anchor" href="#_saas_platform_control_plane"></a>5.1. SaaS Platform Control Plane</h3>
+<h3 id="_product_platform_control_plane"><a class="anchor" href="#_product_platform_control_plane"></a>5.1. Product Platform Control Plane</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-plantuml-md5-18daa4d977a837ebed5890912cf4832c.svg" alt="Diagram" width="70%" height="819">
+<img src="./images/diag-plantuml-md5-cb9b16d6c5be39d8d296f2e0144bdb63.svg" alt="Diagram" width="70%" height="819">
 </div>
 </div>
 <div class="paragraph">
@@ -714,7 +717,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h4 id="_white_box_control_plane_api"><a class="anchor" href="#_white_box_control_plane_api"></a>5.2.1. White Box Control Plane API</h4>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-plantuml-md5-e2c181bdfc23fd00b69f7decd377683d.svg" alt="Diagram" width="70%" height="835">
+<img src="./images/diag-plantuml-md5-01c0a45a9292e36b2a8ee27d8c9292d2.svg" alt="Diagram" width="70%" height="835">
 </div>
 </div>
 <div class="paragraph">
@@ -778,7 +781,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_control_plane_request_flow"><a class="anchor" href="#_control_plane_request_flow"></a>6.1. Control Plane Request Flow</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-plantuml-md5-3c38627e2f5af8c26b702d0cf471fda8.svg" alt="Diagram" width="25%" height="643">
+<img src="./images/diag-plantuml-md5-d3009ee5e05a5ca43daea99556862e7e.svg" alt="Diagram" width="25%" height="643">
 </div>
 </div>
 <div class="paragraph">
@@ -815,7 +818,7 @@ building block instances depicted in this diagram.&gt;</em></p>
 <h3 id="_infrastructure_level_1"><a class="anchor" href="#_infrastructure_level_1"></a>7.1. Infrastructure Level 1</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-plantuml-md5-d1b3e27a23041be4466a3e716696217b.svg" alt="Diagram" width="50%" height="824">
+<img src="./images/diag-plantuml-md5-9572e4e0921a49117740e497244fbbcb.svg" alt="Diagram" width="50%" height="824">
 </div>
 </div>
 <div class="paragraph">
@@ -918,7 +921,7 @@ building block instances depicted in this diagram.&gt;</em></p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_standardize_architecture_documentation_approach_for_the_saas_platform"><a class="anchor" href="#_standardize_architecture_documentation_approach_for_the_saas_platform"></a>11. Standardize architecture documentation approach for the SaaS Platform</h2>
+<h2 id="_standardize_architecture_documentation_approach_for_the_product_platform"><a class="anchor" href="#_standardize_architecture_documentation_approach_for_the_product_platform"></a>11. Standardize architecture documentation approach for the Product Platform</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -936,7 +939,7 @@ building block instances depicted in this diagram.&gt;</em></p>
 <h2 id="_context_and_problem_statement"><a class="anchor" href="#_context_and_problem_statement"></a>12. Context and Problem Statement</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Our architecture documentation needs to stay consistent, reviewable, and easy to evolve as the SaaS Platform grows.<br>
+<p>Our architecture documentation needs to stay consistent, reviewable, and easy to evolve as the Product Platform grows.
 Without shared standards and tooling, documentation drifts in structure and quality and becomes difficult to maintain.</p>
 </div>
 </div>
@@ -1144,7 +1147,7 @@ Without shared standards and tooling, documentation drifts in structure and qual
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-03-29 12:14:47 UTC
+Last updated 2026-03-29 12:33:09 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
