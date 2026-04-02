@@ -505,6 +505,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_define_foundation_state_ownership_and_consistency_boundaries">9.7. Define foundation state ownership and consistency boundaries</a></li>
 <li><a href="#_define_hybrid_isolation_resolution_rules">9.8. Define hybrid isolation resolution rules</a></li>
 <li><a href="#_proposed_decisions_to_resolve_next">9.9. Proposed Decisions To Resolve Next</a></li>
+<li><a href="#_select_platform_access_interface_and_automation_protocol_profile">9.10. Select platform access interface and automation protocol profile</a></li>
+<li><a href="#_select_identity_federation_and_service_account_credential_model">9.11. Select identity federation and service-account credential model</a></li>
+<li><a href="#_select_canonical_audit_store_and_evidence_export_technology_profile">9.12. Select canonical audit store and evidence export technology profile</a></li>
+<li><a href="#_select_authoritative_state_integration_and_projection_technology_profile">9.13. Select authoritative state integration and projection technology profile</a></li>
+<li><a href="#_select_runtime_topology_and_network_isolation_implementation_profile">9.14. Select runtime topology and network isolation implementation profile</a></li>
 </ul>
 </li>
 <li><a href="#section-quality-scenarios">10. Quality Requirements</a>
@@ -933,6 +938,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p>The next concrete interface and trust decisions are tracked in ADR 0008 for the public access protocol profile and ADR 0009 for identity federation plus service-account credentials.</p>
+</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -1443,6 +1451,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>The next concrete implementation-profile decisions are tracked in ADR 0010 for canonical audit storage and export, ADR 0011 for owner-state integration and projections, and ADR 0012 for runtime topology plus network isolation.</p>
+</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -1456,7 +1467,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_principal_and_scope_model"><a class="anchor" href="#_principal_and_scope_model"></a>8.1. Principal and Scope Model</h3>
 <div class="paragraph">
-<p>The architecture treats users and service accounts as principals and groups as a scaling mechanism for access management. Membership determines who belongs to which scope context, while the scope hierarchy remains fixed as platform, tenant, workspace, project / service, and environment. Groups are intentionally flat in the first implementation and do not contain other groups.</p>
+<p>The architecture treats users and service accounts as principals and groups as a scaling mechanism for access management. Membership determines who belongs to which scope context, while the scope hierarchy remains fixed as platform, tenant, workspace, project / service, and environment. Groups are intentionally flat in the first implementation and do not contain other groups.
+Concrete public interface and credential decisions for those principals are tracked separately in ADR 0008 and ADR 0009.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1480,19 +1492,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_ownership_and_consistency_model"><a class="anchor" href="#_ownership_and_consistency_model"></a>8.5. Ownership and Consistency Model</h3>
 <div class="paragraph">
-<p>Each governed record type has one authoritative write owner, and owner reads are authoritative when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain non-authoritative and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.</p>
+<p>Each governed record type has one authoritative write owner, and owner reads are authoritative when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain non-authoritative and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.
+The next concrete implementation decision for owner-state propagation and projection technology is tracked in ADR 0011.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_audit_model"><a class="anchor" href="#_audit_model"></a>8.6. Audit Model</h3>
 <div class="paragraph">
-<p>Auditability is a first-class concept rather than an afterthought. Canonical audit evidence is the governance source of truth, remains distinct from observability exports, and is append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When audit evidence needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.</p>
+<p>Auditability is a first-class concept rather than an afterthought. Canonical audit evidence is the governance source of truth, remains distinct from observability exports, and is append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When audit evidence needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.
+The next concrete implementation decision for canonical audit storage and evidence export is tracked in ADR 0010.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_isolation_model_and_tier_separation"><a class="anchor" href="#_isolation_model_and_tier_separation"></a>8.7. Isolation Model and Tier Separation</h3>
 <div class="paragraph">
-<p>Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime binding, data boundary, and network boundary resolve the actual technical isolation for each environment. In hybrid mode, those three boundaries may resolve independently, but subscription isolation remains the default baseline, environment-level logic may only tighten that baseline, and effective policy is the final acceptance gate before placement succeeds.</p>
+<p>Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime binding, data boundary, and network boundary resolve the actual technical isolation for each environment. In hybrid mode, those three boundaries may resolve independently, but subscription isolation remains the default baseline, environment-level logic may only tighten that baseline, and effective policy is the final acceptance gate before placement succeeds.
+The next concrete implementation decision for runtime topology and network isolation is tracked in ADR 0012.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -3536,10 +3551,1557 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </div>
 <div class="sect2">
 <h3 id="_proposed_decisions_to_resolve_next"><a class="anchor" href="#_proposed_decisions_to_resolve_next"></a>9.9. Proposed Decisions To Resolve Next</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_select_platform_access_interface_and_automation_protocol_profile"><a class="anchor" href="#_select_platform_access_interface_and_automation_protocol_profile"></a>9.10. Select platform access interface and automation protocol profile</h3>
+<div class="sect3">
+<h4 id="_status_8"><a class="anchor" href="#_status_8"></a>9.10.1. Status</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: proposed</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_choose_the_external_platform_access_shape_for_users_and_automation"><a class="anchor" href="#_choose_the_external_platform_access_shape_for_users_and_automation"></a>9.10.2. Choose the external platform access shape for users and automation</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Deciders: Architecture Team</p>
+</li>
+<li>
+<p>Date: 2026-04-03</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_and_problem_statement_8"><a class="anchor" href="#_context_and_problem_statement_8"></a>9.10.3. Context and Problem Statement</h4>
 <div class="paragraph">
-<p>There are currently no additional proposed ADRs awaiting acceptance in this repository.</p>
+<p>The platform foundation defines users, automation clients, service accounts, scoped authorization, policy evaluation, auditability, and hierarchy-aware operations.
+The current architecture book intentionally leaves the concrete external interface and protocol profile open, which keeps the logical model clean but also leaves implementers without a stable public interaction model.</p>
+</div>
+<div class="paragraph">
+<p>Without a concrete interface decision, teams can still make materially different assumptions about:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>whether human administration is browser-first, CLI-first, or API-first</p>
+</li>
+<li>
+<p>whether automation uses the same public interface as interactive administration</p>
+</li>
+<li>
+<p>whether the primary machine protocol is REST, GraphQL, or gRPC</p>
+</li>
+<li>
+<p>how long-running governed operations are exposed to clients</p>
+</li>
+<li>
+<p>how public interface design supports auditing, idempotency, and backward compatibility</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The platform therefore needs one proposed external access profile that can be reviewed and either accepted or refined before implementation begins.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_drivers_8"><a class="anchor" href="#_decision_drivers_8"></a>9.10.4. Decision Drivers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Predictable public interface shape for users and automation</p>
+</li>
+<li>
+<p>Simple interoperability for service-account-driven automation</p>
+</li>
+<li>
+<p>Good support for auditability, idempotency, and traceability</p>
+</li>
+<li>
+<p>Compatibility with the accepted authorization and policy model</p>
+</li>
+<li>
+<p>Low operational complexity for a first implementation</p>
+</li>
+<li>
+<p>Clear evolution path for later CLI and client tooling</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_considered_options_8"><a class="anchor" href="#_considered_options_8"></a>9.10.5. Considered Options</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Browser-based administrative UI plus versioned HTTPS JSON REST API as the primary public interface</p>
+</li>
+<li>
+<p>GraphQL-based public interface with generated clients for both UI and automation</p>
+</li>
+<li>
+<p>gRPC-first public interface for automation with a separate UI-specific backend</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_proposed_decision_direction"><a class="anchor" href="#_proposed_decision_direction"></a>9.10.6. Proposed Decision Direction</h4>
+<div class="paragraph">
+<p>Leading option: "Browser-based administrative UI plus versioned HTTPS JSON REST API as the primary public interface", because it gives both humans and automation clients one interoperable and auditable access model without requiring protocol-specific tooling or a split public contract from the start.</p>
+</div>
+<div class="sect4">
+<h5 id="_proposed_interface_profile"><a class="anchor" href="#_proposed_interface_profile"></a>Proposed Interface Profile</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Human administration uses a browser-based platform foundation UI.</p>
+</li>
+<li>
+<p>Interactive and automation clients both use a versioned HTTPS JSON REST API as the primary public platform interface.</p>
+</li>
+<li>
+<p>The administrative UI acts as a client of the same public platform API rather than relying on a hidden second control API.</p>
+</li>
+<li>
+<p>Service-account-driven automation uses the same scope-aware API surface as interactive administration, subject to different credentials and policy outcomes.</p>
+</li>
+<li>
+<p>Long-running governed operations should be modeled as explicit job or operation resources rather than opaque fire-and-forget commands.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_public_behavior_expected_from_this_direction"><a class="anchor" href="#_public_behavior_expected_from_this_direction"></a>Public Behavior Expected From This Direction</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Public requests should carry stable identifiers suitable for audit correlation and idempotency handling where applicable.</p>
+</li>
+<li>
+<p>Public resources should align to the accepted hierarchy and capability boundaries rather than exposing transport-specific shortcuts.</p>
+</li>
+<li>
+<p>Platform responses should make authorization failure, policy denial, validation failure, and asynchronous processing states distinguishable.</p>
+</li>
+<li>
+<p>The first implementation should avoid GraphQL- or gRPC-only public capabilities unless a later ADR justifies an additional interface profile.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_questions_to_resolve_before_acceptance"><a class="anchor" href="#_questions_to_resolve_before_acceptance"></a>Questions To Resolve Before Acceptance</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Whether the first implementation should publish a supported CLI alongside the browser UI and public API</p>
+</li>
+<li>
+<p>How API versioning should be represented externally, for example URI versioning or media-type versioning</p>
+</li>
+<li>
+<p>Whether asynchronous notifications should use polling only in the first implementation or also include webhook support</p>
+</li>
+<li>
+<p>Which idempotency guarantees are mandatory for mutation operations such as grant changes, policy updates, and placement actions</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_positive_consequences_8"><a class="anchor" href="#_positive_consequences_8"></a>Positive Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Users and automation clients get one consistent public interaction model.</p>
+</li>
+<li>
+<p>The interface profile aligns well with the accepted audit and authorization semantics.</p>
+</li>
+<li>
+<p>Backward compatibility and documentation can focus on one primary public contract.</p>
+</li>
+<li>
+<p>A future CLI can be built on top of the same public API without inventing a second automation surface.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_negative_consequences_8"><a class="anchor" href="#_negative_consequences_8"></a>Negative Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The public API must be designed carefully enough to serve both interactive and automation use cases.</p>
+</li>
+<li>
+<p>Some highly streaming or strongly typed automation scenarios may fit less naturally than in a gRPC-first design.</p>
+</li>
+<li>
+<p>The architecture still needs a follow-up credential and token decision to complete the trust story.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_non_goals_and_deferred_decisions_5"><a class="anchor" href="#_non_goals_and_deferred_decisions_5"></a>Non-Goals and Deferred Decisions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>This ADR does not choose the identity federation or service-account credential model.</p>
+</li>
+<li>
+<p>This ADR does not define detailed resource schemas, pagination formats, or error payload structures.</p>
+</li>
+<li>
+<p>This ADR does not require a CLI in the first implementation.</p>
+</li>
+<li>
+<p>This ADR does not prohibit later internal use of other protocols between internal capability modules.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences_5"><a class="anchor" href="#_consequences_5"></a>9.10.7. Consequences</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Section 3 should stop treating the external interface as wholly unspecified and instead point to this proposed interface profile.</p>
+</li>
+<li>
+<p>Future API design work should align resources and operations to the accepted hierarchy, authorization, policy, and audit model.</p>
+</li>
+<li>
+<p>Any future proposal for GraphQL or gRPC as an additional public interface should justify why the REST profile is insufficient.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_validation_questions"><a class="anchor" href="#_validation_questions"></a>9.10.8. Validation Questions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Can a human administrator perform hierarchy, policy, and grant-management workflows through the same public API that automation clients use?</p>
+</li>
+<li>
+<p>Can service-account-driven automation invoke governed environment actions without requiring a second machine-only control protocol?</p>
+</li>
+<li>
+<p>Do long-running operations expose auditable job state rather than hiding asynchronous behavior behind immediate success responses?</p>
+</li>
+<li>
+<p>Does the proposed public interface make authorization denial and policy denial clearly distinguishable to clients?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options_8"><a class="anchor" href="#_pros_and_cons_of_the_options_8"></a>9.10.9. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_browser_based_administrative_ui_plus_versioned_https_json_rest_api_as_the_primary_public_interface"><a class="anchor" href="#_browser_based_administrative_ui_plus_versioned_https_json_rest_api_as_the_primary_public_interface"></a>Browser-based administrative UI plus versioned HTTPS JSON REST API as the primary public interface</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because it gives humans and automation clients one broadly interoperable interface model.</p>
+</li>
+<li>
+<p>Good, because REST over HTTPS is easy to document, secure, and automate.</p>
+</li>
+<li>
+<p>Good, because it fits naturally with auditable request and resource semantics.</p>
+</li>
+<li>
+<p>Bad, because some streaming or strongly typed automation scenarios may require more design discipline.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_graphql_based_public_interface_with_generated_clients_for_both_ui_and_automation"><a class="anchor" href="#_graphql_based_public_interface_with_generated_clients_for_both_ui_and_automation"></a>GraphQL-based public interface with generated clients for both UI and automation</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because consumers can request shaped responses efficiently.</p>
+</li>
+<li>
+<p>Good, because one graph can serve many UI screens.</p>
+</li>
+<li>
+<p>Bad, because authorization, audit, and mutation semantics are often harder to keep explicit in operational governance APIs.</p>
+</li>
+<li>
+<p>Bad, because automation compatibility can become tightly coupled to schema and resolver design choices.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_grpc_first_public_interface_for_automation_with_a_separate_ui_specific_backend"><a class="anchor" href="#_grpc_first_public_interface_for_automation_with_a_separate_ui_specific_backend"></a>gRPC-first public interface for automation with a separate UI-specific backend</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because machine clients can get strong contracts and efficient transport.</p>
+</li>
+<li>
+<p>Good, because streaming scenarios are easier to model.</p>
+</li>
+<li>
+<p>Bad, because humans and automation would immediately diverge onto different public interaction models.</p>
+</li>
+<li>
+<p>Bad, because browser-first administration would still need an additional interface layer.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_select_identity_federation_and_service_account_credential_model"><a class="anchor" href="#_select_identity_federation_and_service_account_credential_model"></a>9.11. Select identity federation and service-account credential model</h3>
+<div class="sect3">
+<h4 id="_status_9"><a class="anchor" href="#_status_9"></a>9.11.1. Status</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: proposed</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_choose_the_trust_model_for_users_service_accounts_and_platform_tokens"><a class="anchor" href="#_choose_the_trust_model_for_users_service_accounts_and_platform_tokens"></a>9.11.2. Choose the trust model for users, service accounts, and platform tokens</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Deciders: Architecture Team</p>
+</li>
+<li>
+<p>Date: 2026-04-03</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_and_problem_statement_9"><a class="anchor" href="#_context_and_problem_statement_9"></a>9.11.3. Context and Problem Statement</h4>
+<div class="paragraph">
+<p>The accepted architecture says that the Identity Provider is authoritative for external identity claims and that Identity and Access is authoritative for platform-specific principal metadata, service accounts, groups, memberships, grants, roles, and permissions.
+What remains open is the concrete trust and credential model that turns user and automation identity into claims the platform can authenticate and authorize consistently.</p>
+</div>
+<div class="paragraph">
+<p>Without a concrete decision, teams can still make materially different assumptions about:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>whether human federation uses OIDC, SAML, or local platform accounts</p>
+</li>
+<li>
+<p>whether service-account automation uses short-lived tokens, static API keys, client secrets, or workload identity</p>
+</li>
+<li>
+<p>which token shape the platform expects at its public boundary</p>
+</li>
+<li>
+<p>how identity claims are mapped into platform principals before authorization and policy evaluation</p>
+</li>
+<li>
+<p>how key rotation, token expiry, and issuer trust are enforced</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The platform therefore needs one proposed trust and credential direction that aligns with the accepted ownership and authorization model.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_drivers_9"><a class="anchor" href="#_decision_drivers_9"></a>9.11.4. Decision Drivers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Strong security posture for user and machine access</p>
+</li>
+<li>
+<p>Compatibility with the accepted principal, grant, and policy model</p>
+</li>
+<li>
+<p>Avoidance of long-lived shared secrets where possible</p>
+</li>
+<li>
+<p>Predictable claims handoff into authorization and audit</p>
+</li>
+<li>
+<p>Operationally realistic rotation and revocation behavior</p>
+</li>
+<li>
+<p>Support for both interactive users and service-account-driven automation</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_considered_options_9"><a class="anchor" href="#_considered_options_9"></a>9.11.5. Considered Options</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>OIDC federation for users plus OAuth 2.0 style short-lived tokens for service accounts</p>
+</li>
+<li>
+<p>SAML federation for users plus static API keys or long-lived client secrets for automation</p>
+</li>
+<li>
+<p>Local platform-managed credentials for both users and service accounts</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_proposed_decision_direction_2"><a class="anchor" href="#_proposed_decision_direction_2"></a>9.11.6. Proposed Decision Direction</h4>
+<div class="paragraph">
+<p>Leading option: "OIDC federation for users plus OAuth 2.0 style short-lived tokens for service accounts", because it aligns cleanly with modern identity-provider capabilities, reduces reliance on long-lived shared secrets, and produces claims that fit the accepted ownership and authorization boundaries.</p>
+</div>
+<div class="sect4">
+<h5 id="_proposed_trust_profile"><a class="anchor" href="#_proposed_trust_profile"></a>Proposed Trust Profile</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Human users authenticate through an external OpenID Connect-compatible identity provider.</p>
+</li>
+<li>
+<p>The platform accepts signed short-lived bearer tokens that carry issuer, subject, audience, expiry, and stable principal identity claims.</p>
+</li>
+<li>
+<p>Service accounts remain platform-managed principals, but automation authenticates with short-lived OAuth 2.0 compatible tokens rather than static API keys.</p>
+</li>
+<li>
+<p>Workload identity or private-key-based client authentication is preferred over shared client secrets where the runtime environment supports it.</p>
+</li>
+<li>
+<p>Identity and Access maps external token claims to platform principals and then evaluates memberships, grants, roles, permissions, and policy.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_public_behavior_expected_from_this_direction_2"><a class="anchor" href="#_public_behavior_expected_from_this_direction_2"></a>Public Behavior Expected From This Direction</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The platform must validate issuer trust, signature, audience, expiry, and token freshness before authorization begins.</p>
+</li>
+<li>
+<p>Claims used for authorization and audit must be stable enough to correlate a request to one platform principal.</p>
+</li>
+<li>
+<p>Group, tenant, or organization claims from the external identity provider may inform mapping, but platform grants remain internal source-of-truth records.</p>
+</li>
+<li>
+<p>Long-lived static API keys should not be the primary automation credential model in the first implementation.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_questions_to_resolve_before_acceptance_2"><a class="anchor" href="#_questions_to_resolve_before_acceptance_2"></a>Questions To Resolve Before Acceptance</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Whether the first implementation should require JWT access tokens specifically or allow opaque tokens with introspection</p>
+</li>
+<li>
+<p>Which claim names become the canonical subject, display, and tenant-correlation inputs at the platform boundary</p>
+</li>
+<li>
+<p>Whether service accounts use one uniform machine credential flow or a small approved set depending on execution environment</p>
+</li>
+<li>
+<p>How revocation, emergency disablement, and key rotation should surface operationally</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_positive_consequences_9"><a class="anchor" href="#_positive_consequences_9"></a>Positive Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The trust model aligns with the accepted boundary between external identity claims and platform access metadata.</p>
+</li>
+<li>
+<p>Service-account automation gets a more defensible credential posture than static shared secrets.</p>
+</li>
+<li>
+<p>Authorization and audit can rely on stable token-derived identity context.</p>
+</li>
+<li>
+<p>Future platform interfaces can share one clear authentication story.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_negative_consequences_9"><a class="anchor" href="#_negative_consequences_9"></a>Negative Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Token validation, issuer management, and rotation handling become explicit platform concerns.</p>
+</li>
+<li>
+<p>Some external environments may make workload identity harder to adopt immediately.</p>
+</li>
+<li>
+<p>Local development and integration testing need realistic identity emulation or test issuers.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_non_goals_and_deferred_decisions_6"><a class="anchor" href="#_non_goals_and_deferred_decisions_6"></a>Non-Goals and Deferred Decisions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>This ADR does not define exact claim names, token payload schemas, or JWK rotation mechanics.</p>
+</li>
+<li>
+<p>This ADR does not define detailed SCIM or directory synchronization behavior.</p>
+</li>
+<li>
+<p>This ADR does not make the identity provider the source of truth for platform grants, roles, or memberships.</p>
+</li>
+<li>
+<p>This ADR does not choose a vendor-specific identity product.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences_6"><a class="anchor" href="#_consequences_6"></a>9.11.7. Consequences</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Section 3 should point to this ADR as the open concrete trust and credential decision behind the current logical identity integration.</p>
+</li>
+<li>
+<p>Future interface and API work should assume short-lived bearer-token authentication rather than static API-key authentication.</p>
+</li>
+<li>
+<p>Any proposal for local platform passwords, static machine keys, or SAML-first federation should justify why the proposed direction is insufficient.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_validation_questions_2"><a class="anchor" href="#_validation_questions_2"></a>9.11.8. Validation Questions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Can human access be federated without moving platform grant ownership into the external identity provider?</p>
+</li>
+<li>
+<p>Can automation authenticate without relying on long-lived shared API keys?</p>
+</li>
+<li>
+<p>Does the token and claims model provide enough stable context for authorization and audit correlation?</p>
+</li>
+<li>
+<p>Can issuer trust, audience validation, and token expiry be enforced consistently at the platform boundary?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options_9"><a class="anchor" href="#_pros_and_cons_of_the_options_9"></a>9.11.9. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_oidc_federation_for_users_plus_oauth_2_0_style_short_lived_tokens_for_service_accounts"><a class="anchor" href="#_oidc_federation_for_users_plus_oauth_2_0_style_short_lived_tokens_for_service_accounts"></a>OIDC federation for users plus OAuth 2.0 style short-lived tokens for service accounts</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because it fits modern identity-provider capabilities and short-lived credential practices.</p>
+</li>
+<li>
+<p>Good, because it keeps external identity claims separate from internal authorization records.</p>
+</li>
+<li>
+<p>Good, because it supports both interactive and automation access with one coherent trust model.</p>
+</li>
+<li>
+<p>Bad, because token validation and rotation mechanics must be implemented carefully.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_saml_federation_for_users_plus_static_api_keys_or_long_lived_client_secrets_for_automation"><a class="anchor" href="#_saml_federation_for_users_plus_static_api_keys_or_long_lived_client_secrets_for_automation"></a>SAML federation for users plus static API keys or long-lived client secrets for automation</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because some enterprises already operate SAML-based user federation.</p>
+</li>
+<li>
+<p>Bad, because automation security degrades when long-lived shared secrets become normal.</p>
+</li>
+<li>
+<p>Bad, because the split model creates more boundary complexity between interactive and machine access.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_local_platform_managed_credentials_for_both_users_and_service_accounts"><a class="anchor" href="#_local_platform_managed_credentials_for_both_users_and_service_accounts"></a>Local platform-managed credentials for both users and service accounts</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because the platform would own the full identity flow end to end.</p>
+</li>
+<li>
+<p>Bad, because it conflicts with the accepted ownership boundary for external identity claims.</p>
+</li>
+<li>
+<p>Bad, because it increases security and lifecycle burden for a platform that already assumes external federation.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_select_canonical_audit_store_and_evidence_export_technology_profile"><a class="anchor" href="#_select_canonical_audit_store_and_evidence_export_technology_profile"></a>9.12. Select canonical audit store and evidence export technology profile</h3>
+<div class="sect3">
+<h4 id="_status_10"><a class="anchor" href="#_status_10"></a>9.12.1. Status</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: proposed</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_choose_the_concrete_technology_profile_behind_canonical_audit_evidence"><a class="anchor" href="#_choose_the_concrete_technology_profile_behind_canonical_audit_evidence"></a>9.12.2. Choose the concrete technology profile behind canonical audit evidence</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Deciders: Architecture Team</p>
+</li>
+<li>
+<p>Date: 2026-04-03</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_and_problem_statement_10"><a class="anchor" href="#_context_and_problem_statement_10"></a>9.12.3. Context and Problem Statement</h4>
+<div class="paragraph">
+<p>The accepted audit architecture requires a dedicated canonical audit store, append-only evidence, retention enforcement, compensating records, and a clear boundary between canonical evidence and observability exports.
+What remains open is the concrete technology profile that will satisfy those requirements in a way that is queryable, durable, and operationally realistic.</p>
+</div>
+<div class="paragraph">
+<p>Without a concrete decision, teams can still make materially different assumptions about:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>whether canonical evidence lives in a relational store, a log broker, object storage, or an observability backend</p>
+</li>
+<li>
+<p>how append-only behavior and compensating records are enforced</p>
+</li>
+<li>
+<p>how observability exports are derived from canonical evidence</p>
+</li>
+<li>
+<p>how retention, archival, and purge workflows are executed</p>
+</li>
+<li>
+<p>how durability and recovery expectations are met for privileged and regulated events</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The platform therefore needs one proposed audit technology profile that can be validated against the accepted audit semantics.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_drivers_10"><a class="anchor" href="#_decision_drivers_10"></a>9.12.4. Decision Drivers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Compliance-grade durability for canonical evidence</p>
+</li>
+<li>
+<p>Clear separation between canonical evidence and observability copies</p>
+</li>
+<li>
+<p>Efficient evidence retrieval for audit review and governance workflows</p>
+</li>
+<li>
+<p>Practical support for retention, archival, and purge enforcement</p>
+</li>
+<li>
+<p>Clear recovery behavior for failures and outages</p>
+</li>
+<li>
+<p>Compatibility with accepted audit, ownership, and runtime rules</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_considered_options_10"><a class="anchor" href="#_considered_options_10"></a>9.12.5. Considered Options</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Append-only relational audit store plus immutable object archive and observability export</p>
+</li>
+<li>
+<p>Log-broker-first evidence architecture with the event stream as the primary audit store</p>
+</li>
+<li>
+<p>Observability backend as the single audit and telemetry store</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_proposed_decision_direction_3"><a class="anchor" href="#_proposed_decision_direction_3"></a>9.12.6. Proposed Decision Direction</h4>
+<div class="paragraph">
+<p>Leading option: "Append-only relational audit store plus immutable object archive and observability export", because it supports compliance-oriented queryability and retention control while keeping operational telemetry export clearly secondary to canonical evidence.</p>
+</div>
+<div class="sect4">
+<h5 id="_proposed_audit_technology_profile"><a class="anchor" href="#_proposed_audit_technology_profile"></a>Proposed Audit Technology Profile</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Canonical audit evidence is committed first to an append-only relational audit store optimized for indexed retrieval and governance queries.</p>
+</li>
+<li>
+<p>Immutable archival copies are written to object storage for long-term retention and recovery support.</p>
+</li>
+<li>
+<p>Observability tools receive derived audit and operational exports, for example through OpenTelemetry-based pipelines or equivalent structured export mechanisms.</p>
+</li>
+<li>
+<p>Corrections and enrichments remain modeled as linked follow-up records rather than in-place updates to canonical evidence.</p>
+</li>
+<li>
+<p>Privileged and regulated actions should not be treated as successfully committed until the canonical audit store has durably accepted the required evidence.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_public_behavior_expected_from_this_direction_3"><a class="anchor" href="#_public_behavior_expected_from_this_direction_3"></a>Public Behavior Expected From This Direction</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Canonical audit records must preserve stable event identifiers, timestamps, actor context, scope path, action type, decision or outcome, correlation identifiers, and retention metadata.</p>
+</li>
+<li>
+<p>Compliance review, evidence export, and retention enforcement read from the canonical audit store and its archival path, not from observability tooling.</p>
+</li>
+<li>
+<p>Observability exports should preserve correlation identifiers back to canonical evidence.</p>
+</li>
+<li>
+<p>Failure of the observability path must not invalidate already committed canonical evidence.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_questions_to_resolve_before_acceptance_3"><a class="anchor" href="#_questions_to_resolve_before_acceptance_3"></a>Questions To Resolve Before Acceptance</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Whether the canonical relational store should be optimized primarily for transactional writes, evidence retrieval, or mixed workloads</p>
+</li>
+<li>
+<p>Which immutability controls are required for the archival object-storage layer</p>
+</li>
+<li>
+<p>Whether observability export is synchronous for a small critical subset of events or fully asynchronous after canonical commit</p>
+</li>
+<li>
+<p>What recovery point and recovery time objectives apply to canonical audit evidence</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_positive_consequences_10"><a class="anchor" href="#_positive_consequences_10"></a>Positive Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Canonical evidence stays queryable, reviewable, and separate from operational telemetry.</p>
+</li>
+<li>
+<p>Long-term retention and archive handling become architecturally explicit.</p>
+</li>
+<li>
+<p>Observability outages no longer imply governance evidence loss.</p>
+</li>
+<li>
+<p>The accepted audit semantics gain a concrete implementation direction.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_negative_consequences_10"><a class="anchor" href="#_negative_consequences_10"></a>Negative Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The platform must operate both canonical evidence storage and export paths.</p>
+</li>
+<li>
+<p>Retention and archive workflows require stronger operational discipline than a telemetry-only approach.</p>
+</li>
+<li>
+<p>Concrete database and archival product choices still need a later acceptance decision.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_non_goals_and_deferred_decisions_7"><a class="anchor" href="#_non_goals_and_deferred_decisions_7"></a>Non-Goals and Deferred Decisions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>This ADR does not choose a specific relational database product, object-storage vendor, or telemetry product.</p>
+</li>
+<li>
+<p>This ADR does not define the full audit schema for every event family.</p>
+</li>
+<li>
+<p>This ADR does not allow observability tooling to become the canonical evidence store.</p>
+</li>
+<li>
+<p>This ADR does not require the archive layer to be the primary query interface for routine audit review.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences_7"><a class="anchor" href="#_consequences_7"></a>9.12.7. Consequences</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Section 7 should point to this ADR as the open concrete follow-on to the accepted logical audit architecture.</p>
+</li>
+<li>
+<p>Future platform design work should assume a canonical evidence path plus derived export path rather than one shared telemetry sink.</p>
+</li>
+<li>
+<p>Any later proposal to use a log broker or observability backend as the sole audit system of record should explicitly challenge the accepted audit semantics and this proposed direction.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_validation_questions_3"><a class="anchor" href="#_validation_questions_3"></a>9.12.8. Validation Questions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Can canonical evidence still be queried and retained correctly when the observability export path is unavailable?</p>
+</li>
+<li>
+<p>Can privileged actions fail closed when canonical evidence cannot be durably accepted?</p>
+</li>
+<li>
+<p>Can retention enforcement and archival workflows operate from canonical evidence rather than inferred telemetry?</p>
+</li>
+<li>
+<p>Can operators correlate observability signals back to canonical audit records without treating the observability backend as the source of truth?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options_10"><a class="anchor" href="#_pros_and_cons_of_the_options_10"></a>9.12.9. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_append_only_relational_audit_store_plus_immutable_object_archive_and_observability_export"><a class="anchor" href="#_append_only_relational_audit_store_plus_immutable_object_archive_and_observability_export"></a>Append-only relational audit store plus immutable object archive and observability export</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because it supports governance queries and evidence review directly.</p>
+</li>
+<li>
+<p>Good, because it keeps telemetry export secondary to canonical evidence.</p>
+</li>
+<li>
+<p>Good, because it provides a natural place to implement retention and archive controls.</p>
+</li>
+<li>
+<p>Bad, because it introduces multiple persistence concerns instead of one single sink.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_log_broker_first_evidence_architecture_with_the_event_stream_as_the_primary_audit_store"><a class="anchor" href="#_log_broker_first_evidence_architecture_with_the_event_stream_as_the_primary_audit_store"></a>Log-broker-first evidence architecture with the event stream as the primary audit store</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because append-only semantics fit a streaming model naturally.</p>
+</li>
+<li>
+<p>Good, because downstream exports and projections are straightforward.</p>
+</li>
+<li>
+<p>Bad, because evidence retrieval, retention enforcement, and correction workflows can become awkward if the stream is the only canonical read surface.</p>
+</li>
+<li>
+<p>Bad, because governance users may end up depending on operational streaming infrastructure for evidence access.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_observability_backend_as_the_single_audit_and_telemetry_store"><a class="anchor" href="#_observability_backend_as_the_single_audit_and_telemetry_store"></a>Observability backend as the single audit and telemetry store</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because it appears operationally simple at first glance.</p>
+</li>
+<li>
+<p>Bad, because it collapses canonical evidence and telemetry into one mutable operational system.</p>
+</li>
+<li>
+<p>Bad, because retention and governance guarantees become hard to separate from troubleshooting-oriented data handling.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_select_authoritative_state_integration_and_projection_technology_profile"><a class="anchor" href="#_select_authoritative_state_integration_and_projection_technology_profile"></a>9.13. Select authoritative state integration and projection technology profile</h3>
+<div class="sect3">
+<h4 id="_status_11"><a class="anchor" href="#_status_11"></a>9.13.1. Status</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: proposed</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_choose_how_owner_managed_state_changes_propagate_across_capabilities"><a class="anchor" href="#_choose_how_owner_managed_state_changes_propagate_across_capabilities"></a>9.13.2. Choose how owner-managed state changes propagate across capabilities</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Deciders: Architecture Team</p>
+</li>
+<li>
+<p>Date: 2026-04-03</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_and_problem_statement_11"><a class="anchor" href="#_context_and_problem_statement_11"></a>9.13.3. Context and Problem Statement</h4>
+<div class="paragraph">
+<p>The accepted ownership and consistency architecture requires authoritative write ownership per capability, local transactions within each owner boundary, durable asynchronous integration across capabilities, rebuildable projections, and authoritative owner reads when freshness matters.
+What remains open is the concrete integration and projection technology profile that will make those rules practical and repeatable.</p>
+</div>
+<div class="paragraph">
+<p>Without a concrete decision, teams can still make materially different assumptions about:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>whether owner-to-owner coordination is synchronous API chaining or durable event propagation</p>
+</li>
+<li>
+<p>how owner commits are connected to downstream change notifications</p>
+</li>
+<li>
+<p>how projections are populated, rebuilt, and replayed</p>
+</li>
+<li>
+<p>how consumers distinguish authoritative owner reads from eventually consistent views</p>
+</li>
+<li>
+<p>how replay, backfill, and lag handling work operationally</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The platform therefore needs one proposed technology profile for state propagation and projections.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_drivers_11"><a class="anchor" href="#_decision_drivers_11"></a>9.13.4. Decision Drivers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Durable cross-capability propagation after owner commits</p>
+</li>
+<li>
+<p>Recoverable projection rebuild and replay behavior</p>
+</li>
+<li>
+<p>Clear distinction between authoritative reads and convenience views</p>
+</li>
+<li>
+<p>Low risk of losing change notifications during owner updates</p>
+</li>
+<li>
+<p>Compatibility with accepted ownership, audit, and runtime models</p>
+</li>
+<li>
+<p>Practical support for future platform evolution</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_considered_options_11"><a class="anchor" href="#_considered_options_11"></a>9.13.5. Considered Options</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Transactional outbox plus durable message broker and consumer-owned projections</p>
+</li>
+<li>
+<p>Synchronous API chaining between capability owners for all dependent updates</p>
+</li>
+<li>
+<p>Shared database change-data-capture from a central platform store</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_proposed_decision_direction_4"><a class="anchor" href="#_proposed_decision_direction_4"></a>9.13.6. Proposed Decision Direction</h4>
+<div class="paragraph">
+<p>Leading option: "Transactional outbox plus durable message broker and consumer-owned projections", because it matches the accepted owner-first consistency model, reduces dual-write risk, and gives downstream capabilities a recoverable projection path without turning projections into shared write authorities.</p>
+</div>
+<div class="sect4">
+<h5 id="_proposed_integration_profile"><a class="anchor" href="#_proposed_integration_profile"></a>Proposed Integration Profile</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Each authoritative capability commits canonical state within its own local transaction boundary.</p>
+</li>
+<li>
+<p>The same owner transaction records a durable outbox entry or equivalent change record for downstream propagation.</p>
+</li>
+<li>
+<p>A durable broker or stream distributes owner-originated change notifications to dependent capabilities.</p>
+</li>
+<li>
+<p>Consuming capabilities build and maintain their own projections, caches, or read models from those change notifications.</p>
+</li>
+<li>
+<p>Freshness-sensitive workflows continue to read from the owner directly instead of treating projections as real-time truth.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_public_behavior_expected_from_this_direction_4"><a class="anchor" href="#_public_behavior_expected_from_this_direction_4"></a>Public Behavior Expected From This Direction</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Owner-originated change notifications must be durable enough to support retry and replay after downstream failures.</p>
+</li>
+<li>
+<p>Projections must remain rebuildable from authoritative state or from replayable change streams.</p>
+</li>
+<li>
+<p>Operational tooling should make lag, replay status, and projection health visible.</p>
+</li>
+<li>
+<p>A projection becoming stale or unavailable must not transfer write ownership away from the authoritative capability.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_questions_to_resolve_before_acceptance_4"><a class="anchor" href="#_questions_to_resolve_before_acceptance_4"></a>Questions To Resolve Before Acceptance</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Which broker or stream technology best fits ordering, replay, and operational simplicity needs</p>
+</li>
+<li>
+<p>Whether some low-value derived views can be rebuilt on demand instead of continuously projected</p>
+</li>
+<li>
+<p>Which projection stores are capability-local versus shared read-only infrastructure</p>
+</li>
+<li>
+<p>How replay checkpoints, dead-letter handling, and recovery ownership should be operated</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_positive_consequences_11"><a class="anchor" href="#_positive_consequences_11"></a>Positive Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Owner-first change handling gets a clear implementation pattern.</p>
+</li>
+<li>
+<p>Dual-write risk is reduced compared with ad hoc synchronous propagation.</p>
+</li>
+<li>
+<p>Projections gain a credible rebuild and replay model.</p>
+</li>
+<li>
+<p>Cross-capability coupling stays lower than in synchronous orchestration chains.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_negative_consequences_11"><a class="anchor" href="#_negative_consequences_11"></a>Negative Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Broker, replay, and lag management become explicit platform-operational concerns.</p>
+</li>
+<li>
+<p>Teams must handle eventual consistency and stale projections deliberately.</p>
+</li>
+<li>
+<p>Concrete message-broker and projection-store choices still need a later acceptance decision.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_non_goals_and_deferred_decisions_8"><a class="anchor" href="#_non_goals_and_deferred_decisions_8"></a>Non-Goals and Deferred Decisions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>This ADR does not choose a vendor-specific broker, database, or cache product.</p>
+</li>
+<li>
+<p>This ADR does not eliminate the need for direct owner reads in freshness-sensitive flows.</p>
+</li>
+<li>
+<p>This ADR does not make projections authoritative.</p>
+</li>
+<li>
+<p>This ADR does not require every internal interaction to become event-driven when a direct owner read is simpler and freshness-critical.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences_8"><a class="anchor" href="#_consequences_8"></a>9.13.7. Consequences</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Sections 6, 7, and 8 should point to this ADR as the concrete follow-on to the accepted ownership model.</p>
+</li>
+<li>
+<p>Future persistence design should assume outbox-backed propagation and consumer-owned projections unless a later ADR justifies an exception.</p>
+</li>
+<li>
+<p>Any proposal for broad synchronous update chaining or projection-as-source-of-truth behavior should explicitly challenge the accepted ownership rules and this proposed direction.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_validation_questions_4"><a class="anchor" href="#_validation_questions_4"></a>9.13.8. Validation Questions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Can owner-managed records be committed without risking silent loss of downstream change notifications?</p>
+</li>
+<li>
+<p>Can lagging projections be rebuilt without reassigning ownership or blocking authoritative writes?</p>
+</li>
+<li>
+<p>Can consumers tell when they need an authoritative owner read instead of a derived view?</p>
+</li>
+<li>
+<p>Can downstream failures be retried or replayed without distributed rollback?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options_11"><a class="anchor" href="#_pros_and_cons_of_the_options_11"></a>9.13.9. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_transactional_outbox_plus_durable_message_broker_and_consumer_owned_projections"><a class="anchor" href="#_transactional_outbox_plus_durable_message_broker_and_consumer_owned_projections"></a>Transactional outbox plus durable message broker and consumer-owned projections</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because it aligns well with owner-first commits and durable asynchronous propagation.</p>
+</li>
+<li>
+<p>Good, because it gives projections a replayable recovery path.</p>
+</li>
+<li>
+<p>Good, because it reduces dual-write risk compared with ad hoc change emission.</p>
+</li>
+<li>
+<p>Bad, because broker operations, replay, and lag visibility become first-class concerns.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_synchronous_api_chaining_between_capability_owners_for_all_dependent_updates"><a class="anchor" href="#_synchronous_api_chaining_between_capability_owners_for_all_dependent_updates"></a>Synchronous API chaining between capability owners for all dependent updates</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because the flow can appear easier to understand at first glance.</p>
+</li>
+<li>
+<p>Bad, because availability and latency coupling grow quickly across capabilities.</p>
+</li>
+<li>
+<p>Bad, because partial failure handling becomes brittle without really solving ownership concerns.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_shared_database_change_data_capture_from_a_central_platform_store"><a class="anchor" href="#_shared_database_change_data_capture_from_a_central_platform_store"></a>Shared database change-data-capture from a central platform store</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because downstream consumers can react to one shared change feed.</p>
+</li>
+<li>
+<p>Bad, because it pushes the architecture back toward a central shared write model that the accepted ownership ADR rejected.</p>
+</li>
+<li>
+<p>Bad, because capability ownership becomes weaker when integration depends on one common persistence substrate.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_select_runtime_topology_and_network_isolation_implementation_profile"><a class="anchor" href="#_select_runtime_topology_and_network_isolation_implementation_profile"></a>9.14. Select runtime topology and network isolation implementation profile</h3>
+<div class="sect3">
+<h4 id="_status_12"><a class="anchor" href="#_status_12"></a>9.14.1. Status</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: proposed</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_choose_the_concrete_hosting_profile_for_shared_silo_and_hybrid_isolation"><a class="anchor" href="#_choose_the_concrete_hosting_profile_for_shared_silo_and_hybrid_isolation"></a>9.14.2. Choose the concrete hosting profile for shared, silo, and hybrid isolation</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Deciders: Architecture Team</p>
+</li>
+<li>
+<p>Date: 2026-04-03</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_and_problem_statement_12"><a class="anchor" href="#_context_and_problem_statement_12"></a>9.14.3. Context and Problem Statement</h4>
+<div class="paragraph">
+<p>The accepted isolation architecture defines shared, silo, and hybrid profiles, independent runtime, data, and network boundary resolution, anti-weakening rules, and policy-gated placement.
+What remains open is the concrete runtime topology and network-isolation implementation profile that turns those logical rules into an operational hosting model.</p>
+</div>
+<div class="paragraph">
+<p>Without a concrete decision, teams can still make materially different assumptions about:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>whether workloads run in one shared runtime estate, separate cells, or fully duplicated per-tenant stacks</p>
+</li>
+<li>
+<p>how silo and hybrid dedicated boundaries map to accounts, subscriptions, or network segments</p>
+</li>
+<li>
+<p>how dedicated data and network boundaries relate to shared runtime infrastructure</p>
+</li>
+<li>
+<p>how regional placement and ingress or egress boundaries are enforced</p>
+</li>
+<li>
+<p>how the same business hierarchy is preserved across materially different technical placements</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The platform therefore needs one proposed implementation profile for runtime topology and network isolation.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_drivers_12"><a class="anchor" href="#_decision_drivers_12"></a>9.14.4. Decision Drivers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Clear operational mapping from logical isolation outcomes to concrete hosting</p>
+</li>
+<li>
+<p>Strong enough isolation for shared, silo, and hybrid workloads</p>
+</li>
+<li>
+<p>Compatibility with environment-level tightening and anti-weakening rules</p>
+</li>
+<li>
+<p>Practical cost and operability balance across mixed tenant needs</p>
+</li>
+<li>
+<p>Alignment with accepted audit, policy, and ownership decisions</p>
+</li>
+<li>
+<p>Clear basis for future deployment and platform-engineering work</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_considered_options_12"><a class="anchor" href="#_considered_options_12"></a>9.14.5. Considered Options</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Cell-based runtime topology with shared cells, dedicated cells, and dedicated network segments selected by isolation outcome</p>
+</li>
+<li>
+<p>One shared runtime estate with namespace-only isolation for all profiles</p>
+</li>
+<li>
+<p>Full per-tenant stack duplication for every tenant regardless of profile</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_proposed_decision_direction_5"><a class="anchor" href="#_proposed_decision_direction_5"></a>9.14.6. Proposed Decision Direction</h4>
+<div class="paragraph">
+<p>Leading option: "Cell-based runtime topology with shared cells, dedicated cells, and dedicated network segments selected by isolation outcome", because it can support shared, silo, and hybrid placement without forcing either one universal shared estate or universal per-tenant duplication.</p>
+</div>
+<div class="sect4">
+<h5 id="_proposed_hosting_profile"><a class="anchor" href="#_proposed_hosting_profile"></a>Proposed Hosting Profile</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The platform runs workloads in a cell-based topology rather than one monolithic shared runtime estate.</p>
+</li>
+<li>
+<p>Shared-profile environments use shared runtime cells, shared data services where allowed, and shared network boundaries.</p>
+</li>
+<li>
+<p>Silo-profile environments use dedicated runtime cells, dedicated data services, and dedicated network segments or accounts.</p>
+</li>
+<li>
+<p>Hybrid-profile environments may resolve each environment to shared or dedicated runtime, data, and network boundaries independently, but only within the accepted policy and anti-weakening rules.</p>
+</li>
+<li>
+<p>Dedicated network isolation should map to dedicated network segments and, where required, dedicated infrastructure accounts or subscriptions rather than namespace-only separation.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_public_behavior_expected_from_this_direction_5"><a class="anchor" href="#_public_behavior_expected_from_this_direction_5"></a>Public Behavior Expected From This Direction</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Placement outputs must identify the runtime cell, data boundary class, and network boundary class selected for each governed environment.</p>
+</li>
+<li>
+<p>Mixed hybrid outcomes remain valid when they are policy-compliant and do not weaken stricter subscription defaults.</p>
+</li>
+<li>
+<p>The same tenant, workspace, project / service, and environment hierarchy remains intact regardless of whether the final technical placement is shared or dedicated.</p>
+</li>
+<li>
+<p>Placement changes and denials remain canonical audit events.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_questions_to_resolve_before_acceptance_5"><a class="anchor" href="#_questions_to_resolve_before_acceptance_5"></a>Questions To Resolve Before Acceptance</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Which workload orchestrator and compute substrate best fit the cell model</p>
+</li>
+<li>
+<p>How many regions or regional cells are required in the first implementation</p>
+</li>
+<li>
+<p>Which data-service patterns support shared partitions versus dedicated stores</p>
+</li>
+<li>
+<p>How ingress, egress, and private connectivity should be modeled for dedicated network boundaries</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_positive_consequences_12"><a class="anchor" href="#_positive_consequences_12"></a>Positive Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Shared, silo, and hybrid outcomes gain a concrete operational mapping.</p>
+</li>
+<li>
+<p>The platform can offer dedicated boundaries where needed without duplicating everything for every tenant.</p>
+</li>
+<li>
+<p>Hybrid placement remains compatible with the accepted independent-boundary model.</p>
+</li>
+<li>
+<p>Network isolation becomes stronger than a namespace-only convention.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_negative_consequences_12"><a class="anchor" href="#_negative_consequences_12"></a>Negative Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Platform engineering must operate shared and dedicated placement modes together.</p>
+</li>
+<li>
+<p>Cell sizing, regional topology, and dedicated-capacity management become real operational design concerns.</p>
+</li>
+<li>
+<p>Concrete orchestrator, data-service, and network-product choices still need a later acceptance decision.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_non_goals_and_deferred_decisions_9"><a class="anchor" href="#_non_goals_and_deferred_decisions_9"></a>Non-Goals and Deferred Decisions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>This ADR does not choose a cloud vendor, orchestrator product, or network product.</p>
+</li>
+<li>
+<p>This ADR does not require every tenant to receive a fully dedicated stack.</p>
+</li>
+<li>
+<p>This ADR does not allow hybrid placement to change the business hierarchy.</p>
+</li>
+<li>
+<p>This ADR does not define the full region or disaster-recovery topology.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences_9"><a class="anchor" href="#_consequences_9"></a>9.14.7. Consequences</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Section 7 should point to this ADR as the concrete infrastructure follow-on to the accepted logical isolation model.</p>
+</li>
+<li>
+<p>Future platform-engineering work should assume a cell-based hosting pattern instead of either one universal shared estate or universal per-tenant duplication.</p>
+</li>
+<li>
+<p>Any later proposal to use namespace-only isolation for dedicated network outcomes should explicitly challenge the accepted isolation semantics and this proposed direction.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_validation_questions_5"><a class="anchor" href="#_validation_questions_5"></a>9.14.8. Validation Questions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Can the topology support shared, silo, and hybrid placements without changing the business hierarchy?</p>
+</li>
+<li>
+<p>Can dedicated network outcomes be implemented with stronger boundaries than namespace-only separation?</p>
+</li>
+<li>
+<p>Can a hybrid environment receive a dedicated network and runtime boundary while another environment under the same tenant remains shared?</p>
+</li>
+<li>
+<p>Can placement decisions remain auditable and policy-gated across both shared and dedicated cells?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options_12"><a class="anchor" href="#_pros_and_cons_of_the_options_12"></a>9.14.9. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_cell_based_runtime_topology_with_shared_cells_dedicated_cells_and_dedicated_network_segments_selected_by_isolation_outcome"><a class="anchor" href="#_cell_based_runtime_topology_with_shared_cells_dedicated_cells_and_dedicated_network_segments_selected_by_isolation_outcome"></a>Cell-based runtime topology with shared cells, dedicated cells, and dedicated network segments selected by isolation outcome</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because it maps naturally to shared, silo, and hybrid isolation outcomes.</p>
+</li>
+<li>
+<p>Good, because it avoids both one universal shared estate and universal full duplication.</p>
+</li>
+<li>
+<p>Good, because it gives dedicated outcomes stronger technical boundaries than namespace-only isolation.</p>
+</li>
+<li>
+<p>Bad, because cell operations and capacity planning become explicit platform concerns.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_one_shared_runtime_estate_with_namespace_only_isolation_for_all_profiles"><a class="anchor" href="#_one_shared_runtime_estate_with_namespace_only_isolation_for_all_profiles"></a>One shared runtime estate with namespace-only isolation for all profiles</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because it appears operationally simple at first glance.</p>
+</li>
+<li>
+<p>Bad, because silo and dedicated hybrid outcomes become weak or misleading.</p>
+</li>
+<li>
+<p>Bad, because namespace-only isolation does not align well with stronger dedicated network expectations.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_full_per_tenant_stack_duplication_for_every_tenant_regardless_of_profile"><a class="anchor" href="#_full_per_tenant_stack_duplication_for_every_tenant_regardless_of_profile"></a>Full per-tenant stack duplication for every tenant regardless of profile</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because technical isolation is easy to reason about.</p>
+</li>
+<li>
+<p>Bad, because cost and operability become disproportionate for shared-profile tenants.</p>
+</li>
+<li>
+<p>Bad, because the architecture would lose much of the benefit of having separate shared, hybrid, and silo profiles.</p>
+</li>
+</ul>
 </div>
 <div style="page-break-after: always;"></div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -3830,30 +5392,36 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-01</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apply the accepted effective-access semantics to runtime examples, quality scenarios, and future platform tests.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0004, Sections 6 and 10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The accepted authorization model is reflected consistently in architecture examples today and is ready to drive later implementation tests.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolve the platform access interface and automation protocol profile.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0008, Section 3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform gains one concrete public interaction model for browser-based administration and service-account-driven automation.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-02</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apply the accepted audit evidence architecture to runtime examples, storage decisions, and future platform tests.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0005, Sections 5, 7, and 10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The accepted audit model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolve the identity federation and service-account credential model.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0009, Sections 3 and 8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform gains one concrete trust and token model for users and machine principals.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-03</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apply the accepted ownership and consistency model to future persistence, integration, and test decisions.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0006, Sections 5, 6, 7, and 8</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The accepted ownership model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolve the canonical audit store and evidence export technology profile.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0010, Sections 7, 8, and 10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The accepted audit model gains one concrete storage, archive, and export direction that can later be accepted or revised.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-04</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apply the accepted hybrid isolation model to runtime examples, placement decisions, and future platform tests.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0007, Sections 6, 7, and 10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The accepted hybrid model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolve the authoritative state integration and projection technology profile.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0011, Sections 6, 7, and 8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The accepted ownership model gains one concrete propagation, replay, and projection direction for implementation planning.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-05</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolve the runtime topology and network isolation implementation profile.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0012, Sections 6 and 7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The accepted isolation model gains one concrete hosting and network-boundary direction for shared, silo, and hybrid placement.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A-06</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Add one concrete end-to-end governed runtime scenario that exercises authorization, policy, audit, and isolation together.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sections 6 and 10</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The runtime and quality chapters gain one implementation-oriented example that can be used for design review and later test planning.</p></td>
@@ -4007,7 +5575,7 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-04-02 23:12:30 UTC
+Last updated 2026-04-02 23:22:33 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
