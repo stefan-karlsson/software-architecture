@@ -1,6 +1,55 @@
 [[section-technical-risks]]
 == Risks and Technical Debts
 
+This section captures the main architecture risks in the platform foundation model and the technical debt that remains weakly formalized.
+
+=== Risks
+
+[options="header",cols="1,1,2,3,3"]
+|===
+|Priority |ID |Area |Risk |Mitigation / Next Step
+
+|1
+|R-01
+|Inheritance semantics
+|If policy inheritance is implemented inconsistently, child scopes may accidentally bypass mandatory parent controls.
+|Make inheritance direction and mandatory-control behavior explicit in implementation and tests, and review policy examples against the architecture rules.
+
+|2
+|R-02
+|Authorization complexity
+|Fine-grained scoped grants and reusable roles can lead to grant explosion or unclear effective access if role design is uncontrolled.
+|Use clear role design conventions, keep permissions granular, and audit grant changes at every scope.
+
+|3
+|R-03
+|Audit coverage
+|If privileged or regulated activity is not captured consistently, the platform can lose governance evidence even when access checks exist.
+|Treat audit coverage as mandatory for memberships, grants, policy changes, production access, secret access, deployments, and billing or administration changes.
+
+|4
+|R-04
+|Hybrid isolation complexity
+|Hybrid tenants can become difficult to reason about if runtime, data, and network boundaries are resolved independently without clear policy constraints.
+|Keep isolation decisions explicit, policy-driven, and visible in audit and operational telemetry.
+
+|5
+|R-05
+|Concrete infrastructure ambiguity
+|The architecture intentionally leaves runtime platform, storage technology, and network implementation open, which can cause teams to make divergent assumptions.
+|Capture concrete infrastructure decisions in future ADRs once those choices are made and align sections 6 and 7 accordingly.
+|===
+
 === Technical Debts
 
-include::../tdrs/0001-placeholder-technical-debt.adoc[]
+The repository does not yet contain a real Technical Debt Record for the platform foundation. The main debt is the lack of concrete tracked debt entries for issues discovered during implementation.
+
+[options="header",cols="1,2,3,2"]
+|===
+|Debt ID |Debt |Impact |Next Step
+
+|TD-01
+|A formal technical-debt register has not yet been populated with real TDR entries for the platform foundation.
+|Debt can remain implicit, which makes prioritization and ownership difficult once the architecture starts being implemented.
+|Create concrete TDRs when real implementation debt is identified and link them from this chapter.
+|===

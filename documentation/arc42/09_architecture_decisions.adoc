@@ -1,4 +1,10 @@
 [[section-design-decisions]]
 == Architecture Decisions
 
-include::../adrs/0001-adopt-architecture-documentation-standards-and-tooling.adoc[]
+The platform foundation currently depends on the following explicit architecture decisions.
+
+include::../adrs/0001-adopt-architecture-documentation-standards-and-tooling.adoc[leveloffset=+2]
+
+include::../adrs/0002-adopt-hierarchical-scope-and-inheritance-model.adoc[leveloffset=+2]
+
+include::../adrs/0003-separate-subscription-plan-from-isolation-profile-and-boundary-bindings.adoc[leveloffset=+2]

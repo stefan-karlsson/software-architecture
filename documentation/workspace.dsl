@@ -1,121 +1,52 @@
-workspace "Product Platform" "Starter C4 workspace for a Product platform control-plane system." {
+workspace "Product Platform Foundation" "C4 model for the platform foundation architecture." {
 
     model {
-        platformOperator = person "Platform Operator" "Configures and operates tenant environments." "Operator"
-        productEngineer = person "Product Engineer" "Builds and deploys platform capabilities." "Internal User"
+        user = person "User" "Human principal that operates within tenant, workspace, project / service, and environment scopes." "Human Principal"
 
-        identityProvider = softwaresystem "Identity Provider" "Provides user authentication and identity claims." "External System"
-        observabilityStack = softwaresystem "Observability Stack" "Collects logs, metrics, and traces from the control plane." "External System"
+        automationClient = softwaresystem "Automation Client" "Machine-driven client that acts through service accounts." "External System"
+        identityProvider = softwaresystem "Identity Provider" "Provides authentication and identity claims for human and machine principals." "External System"
+        observabilityStack = softwaresystem "Observability Stack" "Collects audit and operational telemetry from the platform foundation." "External System"
 
-        controlPlaneSystem = softwaresystem "Product Platform Control Plane" "Manages tenants, environments, and platform policies." {
-            controlPlanePortal = container "Control Plane Portal" "UI for operators and engineering users." "Web UI"
-            controlPlaneApi = container "Control Plane API" "Public and internal API surface for control-plane capabilities." "HTTP API" {
-                authComponent = component "Auth Component" "Validates identity, session, and role context." "Service Component"
-                tenantComponent = component "Tenant Management Component" "Manages tenant lifecycle and metadata." "Service Component"
-                environmentComponent = component "Environment Management Component" "Handles environment provisioning intents and state." "Service Component"
-                policyComponent = component "Policy Evaluation Component" "Applies platform policy checks for operations." "Service Component"
-            }
-            orchestrationService = container "Orchestration Service" "Coordinates asynchronous workflows for control-plane requests." "Worker Service"
-            metadataStore = container "Metadata Store" "Persists tenant, environment, and operation metadata." "Relational Database"
-            eventBus = container "Event Bus" "Transports domain events and workflow messages." "Message Broker"
+        foundation = softwaresystem "Product Platform Foundation" "Provides hierarchical scoping, authorization, policy inheritance, auditability, and isolation control for the platform." {
+            identityAccess = container "Identity and Access Capability" "Manages users, service accounts, groups, memberships, grants, roles, and permissions." "Capability Module"
+            policyManagement = container "Policy Management Capability" "Manages platform, tenant, workspace, project, and environment policies and computes effective policy." "Capability Module"
+            scopeManagement = container "Tenant Hierarchy and Scope Management Capability" "Manages tenants, billing accounts, subscriptions, workspaces, projects / services, and environments." "Capability Module"
+            auditGovernance = container "Audit and Governance Capability" "Records privileged and regulated activity and preserves audit context across the hierarchy." "Capability Module"
+            isolationPlacement = container "Isolation and Placement Capability" "Resolves isolation profiles and the runtime, data, and network boundaries for environments." "Capability Module"
         }
 
-        platformOperator -> controlPlanePortal "Uses"
-        productEngineer -> controlPlanePortal "Uses"
+        user -> foundation "Uses"
+        automationClient -> foundation "Uses service-account-driven access to"
+        foundation -> identityProvider "Delegates authentication and identity claims to"
+        foundation -> observabilityStack "Emits audit and operational telemetry to"
 
-        controlPlanePortal -> controlPlaneApi "Calls"
-        controlPlaneApi -> identityProvider "Validates identities with"
-        controlPlaneApi -> metadataStore "Reads/writes metadata"
-        controlPlaneApi -> eventBus "Publishes commands/events"
-        orchestrationService -> eventBus "Consumes events from"
-        orchestrationService -> metadataStore "Stores workflow state"
-        controlPlaneApi -> observabilityStack "Emits telemetry to"
-        orchestrationService -> observabilityStack "Emits telemetry to"
+        user -> identityAccess "Authenticates and administers scoped access through"
+        automationClient -> identityAccess "Authenticates service-account access through"
+        identityAccess -> identityProvider "Validates principal identity with"
+        identityAccess -> scopeManagement "Resolves memberships and grant scopes with"
+        identityAccess -> policyManagement "Submits authorization context to"
+        identityAccess -> auditGovernance "Audits access and membership changes through"
 
-        controlPlanePortal -> authComponent "Sends identity context to"
-        controlPlanePortal -> tenantComponent "Calls tenant operations on"
-        controlPlanePortal -> environmentComponent "Calls environment operations on"
-        controlPlanePortal -> policyComponent "Requests access evaluation from"
-        tenantComponent -> policyComponent "Requests authorization decision from"
-        environmentComponent -> policyComponent "Requests authorization decision from"
+        scopeManagement -> policyManagement "Provides hierarchy and scope context to"
+        scopeManagement -> auditGovernance "Audits tenant, workspace, project / service, and environment changes through"
 
-        authComponent -> identityProvider "Exchanges identity data with"
-        tenantComponent -> metadataStore "Reads/writes"
-        environmentComponent -> eventBus "Publishes orchestration requests"
-        policyComponent -> metadataStore "Reads policy and tenancy context"
+        policyManagement -> auditGovernance "Audits policy changes and policy decisions through"
+        policyManagement -> observabilityStack "Emits policy telemetry to"
 
-        deploymentEnvironment "Development" {
-            deploymentNode "Developer Workstation" "" "macOS/Windows/Linux" {
-                deploymentNode "Browser" "" "Chrome/Firefox/Safari/Edge" {
-                    devPortal = containerInstance controlPlanePortal
-                }
-            }
+        isolationPlacement -> scopeManagement "Resolves subscription and environment context from"
+        isolationPlacement -> policyManagement "Applies effective policy constraints from"
+        isolationPlacement -> auditGovernance "Audits binding and boundary changes through"
 
-            deploymentNode "Dev Cluster" "" "Kubernetes" {
-                deploymentNode "App Namespace" "" "Containers" {
-                    devApi = containerInstance controlPlaneApi
-                    devOrchestrator = containerInstance orchestrationService
-                }
-                deploymentNode "Data Namespace" "" "Managed Services" {
-                    devDatabase = containerInstance metadataStore
-                    devBus = containerInstance eventBus
-                }
-            }
-        }
-
-        deploymentEnvironment "Live" {
-            deploymentNode "Operator Device" "" "Browser-capable workstation" {
-                deploymentNode "Browser" "" "Chrome/Firefox/Safari/Edge" {
-                    livePortal = containerInstance controlPlanePortal
-                }
-            }
-
-            deploymentNode "Production Control Plane" "" "Kubernetes" {
-                deploymentNode "API Tier" "" "Containers" {
-                    liveApi = containerInstance controlPlaneApi
-                }
-                deploymentNode "Workflow Tier" "" "Containers" {
-                    liveOrchestrator = containerInstance orchestrationService
-                }
-                deploymentNode "Data Tier" "" "Managed Services" {
-                    liveDatabase = containerInstance metadataStore
-                    liveBus = containerInstance eventBus
-                }
-            }
-        }
+        auditGovernance -> observabilityStack "Exports audit and operational telemetry to"
     }
 
     views {
-        systemcontext controlPlaneSystem "SystemContext" {
+        systemcontext foundation "SystemContext" {
             include *
             autoLayout
         }
 
-        container controlPlaneSystem "Containers" {
-            include *
-            autoLayout
-        }
-
-        component controlPlaneApi "Components" {
-            include *
-            autoLayout
-        }
-
-        dynamic controlPlaneApi "SignIn" "Placeholder runtime flow for control-plane access and request processing." {
-            controlPlanePortal -> authComponent "Submits access token to"
-            authComponent -> identityProvider "Validates token with"
-            controlPlanePortal -> policyComponent "Checks access policy with"
-            controlPlanePortal -> environmentComponent "Requests environment operation from"
-            environmentComponent -> eventBus "Publishes orchestration command to"
-            autoLayout
-        }
-
-        deployment controlPlaneSystem "Development" "DevelopmentDeployment" {
-            include *
-            autoLayout
-        }
-
-        deployment controlPlaneSystem "Live" "LiveDeployment" {
+        container foundation "Capabilities" {
             include *
             autoLayout
         }
@@ -125,11 +56,9 @@ workspace "Product Platform" "Starter C4 workspace for a Product platform contro
                 color #ffffff
                 shape Person
             }
-            element "Operator" {
+            element "Human Principal" {
                 background #0b5cab
-            }
-            element "Internal User" {
-                background #2a7a4b
+                color #ffffff
             }
             element "Software System" {
                 background #1168bd
@@ -143,10 +72,7 @@ workspace "Product Platform" "Starter C4 workspace for a Product platform contro
                 background #438dd5
                 color #ffffff
             }
-            element "Database" {
-                shape Cylinder
-            }
-            element "Component" {
+            element "Capability Module" {
                 background #85bbf0
                 color #000000
             }

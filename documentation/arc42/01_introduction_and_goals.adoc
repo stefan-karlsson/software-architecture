@@ -1,194 +1,129 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
-The goal is to establish a scalable product platform that provides a shared foundation for product capabilities while separating platform management concerns from product-facing functionality.
-
-
-=== Requirements Overview
-
-
-==== Platform Structure
-
-The platform is expected to consist of two main parts:
-
-* a *control plane*
-* an *application plane*
-
-The separation between control plane and application plane is a fundamental architectural decision that enables independent evolution, scalability, and clear ownership boundaries.
-
-===== Control Plane
-
-The *control plane* will provide the central capabilities needed to manage, configure, govern, and operate the platform. This includes responsibilities such as administration, account, workspace and environment lifecycle management, configuration, access control, operational visibility, and other shared platform management capabilities.
-
-===== Application Plane
-
-The *application plane* will contain the product-facing capabilities built on top of the platform. At this stage, the detailed scope of the application plane is not yet fully defined. This is intentional. The platform is being designed to support future product needs, even where all business capabilities are not yet known.
-
-==== Key Requirement: Incremental Growth
-
-A key requirement is that the platform must support incremental growth. It should be possible to introduce new application capabilities over time without major redesign of the underlying foundation. The architecture should therefore promote clear separation of responsibilities, modular design, and the ability to evolve different parts of the platform independently.
-
-==== Business Objectives
-
-From a business perspective, the platform should help the organization:
-
-* reduce repeated work across products and teams
-* improve consistency in how products are built and operated
-* shorten the time from idea to delivered capability
-* provide a stronger foundation for future growth
-* support governance, security, and operational control in a consistent way
-
-==== Flexibility and Long-Term Evolution
-
-The most important expectation is not to fully define every future application capability from the start, but to create a platform foundation that is stable enough to support long-term use and flexible enough to accommodate change.
-
-At this point, the control plane is better understood than the application plane. The architecture should therefore reflect both what is already known and what is expected to emerge later. The application plane should be treated as an extensible area of the platform that will be shaped further as business needs become clearer.
-
-
-=== Quality Goals
-
-The following quality goals describe the most important architectural characteristics of the product platform. These goals guide design decisions and ensure the platform supports long-term growth and evolution.
-
-The primary quality goals for this platform are evolvability, modularity, scalability, security, reliability, and observability.
-
-==== Evolvability
-
-The platform must support continuous evolution. New capabilities should be introduced without requiring major redesign. The architecture must accommodate future application plane functionality that is not yet defined.
-
-==== Modularity
-
-The platform must be composed of loosely coupled components with clear boundaries. This enables independent development, deployment, and replacement of capabilities across both the control plane and application plane.
-
-==== Scalability
-
-The platform must support growth in accounts, users, workspaces, environments, and application capabilities. The control plane and application plane should scale independently to handle increasing demand.
-
-==== Security
-
-The platform must enforce consistent security controls, including access management, isolation between accounts, and protection of sensitive data. Security must be applied uniformly across both planes.
-
-==== Reliability
-
-The platform must provide stable and predictable behavior. Failures in one part of the system should be isolated to minimize impact on other capabilities. The platform should support resilient operation under partial failure.
-
-==== Observability
-
-The platform must provide clear insight into system behavior, usage, and operational health. Metrics, logs, and traces should enable monitoring, troubleshooting, and informed decision-making.
-
-=== Stakeholders
-
-The following table lists the stakeholders of the product platform and what they can expect from this documentation.
-
-[[section-introduction-and-goals]]
-== Introduction and Goals
-
-The goal is to establish a scalable product platform that provides a shared foundation for product capabilities while separating platform management concerns from product-facing functionality. This enables incremental delivery of future products and supports long-term evolution.
+This section summarizes the architectural drivers for the Product Platform Foundation. It focuses on the hierarchical platform model, the governance and authorization capabilities that must be shared across all tenants, and the quality goals that drive the resulting design.
 
 === Requirements Overview
 
-==== Platform Structure
+==== Problem and Goal
 
-The platform is expected to consist of two main parts:
+The Product Platform Foundation provides the shared architecture for identity and access, policy inheritance, auditability, hierarchical scope management, and tenant isolation. It treats `Platform -> Tenant -> Workspace -> Project / Service -> Environment` as the canonical business hierarchy.
 
-* a *control plane*
-* an *application plane*
+==== Business Goals
 
-The separation between control plane and application plane is a fundamental architectural decision that enables independent evolution, scalability, and clear ownership boundaries.
+The platform foundation should help the organization:
 
-===== Control Plane
+* manage human and machine principals consistently across all scopes
+* apply one hierarchical governance model to shared, silo, and hybrid tenants
+* separate authorization, policy, and audit concerns without losing traceability
+* support subscription plans without coupling pricing directly to hosting isolation
+* make privileged and regulated activity auditable across the full hierarchy
+* allow stricter controls at lower scopes without weakening mandatory parent controls
 
-The *control plane* will provide the central capabilities needed to manage, configure, govern, and operate the platform. This includes responsibilities such as administration, account, workspace and environment lifecycle management, configuration, access control, operational visibility, and other shared platform management capabilities.
+==== Requirement Clusters
 
-===== Application Plane
-
-The *application plane* will contain the product-facing capabilities built on top of the platform. At this stage, the detailed scope of the application plane is not yet fully defined. This is intentional. The platform is being designed to support future product needs, even where all business capabilities are not yet known.
-
-==== Key Requirement: Incremental Growth
-
-A key requirement is that the platform must support incremental growth. It should be possible to introduce new application capabilities over time without major redesign of the underlying foundation. The architecture should therefore promote clear separation of responsibilities, modular design, and the ability to evolve different parts of the platform independently.
-
-==== Business Objectives
-
-From a business perspective, the platform should help the organization:
-
-* reduce repeated work across products and teams
-* improve consistency in how products are built and operated
-* shorten the time from idea to delivered capability
-* provide a stronger foundation for future growth
-* support governance, security, and operational control in a consistent way
-
-==== Flexibility and Long-Term Evolution
-
-The most important expectation is not to fully define every future application capability from the start, but to create a platform foundation that is stable enough to support long-term use and flexible enough to accommodate change.
-
-At this point, the control plane is better understood than the application plane. The architecture should therefore reflect both what is already known and what is expected to emerge later. The application plane should be treated as an extensible area of the platform that will be shaped further as business needs become clearer.
-
-=== Quality Goals
-
-The following quality goals describe the most important characteristics of the product platform. These goals guide architectural decisions and help ensure the platform supports long-term business needs.
-
-The most important quality goals for this platform are evolvability, modularity, scalability, and consistency.
-
-==== Scalability
-
-The platform must support growth in accounts, users, workspaces, environments, and application capabilities without requiring major redesign. Both the control plane and application plane should scale independently to handle increasing demand.
-
-==== Modularity
-
-The platform must allow new capabilities to be added incrementally. Components should be loosely coupled so that teams can introduce, update, or replace functionality without impacting unrelated parts of the platform.
-
-==== Evolvability
-
-The platform must support continuous evolution. Since the full scope of the application plane is not yet known, the architecture should enable future expansion while maintaining stability of existing capabilities.
-
-==== Consistency
-
-The platform should provide consistent patterns for identity, configuration, access control, observability, and operational management. This ensures that new capabilities follow the same principles and provide a unified experience.
-
-==== Reusability
-
-Shared capabilities should be designed for reuse across multiple products and services. This reduces duplication and speeds up delivery of new functionality.
-
-==== Reliability
-
-The platform must provide stable and predictable behavior for both platform management and application capabilities. Failures in one part of the system should have minimal impact on other parts.
-
-==== Security
-
-The platform must enforce consistent security controls, including access management, isolation between accounts, and protection of sensitive data across both planes.
-
-==== Operational Visibility
-
-The platform should provide clear visibility into usage, configuration, and operational status. This enables teams to monitor the platform, understand behavior, and respond to issues effectively.
-
-==== Maintainability
-
-The platform should be easy to understand, operate, and maintain. Clear boundaries, separation of concerns, and standard patterns should reduce complexity over time.
-
-=== Stakeholders
-
-The following table lists the stakeholders of the product platform and what they can expect from this documentation.
-
-[options="header",cols="1,2"]
+[cols="1,3"]
 |===
-|Role | Expectations
-| Software Architects
-a|
-* Gain an overview of the product platform architecture
-* Understand the separation between control plane and application plane
-* Use shared architectural principles as a reference for decision-making
-* Align architectural work across teams
-* Support long-term scalability and evolution of the platform
-| Developers
-a|
-* Gain a clear understanding of the platform structure
-* Understand where to place new functionality
-* Follow consistent design principles when building solutions
-* Identify opportunities to reuse shared platform capabilities
-* Collaborate effectively with architects and other teams
-| Product Owners
-a|
-* Understand the purpose of the platform
-* See how future capabilities can be added incrementally
-* Align product planning with platform evolution
+|Cluster |Description
+
+|Identity and access foundation
+|Provide principals, memberships, grants, roles, permissions, and scoped access decisions for tenant, workspace, project / service, and environment boundaries.
+
+|Hierarchical scope governance
+|Manage the canonical hierarchy of tenant, workspace, project / service, and environment, including inherited defaults, audit context, and scope-aware access.
+
+|Policy and audit baseline
+|Maintain a platform policy baseline plus tenant, workspace, project, and environment policies, and audit privileged or regulated activity across all scopes.
+
+|Isolation and placement
+|Support shared, silo, and hybrid isolation without changing the business hierarchy by resolving runtime, data, and network boundaries from subscription and isolation information.
+|===
+
+==== Core Tasks and Capabilities
+
+The architecture is primarily expected to support the following tasks:
+
+. authenticate a user or service account and resolve principal identity
+. resolve memberships and scoped grants for tenant, workspace, project / service, and environment boundaries
+. expand roles into fine-grained permissions for the requested action
+. evaluate effective policy after permission lookup and before access is allowed
+. record privileged changes, secret access, production access, deployments, and billing or administration changes in the correct audit context
+. resolve runtime, data, and network isolation from the subscription's subscription plan and isolation profile
+
+==== Requirement Sources
+
+The repository does not contain linked external requirements or backlog exports. This chapter therefore uses local architecture evidence and explicit source-reference slots:
+
+[options="header",cols="1,2,3"]
+|===
+|Reference ID |Source |Status / Notes
+
+|REQ-SRC-001
+|External product or platform requirements specification
+|Not yet linked in this repository. Reserve this slot for an approved requirements source.
+
+|REQ-SRC-002
+|External backlog or work-item system
+|Not yet linked in this repository. Reserve this slot for stable epic, feature, or story references.
+
+|REQ-EVID-001
+|`documentation/workspace.dsl`
+|Current repo evidence for the platform foundation context and capability-module decomposition.
+
+|REQ-EVID-002
+|This arc42 book
+|Current source of truth for the hierarchical domain model, policy model, audit model, and isolation model.
+|===
+
+=== Quality Goals
+
+The top quality goals for this architecture are intentionally limited to five. Section 4 summarizes the strategic responses and <<section-quality-scenarios,Section 10>> contains the fuller quality model and scenarios.
+
+[options="header",cols="1,2,4"]
+|===
+|Priority |Quality Goal |Scenario
+
+|1
+|Security and Least Privilege
+|When a user or service account requests a privileged action, the platform should resolve only the permissions granted at the relevant scope and deny any action that is not explicitly allowed.
+
+|2
+|Policy Enforceability
+|When a child scope defines a local rule, the platform should apply inherited parent policy and allow the child to tighten controls without weakening mandatory parent requirements.
+
+|3
+|Auditability and Traceability
+|When a privileged or regulated action occurs, the platform should record it with the correct scope, actor, decision context, and resulting effect.
+
+|4
+|Isolation Flexibility
+|When two tenants use different hosting models, they should keep the same business hierarchy while the platform resolves different runtime, data, and network boundaries for shared, silo, or hybrid isolation.
+
+|5
+|Evolvability
+|When the platform adds a new governed capability or stricter control, it should extend the existing hierarchy, policy, and authorization model instead of introducing a separate parallel model.
+|===
+
+Operability remains important, but it is treated as a detailed quality requirement in <<section-quality-scenarios,Section 10>> rather than a top-five introductory goal.
+
+=== Stakeholders
+
+[options="header",cols="1,3"]
+|===
+|Role |Expectation
+
+|Platform Administrator
+|Needs clear rules for platform baseline policy, scope hierarchy, audit coverage, and isolation behavior across all tenants.
+
+|Security and Compliance Stakeholder
+|Needs assurance that least privilege, policy inheritance, audit logging, retention, and regulated access controls are built into the platform model.
+
+|Product Engineer
+|Needs a shared authorization, policy, and hierarchy model that can be reused consistently when new services and environments are introduced.
+
+|Software Architect
+|Needs a clear and extensible foundation model for scopes, inheritance, isolation, and governance so future capabilities do not fragment the platform.
+
+|Product Owner
+|Needs a compact explanation of why the platform uses one hierarchy for all tenants, how subscription plans differ from isolation, and how governance requirements shape the architecture.
 |===

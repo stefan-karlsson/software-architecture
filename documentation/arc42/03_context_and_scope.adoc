@@ -1,4 +1,4 @@
-[[section-context-and-context]]
+[[section-context-and-scope]]
 == Context and Scope
 
 === Business Context
@@ -8,19 +8,56 @@
 include::../diagrams/SystemContext.puml[]
 ....
 
-**Legende**
+The system boundary in this repository is the Product Platform Foundation. It provides the shared governance architecture for principals, scopes, policy inheritance, auditability, and isolation control.
 
-[plantuml, format=svg, width=50%]
-....
-include::../diagrams/SystemContext-key.puml[]
-....
+[options="header",cols="1,2,2"]
+|===
+|Communication Partner |Inputs to the Platform Foundation |Outputs from the Platform Foundation
+
+|User
+|Human-initiated access, administration actions, membership changes, grant requests, policy changes, and scoped operational actions.
+|Authorization decisions, hierarchy-aware access, policy-enforced outcomes, and scope-specific audit context.
+
+|Automation Client
+|Machine-initiated access through service accounts, including deployment and operational automation.
+|Service-account authorization decisions, scoped access to projects / services and environments, and audited machine activity.
+
+|Identity Provider
+|Identity claims and authentication results for users and service accounts.
+|Authentication and identity-validation requests from the platform foundation.
+
+|Observability Stack
+|No direct business command input is modeled.
+|Audit and operational telemetry emitted by the platform foundation.
+|===
 
 <<<
 
 === Technical Context
 
-**<Diagram or Table>**
+The technical context maps the same communication partners to technical interfaces and channels. Concrete API and infrastructure protocols are intentionally left open because they are not yet fixed by the architecture definition.
 
-**<optionally: Explanation of technical interfaces>**
+[options="header",cols="1,2,2,2"]
+|===
+|Partner |Interface / Channel |Purpose |Notes
 
-**<Mapping Input/Output to Channels>**
+|User
+|Platform Foundation access interface
+|Initiate scope administration, access changes, policy changes, and governed operations.
+|The exact user-facing protocol and UI structure are intentionally unspecified in the repository.
+
+|Automation Client
+|Service-account-driven platform interface
+|Initiate machine-to-platform calls for governed project / service and environment actions.
+|The architecture requires service-account access, but not a specific API protocol or client technology.
+
+|Identity Provider
+|Authentication and identity-claims integration
+|Validate principal identity and return claims used during authorization and policy evaluation.
+|The identity exchange is required, but protocol details are intentionally unspecified.
+
+|Observability Stack
+|Telemetry export channel
+|Receive audit and operational signals for monitoring, troubleshooting, and governance evidence.
+|The architecture proves telemetry export, but not a concrete telemetry protocol or product choice.
+|===

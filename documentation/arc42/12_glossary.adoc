@@ -1,15 +1,97 @@
 [[section-glossary]]
 == Glossary
 
-
-
 [cols="e,2e" options="header"]
 |===
 |Term |Definition
 
-|<Term-1>
-|<definition-1>
+|Platform Foundation
+|The shared architecture for identity, authorization, policy inheritance, auditability, and isolation across the platform hierarchy.
 
-|<Term-2>
-|<definition-2>
+|Principal
+|An actor that can request access, represented as a user or service account.
+
+|User
+|Human principal.
+
+|Service Account
+|Machine principal used for automation or service-to-platform access.
+
+|Group
+|Collection of principals used to manage access at scale.
+
+|Membership
+|Association that answers who belongs to which scope or organizational context.
+
+|Grant
+|Scoped assignment of a role to a principal or group.
+
+|Role
+|Reusable bundle of permissions.
+
+|Permission
+|Smallest action unit, such as `environment.deploy` or `audit.view`.
+
+|Scope
+|A hierarchical boundary at which access, policy, and audit context apply. In this architecture the supported scopes are tenant, workspace, project / service, and environment.
+
+|Tenant
+|Top customer or organizational scope inside the platform hierarchy.
+
+|Billing Account
+|Commercial context associated with a tenant.
+
+|Subscription
+|Entitlement record that carries subscription plan and isolation profile information for a tenant.
+
+|Subscription Plan
+|Commercial entitlement such as Standard, Premium, or Enterprise.
+
+|Isolation Profile
+|Technical isolation intent such as Shared, Silo, or Hybrid.
+
+|Workspace
+|Organizing scope inside a tenant.
+
+|Project / Service
+|Unified scope level used to represent a governed delivery or service boundary inside a workspace.
+
+|Environment
+|Operational scope where policy, audit, and isolation decisions become concrete.
+
+|Platform Policy Baseline
+|Top-level policy baseline inherited by lower scopes.
+
+|Tenant Policy
+|Policy defined at the tenant scope.
+
+|Workspace Policy
+|Policy defined at the workspace scope.
+
+|Project Policy
+|Policy defined at the project / service scope.
+
+|Environment Policy
+|Policy defined at the environment scope.
+
+|Audit Log
+|Record of privileged or regulated activity together with actor, scope, decision, and outcome context.
+
+|Runtime Binding
+|Resolution of where an environment actually runs.
+
+|Data Boundary
+|Resolution of how environment data is isolated.
+
+|Network Boundary
+|Resolution of the network isolation level for an environment.
+
+|Shared
+|Isolation mode where runtime, data, and network boundaries remain shared.
+
+|Silo
+|Isolation mode where runtime, data, and network boundaries are dedicated.
+
+|Hybrid
+|Isolation mode where some environments or workloads are shared and others are dedicated.
 |===

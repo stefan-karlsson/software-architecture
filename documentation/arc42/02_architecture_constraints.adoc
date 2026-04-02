@@ -1,5 +1,41 @@
 [[section-architecture-constraints]]
 == Architecture Constraints
 
+The following constraints are fixed by the chosen platform foundation model and by the documentation/tooling approach used in this repository.
 
+[options="header",cols="1,2,3"]
+|===
+|Category |Constraint |Consequence for the Architecture
 
+|Core domain structure
+|The canonical hierarchy is `Platform -> Tenant -> Workspace -> Project / Service -> Environment`.
+|All access, policy, audit, inheritance, defaults, and isolation reasoning must follow this hierarchy rather than introducing a second parallel business structure.
+
+|Authorization model
+|Access must follow `Principal -> Membership -> Grant -> Role -> Permission -> Scope`.
+|Roles remain reusable bundles, permissions remain the smallest action unit, and grants must always be scoped to tenant, workspace, project / service, or environment.
+
+|Principal model
+|The supported principals are user, service account, and group.
+|Human and machine access must be represented consistently, while group membership provides aggregation without replacing scoped grants.
+
+|Policy model
+|Policy is distinct from authorization and inherits downward from platform baseline to tenant, workspace, project, and environment policies.
+|Permission lookup happens before policy evaluation, and lower scopes may tighten controls but must not weaken mandatory parent rules.
+
+|Isolation model
+|Shared, silo, and hybrid tenants must keep the same business hierarchy.
+|Isolation differences are expressed through isolation profile plus runtime, data, and network boundaries, not through a second tenant model.
+
+|Commercial model
+|Subscription plan and isolation profile are separate concepts.
+|Pricing and entitlement may influence isolation choices, but they cannot be treated as the same field or the same architectural concern.
+
+|Audit model
+|Privileged and regulated actions must be auditable at the correct scope.
+|Membership changes, grants, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor and scope context.
+
+|Documentation and generation
+|The repository standardizes on AsciiDoc, arc42, docToolchain, Structurizr DSL, and generated ADR includes.
+|The maintained source must stay in AsciiDoc, C4 diagrams must come from `documentation/workspace.dsl`, and ADR updates must flow through `exportMarkdown` before HTML generation.
+|===

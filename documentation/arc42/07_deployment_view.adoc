@@ -2,52 +2,72 @@
 :diagram-server-type: kroki_io
 
 [[section-deployment-view]]
-
-
 == Deployment View
 
+The architecture defines logical isolation profiles rather than a fixed concrete infrastructure topology. This section therefore describes how environments are placed and isolated in shared, silo, and hybrid modes, while leaving concrete hosting technology intentionally open.
 
-=== Infrastructure Level 1
+=== Logical Isolation Profiles
 
-[plantuml, format=svg, width=50%]   
+[mermaid, format=svg]
 ....
-include::../diagrams/LiveDeployment.puml[]
+flowchart LR
+  subgraph Shared["Shared"]
+    SR["Runtime Binding: Shared Runtime Allocation"]
+    SD["Data Boundary: Shared Partition"]
+    SN["Network Boundary: Shared Network Boundary"]
+    SR --> SD --> SN
+  end
+
+  subgraph Hybrid["Hybrid"]
+    HR["Runtime Binding: Shared or Dedicated by Environment"]
+    HD["Data Boundary: Shared or Dedicated by Environment"]
+    HN["Network Boundary: Shared or Dedicated by Environment"]
+    HR --> HD --> HN
+  end
+
+  subgraph Silo["Silo"]
+    XR["Runtime Binding: Dedicated Runtime Allocation"]
+    XD["Data Boundary: Dedicated Store"]
+    XN["Network Boundary: Dedicated Network Boundary"]
+    XR --> XD --> XN
+  end
 ....
 
-**Legend**
-[plantuml, format=svg, width=50%]   
-....
-include::../diagrams/LiveDeployment-key.puml[]
-....
+[options="header",cols="1,2,2,2,2"]
+|===
+|Isolation Profile |Runtime Binding |Data Boundary |Network Boundary |Typical Use
 
-Motivation::
+|Shared
+|Shared runtime allocation
+|Shared partition or equivalent multi-tenant storage boundary
+|Shared network boundary
+|Cost-efficient default for tenants that do not require dedicated isolation.
 
-_<explanation in text form>_
+|Hybrid
+|Shared for some environments, dedicated for others
+|Shared or dedicated depending on environment and policy
+|Shared or dedicated depending on environment and policy
+|Tenants that need stronger isolation only for selected workloads or environments, such as production.
 
-Quality and/or Performance Features::
+|Silo
+|Dedicated runtime allocation
+|Dedicated store
+|Dedicated network boundary
+|Tenants with strict isolation, regulatory, or contractual requirements.
+|===
 
-_<explanation in text form>_
+=== Deployment Assumptions and Explicit Gaps
 
-Mapping of Building Blocks to Infrastructure::
-_<description of the mapping>_
+The following deployment facts remain intentionally open in this architecture:
 
+* the concrete runtime platform, cluster, account, or subscription model
+* the concrete storage technologies behind shared partitions and dedicated stores
+* the concrete network technologies behind shared and dedicated network boundaries
+* the concrete regional topology and ingress or egress implementations
 
-<<<
+What is fixed is the logical model:
 
-=== Infrastructure Level 2
-
-
-
-==== _<Infrastructure Element 1>_
-
-_<diagram + explanation>_
-
-==== _<Infrastructure Element 2>_
-
-_<diagram + explanation>_
-
-...
-
-==== _<Infrastructure Element n>_
-
-_<diagram + explanation>_
+* every tenant keeps the same business hierarchy regardless of isolation profile
+* isolation is resolved from subscription and policy information
+* runtime, data, and network boundaries may differ even when the tenant hierarchy does not
+* hybrid isolation is a first-class case rather than an exception

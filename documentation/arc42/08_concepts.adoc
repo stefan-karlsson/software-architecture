@@ -1,22 +1,28 @@
 [[section-concepts]]
 == Cross-cutting Concepts
 
+This section defines the core concepts that are reused across the hierarchy, authorization model, runtime behavior, and quality requirements.
 
+=== Principal and Scope Model
 
+The architecture treats users and service accounts as principals and groups as a scaling mechanism for access management. Membership determines who belongs to which scope context, while the scope hierarchy remains fixed as platform, tenant, workspace, project / service, and environment.
 
+=== Grant, Role, and Permission Model
 
-=== _<Concept 1>_
+Access is granted through scoped grants. A grant assigns a role at a specific scope, and roles expand into permissions such as `workspace.view`, `project.update`, `environment.deploy`, `environment.secret.read`, `policy.manage`, or `audit.view`. Permissions remain the smallest action unit and grants remain the scoped assignment mechanism.
 
-_<explanation>_
+=== Policy Versus Authorization
 
+Policy is not the same concern as authorization. Authorization answers whether the acting principal has the required permission at the requested scope. Policy answers whether the action is still allowed under inherited rules such as MFA requirements, production approval requirements, trusted-network restrictions, retention requirements, or approved-region restrictions.
 
+=== Inheritance Model
 
-=== _<Concept 2>_
+The hierarchy inherits policy, access scope interpretation, audit context, and defaults downward from platform to tenant, workspace, project / service, and environment. Lower scopes may tighten controls, but they must not weaken mandatory parent rules.
 
-_<explanation>_
+=== Audit Model
 
-...
+Auditability is a first-class concept rather than an afterthought. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later.
 
-=== _<Concept n>_
+=== Isolation Model and Tier Separation
 
-_<explanation>_
+Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime binding, data boundary, and network boundary resolve the actual technical isolation for each environment.

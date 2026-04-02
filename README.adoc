@@ -7,10 +7,13 @@
 
 This repository is a documentation-as-code for capturing our Product Platform architecture with https://arc42.org/[arc42], https://c4model.com/[C4 model], and https://doctoolchain.org/[docToolchain].
 
+The current book documents a platform foundation architecture for hierarchical scopes, identity and access, policy inheritance, auditability, and shared or dedicated isolation behavior.
+
 It is preconfigured to support:
 
 * arc42 chapter structure
 * Structurizr DSL to generate C4 diagrams
+* Kroki-backed Mermaid diagrams embedded in AsciiDoc chapters
 * docToolchain build automation for HTML/PDF/site outputs
 * ADR workflow with `adr-tools` and Markdown-to-AsciiDoc migration
 
@@ -18,15 +21,22 @@ It is preconfigured to support:
 
 [source,bash]
 ----
-# 1) Export C4 diagrams from Structurizr DSL
+# 1) Convert Markdown ADRs to AsciiDoc includes used by the book
+./dtcw exportMarkdown
+cp ./build/adrs/*.adoc ./documentation/adrs/
+
+# 2) Export C4 diagrams from Structurizr DSL
 ./dtcw exportStructurizr
 
-# 2) Build the HTML documentation
+# 3) Build the HTML documentation
 ./dtcw generateHTML
 
-# 3) Open the generated documentation
+# 4) Open the generated documentation
 open build/html5/software-architecture.html
 ----
+
+The HTML book expects both generated ADR includes and generated PlantUML diagrams to exist before rendering.
+Mermaid diagrams are rendered directly from the AsciiDoc chapters through the existing Kroki-backed diagram configuration.
 
 == Included Tool Versions
 
@@ -51,8 +61,14 @@ Pinned/target versions in this starter (validated on March 29, 2026):
 |`./dtcw exportStructurizr`
 |Generate PlantUML diagrams from `documentation/workspace.dsl`
 
+|`./dtcw exportMarkdown`
+|Convert Markdown ADRs to AsciiDoc under `build/adrs`
+
+|`cp ./build/adrs/*.adoc ./documentation/adrs/`
+|Sync generated ADR includes into the documentation tree used by the book
+
 |`./dtcw generateHTML`
-|Generate HTML documentation
+|Generate HTML documentation after ADR conversion and diagram export
 
 |`./dtcw generatePDF`
 |Generate PDF documentation
@@ -60,8 +76,6 @@ Pinned/target versions in this starter (validated on March 29, 2026):
 |`./dtcw generateSite`
 |Generate documentation microsite
 
-|`./dtcw exportMarkdown`
-|Convert Markdown ADRs to AsciiDoc
 |===
 
 == ADR Setup

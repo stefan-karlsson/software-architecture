@@ -4,23 +4,76 @@
 [[section-runtime-view]]
 == Runtime View
 
-=== Control Plane Request Flow
+This section shows three representative flows that are architecturally relevant for the platform foundation: authorization, policy inheritance, and isolation resolution.
 
-[plantuml, format=svg, width=25%]
+=== Authorization Decision Flow
+
+[mermaid, format=svg]
 ....
-include::../diagrams/SignIn.puml[]
+sequenceDiagram
+  actor Principal
+  participant IAM as Identity and Access
+  participant Scope as Scope Management
+  participant Policy as Policy Management
+  participant Audit as Audit and Governance
+
+  Principal->>IAM: 1. Resolve principal
+  IAM->>Scope: 2. Resolve memberships and scoped grants
+  Scope-->>IAM: Scope chain and effective memberships
+  IAM->>IAM: 3. Expand roles into permissions
+  IAM->>Policy: 4. Evaluate effective policy for requested action
+  Policy-->>IAM: 5. Allow or deny decision
+  IAM->>Audit: 6. Audit the decision
+  IAM-->>Principal: 7. Return allow or deny
 ....
 
-**Legend**
-[plantuml, format=svg, width=50%]
+. Resolve the acting principal as either a user or a service account.
+. Resolve memberships and scoped grants for tenant, workspace, project / service, and environment.
+. Expand the granted role set into fine-grained permissions.
+. Evaluate effective policy after permission lookup.
+. Return an allow or deny decision and audit the result.
+
+=== Policy Inheritance and Effective Policy Evaluation
+
+[mermaid, format=svg]
 ....
-include::../diagrams/SignIn-key.puml[]
+flowchart TD
+  PlatformBaseline["Platform Policy Baseline"] --> TenantPolicy["Tenant Policy"]
+  TenantPolicy --> WorkspacePolicy["Workspace Policy"]
+  WorkspacePolicy --> ProjectPolicy["Project Policy"]
+  ProjectPolicy --> EnvironmentPolicy["Environment Policy"]
+  EnvironmentPolicy --> EffectivePolicy["Effective Policy for Requested Action"]
+  Mandatory["Mandatory parent controls cannot be weakened"] --> EffectivePolicy
+  Tightening["Child scopes may tighten controls"] --> EffectivePolicy
 ....
 
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
+. Start with the platform policy baseline.
+. Apply tenant, workspace, project, and environment policy in hierarchy order.
+. Preserve mandatory parent controls throughout evaluation.
+. Allow lower scopes to tighten controls, such as requiring approval or restricting production access to a narrower group.
+. Use the resulting effective policy during authorization and execution decisions.
 
-<<<
+=== Isolation and Binding Resolution
 
-=== <Runtime Scenario n>
+[mermaid, format=svg]
+....
+flowchart TD
+  Subscription["Subscription"] --> Plan["Subscription Plan"]
+  Subscription --> IsolationProfile["Isolation Profile"]
+  Environment["Environment"] --> IsolationProfile
+  IsolationProfile --> RuntimeBinding["Runtime Binding"]
+  IsolationProfile --> DataBoundary["Data Boundary"]
+  IsolationProfile --> NetworkBoundary["Network Boundary"]
+  Policy["Effective Policy"] --> RuntimeBinding
+  Policy --> DataBoundary
+  Policy --> NetworkBoundary
+  RuntimeBinding --> Placement["Resolved Placement"]
+  DataBoundary --> Placement
+  NetworkBoundary --> Placement
+....
+
+. Resolve the environment and its parent subscription context.
+. Read the subscription's subscription plan and isolation profile.
+. Evaluate policy constraints that can affect placement, region, network, retention, or access posture.
+. Resolve runtime binding, data boundary, and network boundary together.
+. Produce the effective isolation outcome for the environment without changing the business hierarchy.

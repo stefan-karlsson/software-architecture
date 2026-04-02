@@ -1,5 +1,33 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
+This section summarizes the small number of strategic decisions that shape the platform foundation architecture. The detailed structure appears in <<section-building-block-view,Section 5>>, the behavior in <<section-runtime-view,Section 6>>, and the cross-cutting rules in <<section-concepts,Section 8>>.
 
+[options="header",cols="1,2,2"]
+|===
+|Decision Area |Strategy |Why It Matters
 
+|Hierarchy
+|Use one canonical hierarchy: platform, tenant, workspace, project / service, environment.
+|Keeps governance, access, inheritance, and audit consistent across the platform instead of fragmenting the model.
+
+|Authorization
+|Resolve access through principal, membership, grant, role, permission, and scope.
+|Separates identity, scope membership, and reusable permission bundles while supporting fine-grained access control.
+
+|Policy
+|Treat policy as distinct from authorization and evaluate it after permission lookup.
+|Allows mandatory controls, approval requirements, retention rules, trusted-network requirements, and regional restrictions to be enforced consistently.
+
+|Isolation
+|Keep the same business hierarchy for all tenants and express hosting differences through isolation profile plus runtime, data, and network boundaries.
+|Supports shared, silo, and hybrid operation without inventing separate business models for different hosting choices.
+
+|Audit and governance
+|Make audit context a first-class concern across memberships, grants, policy changes, production access, secrets, deployments, and billing or administration changes.
+|Supports compliance, traceability, and operational review across the entire hierarchy.
+
+|Commercial model
+|Separate subscription plan from isolation profile.
+|Prevents pricing concerns from being confused with the technical isolation model.
+|===

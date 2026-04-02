@@ -1,13 +1,88 @@
 [[section-quality-scenarios]]
 == Quality Requirements
 
+This section records the more detailed quality model and scenarios behind the platform foundation architecture. The scenarios below are derived from the defined hierarchy, authorization, policy, audit, and isolation model.
 
+=== Quality Requirements Overview
 
+Section 1 highlights the top five quality goals. This section keeps the broader overview together with the concrete scenarios.
 
-=== Quality Tree
+[options="header",cols="1,3"]
+|===
+|Quality Attribute |Focus for This Architecture
 
+|Security and Least Privilege
+|Only explicitly granted permissions at the relevant scope should authorize an action.
 
+|Policy Enforceability
+|Inherited policy must be applied consistently, and mandatory parent controls must not be weakened.
+
+|Auditability and Traceability
+|Privileged and regulated activity must preserve actor, scope, decision, and outcome context.
+
+|Isolation Flexibility
+|Shared, silo, and hybrid hosting must use the same business hierarchy while allowing different technical isolation outcomes.
+
+|Evolvability
+|New governed capabilities should extend the existing hierarchy and authorization model instead of creating a parallel model.
+
+|Operability
+|Operators and auditors should be able to understand effective access, policy, and isolation outcomes from the recorded context and telemetry.
+|===
 
 === Quality Scenarios
 
+[options="header",cols="1,1,3,4"]
+|===
+|ID |Quality Attribute |Stimulus |Expected Response
 
+|QS-01
+|Security and Least Privilege
+|A user requests `tenant.members.manage` without a grant that expands to that permission at the tenant scope.
+|The platform denies the action and records the denied decision with actor, scope, and requested permission context.
+
+|QS-02
+|Policy Enforceability
+|An administrator with deployment permission requests a production deployment where policy requires explicit approval.
+|The platform blocks execution until the approval requirement is satisfied and audits the policy-enforced outcome.
+
+|QS-03
+|Policy Enforceability
+|A user requests `environment.secret.read` from a network that is not trusted by policy.
+|The platform denies secret access even if the underlying permission is present and records the denied access event.
+
+|QS-04
+|Security and Least Privilege
+|A child scope attempts to define a local policy that weakens a mandatory parent control such as required audit logging.
+|The platform rejects the weakening change or preserves the stronger inherited control in the effective policy.
+
+|QS-05
+|Auditability and Traceability
+|A membership change, grant revocation, policy update, or production access event occurs.
+|The platform records the actor, scope, action, decision context, and resulting effect in the relevant audit context.
+
+|QS-06
+|Auditability and Traceability
+|Policy requires regulated audit retention for 365 days.
+|The platform preserves audit records in a way that supports the required retention period and exposes the retention rule as part of effective policy.
+
+|QS-07
+|Isolation Flexibility
+|Two tenants use the same hierarchy but different isolation profiles, such as `subscription_plan = Enterprise, isolation_profile = Silo` and `subscription_plan = Standard, isolation_profile = Shared`.
+|The tenants keep the same business model while the platform resolves different runtime, data, and network boundaries.
+
+|QS-08
+|Isolation Flexibility
+|A hybrid tenant needs a dedicated production environment while allowing non-production environments to remain shared.
+|The platform resolves dedicated boundaries for the stricter environment and shared boundaries for the others without introducing a different tenant hierarchy.
+
+|QS-09
+|Policy Enforceability
+|Policy restricts data storage to approved regions.
+|The platform allows only placements whose resolved runtime and data boundaries comply with the approved-region policy.
+
+|QS-10
+|Operability
+|An operator or auditor needs to understand why a privileged action was allowed or denied.
+|The platform exposes enough decision and audit context to reconstruct the principal, scoped grants, permissions, effective policy, and resulting decision.
+|===
