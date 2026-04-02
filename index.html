@@ -2298,7 +2298,7 @@ That model establishes the core building blocks, but it is not sufficient on its
 </div>
 </div>
 <div class="sect3">
-<h4 id="_resolve_how_audit_evidence_is_stored_retained_and_protected"><a class="anchor" href="#_resolve_how_audit_evidence_is_stored_retained_and_protected"></a>9.7.2. Resolve how audit evidence is stored, retained, and protected</h4>
+<h4 id="_standardize_how_audit_evidence_is_stored_retained_and_protected"><a class="anchor" href="#_standardize_how_audit_evidence_is_stored_retained_and_protected"></a>9.7.2. Standardize how audit evidence is stored, retained, and protected</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2314,10 +2314,10 @@ That model establishes the core building blocks, but it is not sufficient on its
 <h4 id="_context_and_problem_statement_5"><a class="anchor" href="#_context_and_problem_statement_5"></a>9.7.3. Context and Problem Statement</h4>
 <div class="paragraph">
 <p>The platform foundation requires auditability for memberships, grants, policy changes, production access, secret access, deployments, and billing or administration changes.
-The architecture also integrates with an observability stack, but it does not yet define whether compliance-grade audit evidence is the same thing as operational telemetry.</p>
+The architecture also integrates with an observability stack, but operational telemetry is not automatically sufficient as compliance-grade audit evidence.</p>
 </div>
 <div class="paragraph">
-<p>The platform therefore still needs explicit decisions about:</p>
+<p>Without an explicit decision, teams could still implement materially different behavior for:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2325,18 +2325,24 @@ The architecture also integrates with an observability stack, but it does not ye
 <p>the system of record for audit evidence</p>
 </li>
 <li>
-<p>required retention behavior</p>
+<p>the boundary between canonical evidence and operational telemetry</p>
 </li>
 <li>
-<p>immutability and tamper-resistance expectations</p>
+<p>retention ownership and enforcement</p>
 </li>
 <li>
-<p>export and reporting expectations</p>
+<p>immutability and correction behavior</p>
 </li>
 <li>
-<p>the boundary between audit evidence and general observability data</p>
+<p>export and reporting expectations for audit review</p>
+</li>
+<li>
+<p>commit guarantees for privileged or regulated actions</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>The platform therefore needs one normative audit evidence model that every implementation can follow.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2347,16 +2353,19 @@ The architecture also integrates with an observability stack, but it does not ye
 <p>Compliance and governance expectations</p>
 </li>
 <li>
-<p>Traceable privileged activity</p>
+<p>Durable retention of regulated activity</p>
 </li>
 <li>
-<p>Durable retention of regulated events</p>
+<p>Traceable privileged actions across all scopes</p>
 </li>
 <li>
-<p>Separation of evidence from convenience telemetry</p>
+<p>Clear separation between audit evidence and convenience telemetry</p>
 </li>
 <li>
-<p>Support for later operational and security review</p>
+<p>Tamper resistance and evidence integrity</p>
+</li>
+<li>
+<p>Support for later operational, security, and compliance review</p>
 </li>
 </ul>
 </div>
@@ -2380,7 +2389,199 @@ The architecture also integrates with an observability stack, but it does not ye
 <div class="sect3">
 <h4 id="_decision_outcome_5"><a class="anchor" href="#_decision_outcome_5"></a>9.7.6. Decision Outcome</h4>
 <div class="paragraph">
-<p>To be decided. This ADR exists to define the audit evidence architecture before implementation or compliance controls depend on implicit assumptions.</p>
+<p>Chosen option: "Use a dedicated audit store and export selected signals to observability", because it keeps compliance-grade evidence durable and authoritative while still supporting operational visibility through telemetry exports.</p>
+</div>
+<div class="sect4">
+<h5 id="_normative_audit_evidence_model"><a class="anchor" href="#_normative_audit_evidence_model"></a>Normative Audit Evidence Model</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The platform uses a dedicated audit store as the canonical system of record for audit evidence.</p>
+</li>
+<li>
+<p>The observability stack receives selected audit signals and operational summaries, but it is not the authoritative evidence store.</p>
+</li>
+<li>
+<p>Audit evidence is append-only after commit.</p>
+</li>
+<li>
+<p>Committed audit records must not be overwritten in place.</p>
+</li>
+<li>
+<p>Corrections, reconciliations, or enrichment must be represented by linked follow-up records rather than mutation of original records.</p>
+</li>
+<li>
+<p>Canonical audit evidence must preserve actor, scope, action, decision, and outcome context.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_retention_model"><a class="anchor" href="#_normative_retention_model"></a>Normative Retention Model</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Audit retention is enforced by the canonical audit store according to effective policy and mandatory platform baseline controls.</p>
+</li>
+<li>
+<p>Child scopes may tighten retention or add stricter handling requirements, but they must not weaken mandatory baseline retention requirements.</p>
+</li>
+<li>
+<p>Retention expiration, archival, and purge behavior must itself be governed and auditable.</p>
+</li>
+<li>
+<p>Audit review and retention enforcement must operate from canonical audit evidence rather than observability copies.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_boundary_between_audit_evidence_and_observability"><a class="anchor" href="#_normative_boundary_between_audit_evidence_and_observability"></a>Normative Boundary Between Audit Evidence and Observability</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The audit store holds compliance-grade evidence.</p>
+</li>
+<li>
+<p>The observability stack holds exported or derived telemetry intended for operations, alerting, dashboards, and convenience analysis.</p>
+</li>
+<li>
+<p>Loss of observability copies must not imply loss of canonical audit evidence.</p>
+</li>
+<li>
+<p>Observability data must not be treated as the only source for compliance review, retention enforcement, or governance evidence.</p>
+</li>
+<li>
+<p>Exported telemetry should preserve correlation identifiers that allow operators and auditors to trace operational signals back to canonical audit records.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_commit_and_integrity_rules"><a class="anchor" href="#_normative_commit_and_integrity_rules"></a>Normative Commit and Integrity Rules</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Privileged or regulated actions must not be treated as successfully committed until canonical audit evidence has been durably accepted by the audit architecture.</p>
+</li>
+<li>
+<p>Durable acceptance may be direct persistence to the audit store or platform-owned durable buffering under the audit architecture, but it must not rely on transient best-effort emission only.</p>
+</li>
+<li>
+<p>If canonical audit evidence for a privileged or regulated mutation cannot be durably accepted, the platform must not report the mutation as successfully committed.</p>
+</li>
+<li>
+<p>The platform must preserve enough integrity context to distinguish original records, compensating records, exports, and later review artifacts.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_event_coverage"><a class="anchor" href="#_normative_event_coverage"></a>Normative Event Coverage</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Canonical audit evidence is mandatory for membership changes.</p>
+</li>
+<li>
+<p>Canonical audit evidence is mandatory for grant assignment and revocation.</p>
+</li>
+<li>
+<p>Canonical audit evidence is mandatory for policy changes and policy-driven decisions.</p>
+</li>
+<li>
+<p>Canonical audit evidence is mandatory for privileged authorization decisions and privileged access outcomes.</p>
+</li>
+<li>
+<p>Canonical audit evidence is mandatory for production access, secret access, deployments, and billing or administrative changes.</p>
+</li>
+<li>
+<p>Canonical audit evidence is mandatory for runtime, data, and network boundary changes when they affect governed environments.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_public_behavior_locked_by_this_decision_2"><a class="anchor" href="#_public_behavior_locked_by_this_decision_2"></a>Public Behavior Locked by This Decision</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Canonical audit records must preserve at minimum: event identifier, event timestamp, actor principal, actor type, action or event type, target scope, scope path, decision or outcome, source capability, correlation identifier, and retention context.</p>
+</li>
+<li>
+<p>The capabilities that produce governed audit evidence include Identity and Access, Policy Management, Tenant Hierarchy and Scope Management, and Isolation and Placement.</p>
+</li>
+<li>
+<p>Audit review, compliance export, and governance evidence retrieval must read from the canonical audit store.</p>
+</li>
+<li>
+<p>Operational dashboards, alerts, and troubleshooting flows may read from observability exports.</p>
+</li>
+<li>
+<p>Export to observability may summarize or redact data for operational use, but it must not replace canonical evidence retention.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_positive_consequences_5"><a class="anchor" href="#_positive_consequences_5"></a>Positive Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Compliance-grade evidence has one authoritative source.</p>
+</li>
+<li>
+<p>Retention enforcement becomes explicit and testable.</p>
+</li>
+<li>
+<p>Operators can use telemetry for day-to-day work without turning observability into the evidence source of truth.</p>
+</li>
+<li>
+<p>Audit correction and reconciliation stay traceable because original records are preserved.</p>
+</li>
+<li>
+<p>Privileged and regulated actions gain stronger integrity guarantees.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_negative_consequences_5"><a class="anchor" href="#_negative_consequences_5"></a>Negative Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The platform must maintain a dedicated audit storage concern in addition to observability exports.</p>
+</li>
+<li>
+<p>Privileged workflows may need to fail or remain pending when canonical audit evidence cannot be durably accepted.</p>
+</li>
+<li>
+<p>Teams must manage correlation between canonical audit records and operational telemetry instead of assuming they are the same artifact.</p>
+</li>
+<li>
+<p>Concrete storage and archival technology choices still require later decisions.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_non_goals_and_deferred_decisions_2"><a class="anchor" href="#_non_goals_and_deferred_decisions_2"></a>Non-Goals and Deferred Decisions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>This ADR does not choose a specific database, object store, or vendor technology for the audit store.</p>
+</li>
+<li>
+<p>This ADR does not define exact wire schemas for exports or reporting APIs.</p>
+</li>
+<li>
+<p>This ADR does not define cross-region replication strategy or concrete disaster-recovery mechanics.</p>
+</li>
+<li>
+<p>Any future requirement to weaken append-only behavior, rely on observability as the only source of evidence, or allow silent record mutation requires a follow-up ADR.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -2388,12 +2589,109 @@ The architecture also integrates with an observability stack, but it does not ye
 <div class="ulist">
 <ul>
 <li>
-<p>Once decided, this ADR should drive updates to sections 5, 7, 10, and 11.</p>
+<p>Section 5 should reflect that Audit and Governance owns canonical audit evidence rather than only telemetry export.</p>
 </li>
 <li>
-<p>The chosen model should define retention ownership, query/reporting expectations, and integrity guarantees.</p>
+<p>Section 7 should keep concrete storage technology open while describing the canonical audit store as a required architectural concern.</p>
+</li>
+<li>
+<p>Section 10 should add scenarios that distinguish canonical evidence retention from observability exports and cover commit failure when audit evidence cannot be durably accepted.</p>
+</li>
+<li>
+<p>Section 11 should treat missing canonical audit persistence as a material implementation risk until concrete storage choices are made.</p>
+</li>
+<li>
+<p>Implementations should add automated tests for the validation scenarios below before relying on local assumptions about audit durability or retention.</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_validation_scenarios_2"><a class="anchor" href="#_validation_scenarios_2"></a>9.7.8. Validation Scenarios</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>A membership change creates a canonical audit record with actor, scope, action, and resulting effect context.</p>
+</li>
+<li>
+<p>A policy-driven denial, such as blocked secret access from an untrusted network, creates a canonical audit record that preserves permission context, policy outcome, and final decision.</p>
+</li>
+<li>
+<p>A production deployment approval flow records request, approval decision, execution outcome, and relevant scope chain.</p>
+</li>
+<li>
+<p>Effective policy requires 365-day retention, and the canonical audit store preserves the evidence for that duration.</p>
+</li>
+<li>
+<p>A child scope attempts to reduce retention below a mandatory baseline requirement, and the platform rejects or ignores the weakening while preserving the stronger retention rule.</p>
+</li>
+<li>
+<p>The observability stack is unavailable while the canonical audit store is available, and governed actions can still complete with canonical evidence preserved.</p>
+</li>
+<li>
+<p>Canonical audit evidence for a privileged mutation cannot be durably accepted, and the platform does not report that mutation as successfully committed.</p>
+</li>
+<li>
+<p>An audit record needs correction, and the platform writes a compensating or linked follow-up record instead of mutating the original record in place.</p>
+</li>
+<li>
+<p>An operator correlates an observability event back to the canonical audit record through a shared correlation identifier.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options_5"><a class="anchor" href="#_pros_and_cons_of_the_options_5"></a>9.7.9. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_use_the_observability_stack_as_the_only_audit_system_of_record"><a class="anchor" href="#_use_the_observability_stack_as_the_only_audit_system_of_record"></a>Use the observability stack as the only audit system of record</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because the architecture appears simpler at first.</p>
+</li>
+<li>
+<p>Bad, because operational telemetry and compliance evidence become conflated.</p>
+</li>
+<li>
+<p>Bad, because retention, integrity, and evidence review guarantees become harder to define and test.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_use_a_dedicated_audit_store_and_export_selected_signals_to_observability"><a class="anchor" href="#_use_a_dedicated_audit_store_and_export_selected_signals_to_observability"></a>Use a dedicated audit store and export selected signals to observability</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because canonical evidence remains durable and authoritative.</p>
+</li>
+<li>
+<p>Good, because telemetry can still support operations and alerting.</p>
+</li>
+<li>
+<p>Good, because retention and immutability rules can be enforced at the evidence source of truth.</p>
+</li>
+<li>
+<p>Bad, because the platform must operate both canonical evidence storage and telemetry export flows.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_use_a_mixed_model_with_audit_grade_storage_plus_operational_summaries"><a class="anchor" href="#_use_a_mixed_model_with_audit_grade_storage_plus_operational_summaries"></a>Use a mixed model with audit-grade storage plus operational summaries</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because it acknowledges different audiences and use cases.</p>
+</li>
+<li>
+<p>Bad, because without a clear source-of-truth rule it can still become ambiguous which records are canonical.</p>
+</li>
+<li>
+<p>Bad, because teams may implement incompatible boundaries unless the dedicated audit store remains explicitly authoritative.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -3046,7 +3344,7 @@ Hybrid is intentionally first-class, but the architecture does not yet define ex
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-04-02 22:26:45 UTC
+Last updated 2026-04-02 22:34:36 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
