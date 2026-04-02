@@ -499,8 +499,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_adopt_architecture_documentation_standards_and_tooling">9.2. Adopt architecture documentation standards and tooling</a></li>
 <li><a href="#_adopt_hierarchical_scope_and_inheritance_model">9.3. Adopt hierarchical scope and inheritance model</a></li>
 <li><a href="#_separate_subscription_plan_from_isolation_profile_and_boundary_bindings">9.4. Separate subscription plan from isolation profile and boundary bindings</a></li>
-<li><a href="#_proposed_decisions_to_resolve_next">9.5. Proposed Decisions To Resolve Next</a></li>
-<li><a href="#_define_effective_access_evaluation_semantics">9.6. Define effective-access evaluation semantics</a></li>
+<li><a href="#_define_effective_access_evaluation_semantics">9.5. Define effective-access evaluation semantics</a></li>
+<li><a href="#_proposed_decisions_to_resolve_next">9.6. Proposed Decisions To Resolve Next</a></li>
 <li><a href="#_define_audit_evidence_and_retention_architecture">9.7. Define audit evidence and retention architecture</a></li>
 <li><a href="#_define_foundation_state_ownership_and_consistency_boundaries">9.8. Define foundation state ownership and consistency boundaries</a></li>
 <li><a href="#_define_hybrid_isolation_resolution_rules">9.9. Define hybrid isolation resolution rules</a></li>
@@ -1228,7 +1228,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_authorization_decision_flow"><a class="anchor" href="#_authorization_decision_flow"></a>6.1. Authorization Decision Flow</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-mermaid-md5-7bb88b0deb768f4e9460de7e2557c6b4.svg" alt="Diagram" width="1314" height="585">
+<img src="./images/diag-mermaid-md5-8506198ea0bef84e72a2df019df6e110.svg" alt="Diagram" width="1549" height="663">
 </div>
 </div>
 <div class="olist arabic">
@@ -1237,16 +1237,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Resolve the acting principal as either a user or a service account.</p>
 </li>
 <li>
-<p>Resolve memberships and scoped grants for tenant, workspace, project / service, and environment.</p>
+<p>Resolve direct memberships, flat group memberships, and scoped grants for tenant, workspace, project / service, and environment.</p>
 </li>
 <li>
-<p>Expand the granted role set into fine-grained permissions.</p>
+<p>Expand the granted role set into fine-grained permissions and union direct and group-derived permissions.</p>
 </li>
 <li>
-<p>Evaluate effective policy after permission lookup.</p>
+<p>Deny by default when the required permission is absent at the requested scope or any ancestor scope.</p>
 </li>
 <li>
-<p>Return an allow or deny decision and audit the result.</p>
+<p>Evaluate effective policy only after permission lookup succeeds.</p>
+</li>
+<li>
+<p>Return an allow or deny decision and audit missing-permission denials, policy denials, and successful allows.</p>
 </li>
 </ol>
 </div>
@@ -1416,19 +1419,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_principal_and_scope_model"><a class="anchor" href="#_principal_and_scope_model"></a>8.1. Principal and Scope Model</h3>
 <div class="paragraph">
-<p>The architecture treats users and service accounts as principals and groups as a scaling mechanism for access management. Membership determines who belongs to which scope context, while the scope hierarchy remains fixed as platform, tenant, workspace, project / service, and environment.</p>
+<p>The architecture treats users and service accounts as principals and groups as a scaling mechanism for access management. Membership determines who belongs to which scope context, while the scope hierarchy remains fixed as platform, tenant, workspace, project / service, and environment. Groups are intentionally flat in the first implementation and do not contain other groups.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_grant_role_and_permission_model"><a class="anchor" href="#_grant_role_and_permission_model"></a>8.2. Grant, Role, and Permission Model</h3>
 <div class="paragraph">
-<p>Access is granted through scoped grants. A grant assigns a role at a specific scope, and roles expand into permissions such as <code>workspace.view</code>, <code>project.update</code>, <code>environment.deploy</code>, <code>environment.secret.read</code>, <code>policy.manage</code>, or <code>audit.view</code>. Permissions remain the smallest action unit and grants remain the scoped assignment mechanism.</p>
+<p>Access is granted through scoped grants. A grant assigns a role at a specific scope, and roles expand into permissions such as <code>workspace.view</code>, <code>project.update</code>, <code>environment.deploy</code>, <code>environment.secret.read</code>, <code>policy.manage</code>, or <code>audit.view</code>. Permissions remain the smallest action unit and grants remain the scoped assignment mechanism. Effective access is additive: direct grants and group-derived grants combine by union, and broader-scope grants apply downward by scope interpretation to descendant scopes instead of being copied to child records.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_policy_versus_authorization"><a class="anchor" href="#_policy_versus_authorization"></a>8.3. Policy Versus Authorization</h3>
 <div class="paragraph">
-<p>Policy is not the same concern as authorization. Authorization answers whether the acting principal has the required permission at the requested scope. Policy answers whether the action is still allowed under inherited rules such as MFA requirements, production approval requirements, trusted-network restrictions, retention requirements, or approved-region restrictions.</p>
+<p>Policy is not the same concern as authorization. Authorization answers whether the acting principal has the required permission at the requested scope and denies by default when no matching grant expands to that permission. Policy answers whether the action is still allowed under inherited rules such as MFA requirements, production approval requirements, trusted-network restrictions, retention requirements, or approved-region restrictions. Policy is evaluated only after permission resolution succeeds.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1880,25 +1883,19 @@ If pricing and isolation are treated as the same field, the architecture becomes
 </div>
 </div>
 <div class="sect2">
-<h3 id="_proposed_decisions_to_resolve_next"><a class="anchor" href="#_proposed_decisions_to_resolve_next"></a>9.5. Proposed Decisions To Resolve Next</h3>
-<div class="paragraph">
-<p>The following proposed ADRs capture the next architectural decisions that should be resolved to make the platform foundation implementation-ready.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_define_effective_access_evaluation_semantics"><a class="anchor" href="#_define_effective_access_evaluation_semantics"></a>9.6. Define effective-access evaluation semantics</h3>
+<h3 id="_define_effective_access_evaluation_semantics"><a class="anchor" href="#_define_effective_access_evaluation_semantics"></a>9.5. Define effective-access evaluation semantics</h3>
 <div class="sect3">
-<h4 id="_status_4"><a class="anchor" href="#_status_4"></a>9.6.1. Status</h4>
+<h4 id="_status_4"><a class="anchor" href="#_status_4"></a>9.5.1. Status</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>Status: proposed</p>
+<p>Status: accepted</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_standardize_how_effective_access_is_resolved_across_scopes"><a class="anchor" href="#_standardize_how_effective_access_is_resolved_across_scopes"></a>9.6.2. Standardize how effective access is resolved across scopes</h4>
+<h4 id="_standardize_how_effective_access_is_resolved_across_scopes"><a class="anchor" href="#_standardize_how_effective_access_is_resolved_across_scopes"></a>9.5.2. Standardize how effective access is resolved across scopes</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1911,7 +1908,7 @@ If pricing and isolation are treated as the same field, the architecture becomes
 </div>
 </div>
 <div class="sect3">
-<h4 id="_context_and_problem_statement_4"><a class="anchor" href="#_context_and_problem_statement_4"></a>9.6.3. Context and Problem Statement</h4>
+<h4 id="_context_and_problem_statement_4"><a class="anchor" href="#_context_and_problem_statement_4"></a>9.5.3. Context and Problem Statement</h4>
 <div class="paragraph">
 <p>The platform foundation defines the authorization chain as <code>Principal &#8594; Membership &#8594; Grant &#8594; Role &#8594; Permission &#8594; Scope</code>.
 That model establishes the core building blocks, but it is not sufficient on its own to guarantee consistent implementation.</p>
@@ -1943,7 +1940,7 @@ That model establishes the core building blocks, but it is not sufficient on its
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_drivers_4"><a class="anchor" href="#_decision_drivers_4"></a>9.6.4. Decision Drivers</h4>
+<h4 id="_decision_drivers_4"><a class="anchor" href="#_decision_drivers_4"></a>9.5.4. Decision Drivers</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1968,7 +1965,7 @@ That model establishes the core building blocks, but it is not sufficient on its
 </div>
 </div>
 <div class="sect3">
-<h4 id="_considered_options_4"><a class="anchor" href="#_considered_options_4"></a>9.6.5. Considered Options</h4>
+<h4 id="_considered_options_4"><a class="anchor" href="#_considered_options_4"></a>9.5.5. Considered Options</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1984,7 +1981,7 @@ That model establishes the core building blocks, but it is not sufficient on its
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_outcome_4"><a class="anchor" href="#_decision_outcome_4"></a>9.6.6. Decision Outcome</h4>
+<h4 id="_decision_outcome_4"><a class="anchor" href="#_decision_outcome_4"></a>9.5.6. Decision Outcome</h4>
 <div class="paragraph">
 <p>Chosen option: "Resolve access through additive grants only, with policy handling all denials and restrictions", because it keeps authorization semantics predictable, preserves default deny, and keeps restrictive rules in the policy layer where the architecture already places them.</p>
 </div>
@@ -2118,7 +2115,7 @@ That model establishes the core building blocks, but it is not sufficient on its
 <div class="ulist">
 <ul>
 <li>
-<p>Teams can implement one consistent effective-access model across the platform.</p>
+<p>Teams have one consistent effective-access model across the platform.</p>
 </li>
 <li>
 <p>Direct and group-derived access remains understandable because both use additive union semantics.</p>
@@ -2178,17 +2175,17 @@ That model establishes the core building blocks, but it is not sufficient on its
 </div>
 </div>
 <div class="sect3">
-<h4 id="_consequences"><a class="anchor" href="#_consequences"></a>9.6.7. Consequences</h4>
+<h4 id="_consequences"><a class="anchor" href="#_consequences"></a>9.5.7. Consequences</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>Section 6 should reflect the exact authorization algorithm defined by this ADR.</p>
+<p>Section 6 reflects the exact authorization algorithm defined by this ADR.</p>
 </li>
 <li>
-<p>Section 8 should describe additive union semantics, downward scope interpretation, and flat group behavior explicitly.</p>
+<p>Section 8 describes additive union semantics, downward scope interpretation, and flat group behavior explicitly.</p>
 </li>
 <li>
-<p>Section 10 should add scenarios that cover direct versus group-derived grants and ancestor-scope matching.</p>
+<p>Section 10 includes scenarios that cover direct versus group-derived grants and ancestor-scope matching.</p>
 </li>
 <li>
 <p>Implementations should add automated tests for the validation scenarios below before relying on local authorization behavior.</p>
@@ -2197,7 +2194,7 @@ That model establishes the core building blocks, but it is not sufficient on its
 </div>
 </div>
 <div class="sect3">
-<h4 id="_validation_scenarios"><a class="anchor" href="#_validation_scenarios"></a>9.6.8. Validation Scenarios</h4>
+<h4 id="_validation_scenarios"><a class="anchor" href="#_validation_scenarios"></a>9.5.8. Validation Scenarios</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2231,7 +2228,7 @@ That model establishes the core building blocks, but it is not sufficient on its
 </div>
 </div>
 <div class="sect3">
-<h4 id="_pros_and_cons_of_the_options_4"><a class="anchor" href="#_pros_and_cons_of_the_options_4"></a>9.6.9. Pros and Cons of the Options</h4>
+<h4 id="_pros_and_cons_of_the_options_4"><a class="anchor" href="#_pros_and_cons_of_the_options_4"></a>9.5.9. Pros and Cons of the Options</h4>
 <div class="sect4">
 <h5 id="_resolve_access_through_additive_grants_only_with_policy_handling_all_denials_and_restrictions"><a class="anchor" href="#_resolve_access_through_additive_grants_only_with_policy_handling_all_denials_and_restrictions"></a>Resolve access through additive grants only, with policy handling all denials and restrictions</h5>
 <div class="ulist">
@@ -2283,6 +2280,12 @@ That model establishes the core building blocks, but it is not sufficient on its
 </ul>
 </div>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_proposed_decisions_to_resolve_next"><a class="anchor" href="#_proposed_decisions_to_resolve_next"></a>9.6. Proposed Decisions To Resolve Next</h3>
+<div class="paragraph">
+<p>The following proposed ADRs capture the next architectural decisions that should be resolved to make the platform foundation implementation-ready.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3579,48 +3582,60 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">QS-03</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security and Least Privilege</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A user receives the required permission only through a group-derived grant at the workspace scope and requests the corresponding action within a project inside that workspace.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform unions the group-derived permission with any direct permissions, recognizes the ancestor-scope match, and allows the action if policy also allows it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-04</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security and Least Privilege</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A user has a tenant-scoped grant that expands to <code>project.view</code> and requests that permission for an environment inside a descendant project / service.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform recognizes the ancestor-scope grant as matching, allows the request only if policy also allows it, and records the scope chain in the decision context.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-05</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Policy Enforceability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A user requests <code>environment.secret.read</code> from a network that is not trusted by policy.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The platform denies secret access even if the underlying permission is present and records the denied access event.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QS-04</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-06</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Security and Least Privilege</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A child scope attempts to define a local policy that weakens a mandatory parent control such as required audit logging.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The platform rejects the weakening change or preserves the stronger inherited control in the effective policy.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QS-05</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-07</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Auditability and Traceability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A membership change, grant revocation, policy update, or production access event occurs.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The platform records the actor, scope, action, decision context, and resulting effect in the relevant audit context.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QS-06</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-08</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Auditability and Traceability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Policy requires regulated audit retention for 365 days.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The platform preserves audit records in a way that supports the required retention period and exposes the retention rule as part of effective policy.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QS-07</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-09</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Isolation Flexibility</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Two tenants use the same hierarchy but different isolation profiles, such as <code>subscription_plan = Enterprise, isolation_profile = Silo</code> and <code>subscription_plan = Standard, isolation_profile = Shared</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The tenants keep the same business model while the platform resolves different runtime, data, and network boundaries.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QS-08</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-10</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Isolation Flexibility</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A hybrid tenant needs a dedicated production environment while allowing non-production environments to remain shared.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The platform resolves dedicated boundaries for the stricter environment and shared boundaries for the others without introducing a different tenant hierarchy.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QS-09</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-11</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Policy Enforceability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Policy restricts data storage to approved regions.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The platform allows only placements whose resolved runtime and data boundaries comply with the approved-region policy.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QS-10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-12</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Operability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An operator or auditor needs to understand why a privileged action was allowed or denied.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The platform exposes enough decision and audit context to reconstruct the principal, scoped grants, permissions, effective policy, and resulting decision.</p></td>
@@ -3748,9 +3763,9 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-01</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Define effective-access evaluation semantics, including merge rules for direct grants, group-derived grants, scope overlap, and deny behavior.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0004</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The authorization model becomes decision-complete enough to implement consistently across services and scopes.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apply the accepted effective-access semantics to runtime examples, quality scenarios, and future platform tests.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0004, Sections 6 and 10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The accepted authorization model is reflected consistently in architecture examples today and is ready to drive later implementation tests.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-02</p></td>
@@ -3925,7 +3940,7 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-04-02 22:52:00 UTC
+Last updated 2026-04-02 22:57:13 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
