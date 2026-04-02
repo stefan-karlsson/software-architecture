@@ -500,8 +500,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_adopt_hierarchical_scope_and_inheritance_model">9.3. Adopt hierarchical scope and inheritance model</a></li>
 <li><a href="#_separate_subscription_plan_from_isolation_profile_and_boundary_bindings">9.4. Separate subscription plan from isolation profile and boundary bindings</a></li>
 <li><a href="#_define_effective_access_evaluation_semantics">9.5. Define effective-access evaluation semantics</a></li>
-<li><a href="#_proposed_decisions_to_resolve_next">9.6. Proposed Decisions To Resolve Next</a></li>
-<li><a href="#_define_audit_evidence_and_retention_architecture">9.7. Define audit evidence and retention architecture</a></li>
+<li><a href="#_define_audit_evidence_and_retention_architecture">9.6. Define audit evidence and retention architecture</a></li>
+<li><a href="#_proposed_decisions_to_resolve_next">9.7. Proposed Decisions To Resolve Next</a></li>
 <li><a href="#_define_foundation_state_ownership_and_consistency_boundaries">9.8. Define foundation state ownership and consistency boundaries</a></li>
 <li><a href="#_define_hybrid_isolation_resolution_rules">9.9. Define hybrid isolation resolution rules</a></li>
 </ul>
@@ -1039,7 +1039,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Audit and Governance Capability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Records privileged and regulated activity, preserves scope context, and exports audit and operational telemetry.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Owns canonical audit evidence, preserves scope and decision context, enforces governance-oriented audit behavior, and exports operational telemetry as a secondary concern.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Isolation and Placement Capability</p></td>
@@ -1074,7 +1074,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Policy Management &#8594; Audit and Governance</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Policy decisions and policy changes must be auditable at the correct scope.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy decisions and policy changes must be preserved as canonical audit evidence at the correct scope.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Isolation and Placement &#8594; Tenant Hierarchy and Scope Management</p></td>
@@ -1086,7 +1086,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">All capability modules &#8594; Audit and Governance</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Privileged and regulated events must preserve actor, scope, and decision context.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Privileged and regulated events must preserve actor, scope, and decision context in canonical audit evidence, while telemetry export remains a secondary downstream concern.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1404,6 +1404,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li>
 <p>hybrid isolation is a first-class case rather than an exception</p>
 </li>
+<li>
+<p>a canonical audit store is a required logical architectural concern even though its concrete storage technology remains open</p>
+</li>
+<li>
+<p>canonical audit evidence remains distinct from operational telemetry exported to observability tools</p>
+</li>
 </ul>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1443,7 +1449,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_audit_model"><a class="anchor" href="#_audit_model"></a>8.5. Audit Model</h3>
 <div class="paragraph">
-<p>Auditability is a first-class concept rather than an afterthought. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later.</p>
+<p>Auditability is a first-class concept rather than an afterthought. Canonical audit evidence is the governance source of truth, remains distinct from observability exports, and is append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When audit evidence needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2283,25 +2289,19 @@ That model establishes the core building blocks, but it is not sufficient on its
 </div>
 </div>
 <div class="sect2">
-<h3 id="_proposed_decisions_to_resolve_next"><a class="anchor" href="#_proposed_decisions_to_resolve_next"></a>9.6. Proposed Decisions To Resolve Next</h3>
-<div class="paragraph">
-<p>The following proposed ADRs capture the next architectural decisions that should be resolved to make the platform foundation implementation-ready.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_define_audit_evidence_and_retention_architecture"><a class="anchor" href="#_define_audit_evidence_and_retention_architecture"></a>9.7. Define audit evidence and retention architecture</h3>
+<h3 id="_define_audit_evidence_and_retention_architecture"><a class="anchor" href="#_define_audit_evidence_and_retention_architecture"></a>9.6. Define audit evidence and retention architecture</h3>
 <div class="sect3">
-<h4 id="_status_5"><a class="anchor" href="#_status_5"></a>9.7.1. Status</h4>
+<h4 id="_status_5"><a class="anchor" href="#_status_5"></a>9.6.1. Status</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>Status: proposed</p>
+<p>Status: accepted</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_standardize_how_audit_evidence_is_stored_retained_and_protected"><a class="anchor" href="#_standardize_how_audit_evidence_is_stored_retained_and_protected"></a>9.7.2. Standardize how audit evidence is stored, retained, and protected</h4>
+<h4 id="_standardize_how_audit_evidence_is_stored_retained_and_protected"><a class="anchor" href="#_standardize_how_audit_evidence_is_stored_retained_and_protected"></a>9.6.2. Standardize how audit evidence is stored, retained, and protected</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2314,7 +2314,7 @@ That model establishes the core building blocks, but it is not sufficient on its
 </div>
 </div>
 <div class="sect3">
-<h4 id="_context_and_problem_statement_5"><a class="anchor" href="#_context_and_problem_statement_5"></a>9.7.3. Context and Problem Statement</h4>
+<h4 id="_context_and_problem_statement_5"><a class="anchor" href="#_context_and_problem_statement_5"></a>9.6.3. Context and Problem Statement</h4>
 <div class="paragraph">
 <p>The platform foundation requires auditability for memberships, grants, policy changes, production access, secret access, deployments, and billing or administration changes.
 The architecture also integrates with an observability stack, but operational telemetry is not automatically sufficient as compliance-grade audit evidence.</p>
@@ -2349,7 +2349,7 @@ The architecture also integrates with an observability stack, but operational te
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_drivers_5"><a class="anchor" href="#_decision_drivers_5"></a>9.7.4. Decision Drivers</h4>
+<h4 id="_decision_drivers_5"><a class="anchor" href="#_decision_drivers_5"></a>9.6.4. Decision Drivers</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2374,7 +2374,7 @@ The architecture also integrates with an observability stack, but operational te
 </div>
 </div>
 <div class="sect3">
-<h4 id="_considered_options_5"><a class="anchor" href="#_considered_options_5"></a>9.7.5. Considered Options</h4>
+<h4 id="_considered_options_5"><a class="anchor" href="#_considered_options_5"></a>9.6.5. Considered Options</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2390,7 +2390,7 @@ The architecture also integrates with an observability stack, but operational te
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_outcome_5"><a class="anchor" href="#_decision_outcome_5"></a>9.7.6. Decision Outcome</h4>
+<h4 id="_decision_outcome_5"><a class="anchor" href="#_decision_outcome_5"></a>9.6.6. Decision Outcome</h4>
 <div class="paragraph">
 <p>Chosen option: "Use a dedicated audit store and export selected signals to observability", because it keeps compliance-grade evidence durable and authoritative while still supporting operational visibility through telemetry exports.</p>
 </div>
@@ -2588,20 +2588,20 @@ The architecture also integrates with an observability stack, but operational te
 </div>
 </div>
 <div class="sect3">
-<h4 id="_consequences_2"><a class="anchor" href="#_consequences_2"></a>9.7.7. Consequences</h4>
+<h4 id="_consequences_2"><a class="anchor" href="#_consequences_2"></a>9.6.7. Consequences</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>Section 5 should reflect that Audit and Governance owns canonical audit evidence rather than only telemetry export.</p>
+<p>Section 5 reflects that Audit and Governance owns canonical audit evidence rather than only telemetry export.</p>
 </li>
 <li>
-<p>Section 7 should keep concrete storage technology open while describing the canonical audit store as a required architectural concern.</p>
+<p>Section 7 keeps concrete storage technology open while describing the canonical audit store as a required architectural concern.</p>
 </li>
 <li>
-<p>Section 10 should add scenarios that distinguish canonical evidence retention from observability exports and cover commit failure when audit evidence cannot be durably accepted.</p>
+<p>Section 10 includes scenarios that distinguish canonical evidence retention from observability exports and cover commit failure when audit evidence cannot be durably accepted.</p>
 </li>
 <li>
-<p>Section 11 should treat missing canonical audit persistence as a material implementation risk until concrete storage choices are made.</p>
+<p>Section 11 treats missing canonical audit persistence as a material implementation risk until concrete storage choices are made.</p>
 </li>
 <li>
 <p>Implementations should add automated tests for the validation scenarios below before relying on local assumptions about audit durability or retention.</p>
@@ -2610,7 +2610,7 @@ The architecture also integrates with an observability stack, but operational te
 </div>
 </div>
 <div class="sect3">
-<h4 id="_validation_scenarios_2"><a class="anchor" href="#_validation_scenarios_2"></a>9.7.8. Validation Scenarios</h4>
+<h4 id="_validation_scenarios_2"><a class="anchor" href="#_validation_scenarios_2"></a>9.6.8. Validation Scenarios</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2644,7 +2644,7 @@ The architecture also integrates with an observability stack, but operational te
 </div>
 </div>
 <div class="sect3">
-<h4 id="_pros_and_cons_of_the_options_5"><a class="anchor" href="#_pros_and_cons_of_the_options_5"></a>9.7.9. Pros and Cons of the Options</h4>
+<h4 id="_pros_and_cons_of_the_options_5"><a class="anchor" href="#_pros_and_cons_of_the_options_5"></a>9.6.9. Pros and Cons of the Options</h4>
 <div class="sect4">
 <h5 id="_use_the_observability_stack_as_the_only_audit_system_of_record"><a class="anchor" href="#_use_the_observability_stack_as_the_only_audit_system_of_record"></a>Use the observability stack as the only audit system of record</h5>
 <div class="ulist">
@@ -2696,6 +2696,12 @@ The architecture also integrates with an observability stack, but operational te
 </ul>
 </div>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_proposed_decisions_to_resolve_next"><a class="anchor" href="#_proposed_decisions_to_resolve_next"></a>9.7. Proposed Decisions To Resolve Next</h3>
+<div class="paragraph">
+<p>The following proposed ADRs capture the next architectural decisions that should be resolved to make the platform foundation implementation-ready.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3618,24 +3624,36 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">QS-09</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Auditability and Traceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The observability stack is unavailable while a governed action succeeds and canonical audit evidence can still be durably accepted.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform preserves canonical audit evidence and does not depend on observability exports as the source of truth for governance evidence.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Auditability and Traceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A privileged mutation cannot durably commit canonical audit evidence.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform does not report the privileged mutation as successfully committed and preserves the failure context for later review.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-11</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Isolation Flexibility</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Two tenants use the same hierarchy but different isolation profiles, such as <code>subscription_plan = Enterprise, isolation_profile = Silo</code> and <code>subscription_plan = Standard, isolation_profile = Shared</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The tenants keep the same business model while the platform resolves different runtime, data, and network boundaries.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QS-10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-12</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Isolation Flexibility</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A hybrid tenant needs a dedicated production environment while allowing non-production environments to remain shared.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The platform resolves dedicated boundaries for the stricter environment and shared boundaries for the others without introducing a different tenant hierarchy.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QS-11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-13</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Policy Enforceability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Policy restricts data storage to approved regions.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The platform allows only placements whose resolved runtime and data boundaries comply with the approved-region policy.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QS-12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-14</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Operability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An operator or auditor needs to understand why a privileged action was allowed or denied.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The platform exposes enough decision and audit context to reconstruct the principal, scoped grants, permissions, effective policy, and resulting decision.</p></td>
@@ -3769,9 +3787,9 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-02</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Define the audit evidence architecture, including durable storage, retention ownership, immutability expectations, and the relationship between audit evidence and observability telemetry.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0005</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit requirements become implementable and distinguish compliance evidence from general operational telemetry.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apply the accepted audit evidence architecture to runtime examples, storage decisions, and future platform tests.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0005, Sections 5, 7, and 10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The accepted audit model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-03</p></td>
@@ -3940,7 +3958,7 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-04-02 22:57:13 UTC
+Last updated 2026-04-02 23:04:34 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
