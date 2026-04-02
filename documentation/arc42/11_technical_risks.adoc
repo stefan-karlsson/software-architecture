@@ -53,3 +53,37 @@ The repository does not yet contain a real Technical Debt Record for the platfor
 |Debt can remain implicit, which makes prioritization and ownership difficult once the architecture starts being implemented.
 |Create concrete TDRs when real implementation debt is identified and link them from this chapter.
 |===
+
+=== Recommended Next Actions
+
+The following action backlog turns the open architectural gaps into concrete next steps that can be resolved one by one.
+
+[options="header",cols="1,3,2,3"]
+|===
+|Action ID |Action |Primary Artifact |Expected Result
+
+|A-01
+|Define effective-access evaluation semantics, including merge rules for direct grants, group-derived grants, scope overlap, and deny behavior.
+|ADR 0004
+|The authorization model becomes decision-complete enough to implement consistently across services and scopes.
+
+|A-02
+|Define the audit evidence architecture, including durable storage, retention ownership, immutability expectations, and the relationship between audit evidence and observability telemetry.
+|ADR 0005
+|Audit requirements become implementable and distinguish compliance evidence from general operational telemetry.
+
+|A-03
+|Define state ownership and consistency boundaries for principals, memberships, grants, policies, subscriptions, runtime bindings, and audit records.
+|ADR 0006
+|The platform gains a clear source-of-truth model and a basis for persistence, consistency, and recovery decisions.
+
+|A-04
+|Define hybrid isolation resolution rules, including precedence between subscription defaults, scope-level policy, and environment-level tightening.
+|ADR 0007
+|Hybrid placement behavior becomes predictable enough to implement and test without per-team interpretation.
+
+|A-05
+|Add one concrete end-to-end governed runtime scenario that exercises authorization, policy, audit, and isolation together.
+|Sections 6 and 10
+|The runtime and quality chapters gain one implementation-oriented example that can be used for design review and later test planning.
+|===
