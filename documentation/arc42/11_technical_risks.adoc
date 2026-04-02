@@ -68,9 +68,9 @@ The following action backlog turns the open architectural gaps into concrete nex
 |The accepted authorization model is reflected consistently in architecture examples today and is ready to drive later implementation tests.
 
 |A-02
-|Define the audit evidence architecture, including durable storage, retention ownership, immutability expectations, and the relationship between audit evidence and observability telemetry.
-|ADR 0005
-|Audit requirements become implementable and distinguish compliance evidence from general operational telemetry.
+|Apply the accepted audit evidence architecture to runtime examples, storage decisions, and future platform tests.
+|ADR 0005, Sections 5, 7, and 10
+|The accepted audit model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.
 
 |A-03
 |Define state ownership and consistency boundaries for principals, memberships, grants, policies, subscriptions, runtime bindings, and audit records.

@@ -71,3 +71,5 @@ What is fixed is the logical model:
 * isolation is resolved from subscription and policy information
 * runtime, data, and network boundaries may differ even when the tenant hierarchy does not
 * hybrid isolation is a first-class case rather than an exception
+* a canonical audit store is a required logical architectural concern even though its concrete storage technology remains open
+* canonical audit evidence remains distinct from operational telemetry exported to observability tools

@@ -13,11 +13,11 @@ include::../adrs/0003-separate-subscription-plan-from-isolation-profile-and-boun
 
 include::../adrs/0004-define-effective-access-evaluation-semantics.adoc[leveloffset=+2]
 
+include::../adrs/0005-define-audit-evidence-and-retention-architecture.adoc[leveloffset=+2]
+
 === Proposed Decisions To Resolve Next
 
 The following proposed ADRs capture the next architectural decisions that should be resolved to make the platform foundation implementation-ready.
-
-include::../adrs/0005-define-audit-evidence-and-retention-architecture.adoc[leveloffset=+2]
 
 include::../adrs/0006-define-foundation-state-ownership-and-consistency-boundaries.adoc[leveloffset=+2]
 

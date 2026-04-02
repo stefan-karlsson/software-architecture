@@ -2,7 +2,7 @@
 
 ## Status
 
-* Status: proposed
+* Status: accepted
 
 ## Standardize how audit evidence is stored, retained, and protected
 
@@ -116,10 +116,10 @@ Chosen option: "Use a dedicated audit store and export selected signals to obser
 
 ## Consequences
 
-* Section 5 should reflect that Audit and Governance owns canonical audit evidence rather than only telemetry export.
-* Section 7 should keep concrete storage technology open while describing the canonical audit store as a required architectural concern.
-* Section 10 should add scenarios that distinguish canonical evidence retention from observability exports and cover commit failure when audit evidence cannot be durably accepted.
-* Section 11 should treat missing canonical audit persistence as a material implementation risk until concrete storage choices are made.
+* Section 5 reflects that Audit and Governance owns canonical audit evidence rather than only telemetry export.
+* Section 7 keeps concrete storage technology open while describing the canonical audit store as a required architectural concern.
+* Section 10 includes scenarios that distinguish canonical evidence retention from observability exports and cover commit failure when audit evidence cannot be durably accepted.
+* Section 11 treats missing canonical audit persistence as a material implementation risk until concrete storage choices are made.
 * Implementations should add automated tests for the validation scenarios below before relying on local assumptions about audit durability or retention.
 
 ## Validation Scenarios

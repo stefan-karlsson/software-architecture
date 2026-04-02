@@ -28,7 +28,7 @@ Contained Building Blocks::
 |Maintains tenants, billing accounts, subscriptions, workspaces, projects / services, and environments as the canonical scope hierarchy.
 
 |Audit and Governance Capability
-|Records privileged and regulated activity, preserves scope context, and exports audit and operational telemetry.
+|Owns canonical audit evidence, preserves scope and decision context, enforces governance-oriented audit behavior, and exports operational telemetry as a secondary concern.
 
 |Isolation and Placement Capability
 |Resolves isolation profile and the runtime, data, and network boundaries used by each environment.
@@ -46,7 +46,7 @@ Important Relationships::
 |Effective policy is evaluated after permissions are resolved and before access is allowed.
 
 |Policy Management -> Audit and Governance
-|Policy decisions and policy changes must be auditable at the correct scope.
+|Policy decisions and policy changes must be preserved as canonical audit evidence at the correct scope.
 
 |Isolation and Placement -> Tenant Hierarchy and Scope Management
 |Isolation resolution depends on the subscription, project / service, and environment context.
@@ -55,7 +55,7 @@ Important Relationships::
 |Placement and boundary choices must respect inherited policy constraints such as approved regions or network restrictions.
 
 |All capability modules -> Audit and Governance
-|Privileged and regulated events must preserve actor, scope, and decision context.
+|Privileged and regulated events must preserve actor, scope, and decision context in canonical audit evidence, while telemetry export remains a secondary downstream concern.
 |===
 
 === Platform Hierarchy

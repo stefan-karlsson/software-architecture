@@ -21,7 +21,7 @@ The hierarchy inherits policy, access scope interpretation, audit context, and d
 
 === Audit Model
 
-Auditability is a first-class concept rather than an afterthought. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later.
+Auditability is a first-class concept rather than an afterthought. Canonical audit evidence is the governance source of truth, remains distinct from observability exports, and is append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When audit evidence needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.
 
 === Isolation Model and Tier Separation
 
