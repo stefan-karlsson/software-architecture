@@ -1898,7 +1898,7 @@ If pricing and isolation are treated as the same field, the architecture becomes
 </div>
 </div>
 <div class="sect3">
-<h4 id="_resolve_how_effective_access_is_computed_across_scopes"><a class="anchor" href="#_resolve_how_effective_access_is_computed_across_scopes"></a>9.6.2. Resolve how effective access is computed across scopes</h4>
+<h4 id="_standardize_how_effective_access_is_resolved_across_scopes"><a class="anchor" href="#_standardize_how_effective_access_is_resolved_across_scopes"></a>9.6.2. Standardize how effective access is resolved across scopes</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1914,10 +1914,10 @@ If pricing and isolation are treated as the same field, the architecture becomes
 <h4 id="_context_and_problem_statement_4"><a class="anchor" href="#_context_and_problem_statement_4"></a>9.6.3. Context and Problem Statement</h4>
 <div class="paragraph">
 <p>The platform foundation defines the authorization chain as <code>Principal &#8594; Membership &#8594; Grant &#8594; Role &#8594; Permission &#8594; Scope</code>.
-That model is architecturally sound, but it is not yet decision-complete for implementation because several effective-access semantics remain unspecified.</p>
+That model establishes the core building blocks, but it is not sufficient on its own to guarantee consistent implementation.</p>
 </div>
 <div class="paragraph">
-<p>Examples of unresolved questions include:</p>
+<p>Without an explicit decision, teams could still implement materially different behavior for:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1925,18 +1925,21 @@ That model is architecturally sound, but it is not yet decision-complete for imp
 <p>how direct grants and group-derived grants combine</p>
 </li>
 <li>
-<p>whether explicit deny exists and how it behaves</p>
+<p>how broader-scope grants apply to descendant scopes</p>
 </li>
 <li>
-<p>how overlapping grants at different scopes are merged</p>
+<p>whether authorization supports explicit deny semantics</p>
 </li>
 <li>
-<p>whether broader-scope grants flow downward automatically or are interpreted only through scope resolution</p>
+<p>how access resolution is separated from policy evaluation</p>
+</li>
+<li>
+<p>which decision context must be captured for audit</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Without these decisions, different teams can implement materially different access behavior while still claiming to follow the architecture.</p>
+<p>The platform therefore needs one normative effective-access model that every implementation can follow.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1947,16 +1950,19 @@ That model is architecturally sound, but it is not yet decision-complete for imp
 <p>Consistent authorization behavior across all platform capabilities</p>
 </li>
 <li>
-<p>Least-privilege enforcement</p>
+<p>Least-privilege enforcement with default deny</p>
 </li>
 <li>
-<p>Predictable scope resolution</p>
+<p>Predictable scope resolution across the hierarchy</p>
 </li>
 <li>
-<p>Testable allow/deny behavior</p>
+<p>Clear separation between authorization and policy</p>
 </li>
 <li>
-<p>Reduced risk of grant explosion and ambiguous access</p>
+<p>Testable allow and deny behavior</p>
+</li>
+<li>
+<p>Auditable authorization decisions</p>
 </li>
 </ul>
 </div>
@@ -1980,7 +1986,195 @@ That model is architecturally sound, but it is not yet decision-complete for imp
 <div class="sect3">
 <h4 id="_decision_outcome_4"><a class="anchor" href="#_decision_outcome_4"></a>9.6.6. Decision Outcome</h4>
 <div class="paragraph">
-<p>To be decided. This ADR exists to make the effective-access semantics explicit before implementation proceeds.</p>
+<p>Chosen option: "Resolve access through additive grants only, with policy handling all denials and restrictions", because it keeps authorization semantics predictable, preserves default deny, and keeps restrictive rules in the policy layer where the architecture already places them.</p>
+</div>
+<div class="sect4">
+<h5 id="_normative_authorization_model"><a class="anchor" href="#_normative_authorization_model"></a>Normative Authorization Model</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Authorization uses default deny.</p>
+</li>
+<li>
+<p>An action is eligible for authorization only if at least one matching grant expands to the required permission at the requested scope or one of its ancestor scopes.</p>
+</li>
+<li>
+<p>Effective permissions are the union of all matching direct and group-derived grants.</p>
+</li>
+<li>
+<p>The authorization layer does not support explicit deny grants.</p>
+</li>
+<li>
+<p>Policy evaluation happens only after permission resolution and can still deny an otherwise authorized action.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_scope_matching_rules"><a class="anchor" href="#_normative_scope_matching_rules"></a>Normative Scope-Matching Rules</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>A tenant-scoped grant applies to that tenant and all descendant workspaces, projects / services, and environments.</p>
+</li>
+<li>
+<p>A workspace-scoped grant applies to that workspace and all descendant projects / services and environments.</p>
+</li>
+<li>
+<p>A project / service-scoped grant applies to that project / service and all descendant environments.</p>
+</li>
+<li>
+<p>An environment-scoped grant applies only to that environment.</p>
+</li>
+<li>
+<p>Access propagation is interpreted through the hierarchy during evaluation. Grants are not copied to child scopes.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_group_rules"><a class="anchor" href="#_normative_group_rules"></a>Normative Group Rules</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Groups aggregate principals for access management.</p>
+</li>
+<li>
+<p>Users and service accounts may be members of groups.</p>
+</li>
+<li>
+<p>Groups do not contain other groups in the first implementation.</p>
+</li>
+<li>
+<p>Group-derived grants are evaluated the same way as direct grants once group membership has been resolved.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_effective_access_evaluation_algorithm"><a class="anchor" href="#_effective_access_evaluation_algorithm"></a>Effective-Access Evaluation Algorithm</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Resolve the acting principal.</p>
+</li>
+<li>
+<p>Resolve direct memberships for the principal at the relevant scopes.</p>
+</li>
+<li>
+<p>Resolve flat group memberships for the principal.</p>
+</li>
+<li>
+<p>Collect direct grants and group-derived grants whose scopes match the requested scope or one of its ancestor scopes.</p>
+</li>
+<li>
+<p>Expand the roles from those grants into permissions.</p>
+</li>
+<li>
+<p>Union the resulting permissions into one effective permission set.</p>
+</li>
+<li>
+<p>If the required permission is absent, deny the action and audit the denied result.</p>
+</li>
+<li>
+<p>If the required permission is present, evaluate effective policy for the requested action and scope.</p>
+</li>
+<li>
+<p>If policy denies the action, deny it and audit the policy-driven denial with policy context.</p>
+</li>
+<li>
+<p>If policy allows the action, allow it and audit the successful decision.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_public_behavior_locked_by_this_decision"><a class="anchor" href="#_public_behavior_locked_by_this_decision"></a>Public Behavior Locked by This Decision</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Authorization input must include the acting principal, the requested permission, and the requested scope.</p>
+</li>
+<li>
+<p>Authorization output must include allow or deny plus enough decision context for audit and later review.</p>
+</li>
+<li>
+<p>Valid grant scopes remain limited to tenant, workspace, project / service, and environment.</p>
+</li>
+<li>
+<p>Authorization answers whether a valid matching grant provides the required permission at the requested scope.</p>
+</li>
+<li>
+<p>Policy answers whether the action is still allowed under inherited rules after permission resolution.</p>
+</li>
+<li>
+<p>Every authorization decision must preserve principal, resolved scope, matching grants or absence of grants, resolved permission, policy outcome when evaluated, and final allow or deny result.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_positive_consequences_4"><a class="anchor" href="#_positive_consequences_4"></a>Positive Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Teams can implement one consistent effective-access model across the platform.</p>
+</li>
+<li>
+<p>Direct and group-derived access remains understandable because both use additive union semantics.</p>
+</li>
+<li>
+<p>Default deny remains simple: missing permission means denied access.</p>
+</li>
+<li>
+<p>Restrictive controls such as MFA, approval, trusted-network checks, or region rules stay in the policy layer.</p>
+</li>
+<li>
+<p>Audit records can capture a clear sequence from permission resolution to policy outcome to final decision.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_negative_consequences_4"><a class="anchor" href="#_negative_consequences_4"></a>Negative Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The platform cannot express authorization-layer deny exceptions in the first implementation.</p>
+</li>
+<li>
+<p>Group support stays intentionally limited because nested groups are not supported.</p>
+</li>
+<li>
+<p>Broader-scope grants must be designed carefully to avoid over-entitlement.</p>
+</li>
+<li>
+<p>Teams that want custom precedence or propagation behavior must propose a new ADR instead of adding local rules.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_non_goals_and_deferred_decisions"><a class="anchor" href="#_non_goals_and_deferred_decisions"></a>Non-Goals and Deferred Decisions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>No explicit deny grants are supported.</p>
+</li>
+<li>
+<p>No nested groups are supported.</p>
+</li>
+<li>
+<p>No nearest-scope-only override model is used.</p>
+</li>
+<li>
+<p>No role-specific propagation flags are supported.</p>
+</li>
+<li>
+<p>Any future need for explicit deny semantics, nested groups, or alternate precedence rules requires a follow-up ADR.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -1988,12 +2182,106 @@ That model is architecturally sound, but it is not yet decision-complete for imp
 <div class="ulist">
 <ul>
 <li>
-<p>Once decided, this ADR should drive updates to sections 6, 8, and 10.</p>
+<p>Section 6 should reflect the exact authorization algorithm defined by this ADR.</p>
 </li>
 <li>
-<p>The chosen semantics should be reflected in test cases for scope inheritance, group membership, and privileged actions.</p>
+<p>Section 8 should describe additive union semantics, downward scope interpretation, and flat group behavior explicitly.</p>
+</li>
+<li>
+<p>Section 10 should add scenarios that cover direct versus group-derived grants and ancestor-scope matching.</p>
+</li>
+<li>
+<p>Implementations should add automated tests for the validation scenarios below before relying on local authorization behavior.</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_validation_scenarios"><a class="anchor" href="#_validation_scenarios"></a>9.6.8. Validation Scenarios</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>A user with a direct workspace grant for <code>project.view</code> is allowed to request that permission for a project inside that workspace before policy evaluation.</p>
+</li>
+<li>
+<p>A user with no matching grant at the requested scope or any ancestor is denied by default and the denial is audited.</p>
+</li>
+<li>
+<p>A user who receives the required permission only through a group-derived grant is allowed if policy also allows the action.</p>
+</li>
+<li>
+<p>A user with both direct and group-derived grants receives the union of those permissions with no special precedence rule.</p>
+</li>
+<li>
+<p>A tenant-scoped grant is recognized when the request targets a descendant environment.</p>
+</li>
+<li>
+<p>An environment-scoped grant does not authorize access to a sibling environment.</p>
+</li>
+<li>
+<p>A request with the required permission is still denied when policy requires MFA or approval and the requirement is not satisfied.</p>
+</li>
+<li>
+<p>A parent-scope grant can still be blocked by a stricter child-scope policy.</p>
+</li>
+<li>
+<p>Nested groups are rejected or treated as unsupported in the first implementation.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options_4"><a class="anchor" href="#_pros_and_cons_of_the_options_4"></a>9.6.9. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_resolve_access_through_additive_grants_only_with_policy_handling_all_denials_and_restrictions"><a class="anchor" href="#_resolve_access_through_additive_grants_only_with_policy_handling_all_denials_and_restrictions"></a>Resolve access through additive grants only, with policy handling all denials and restrictions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because authorization behavior stays simple and consistent across scopes.</p>
+</li>
+<li>
+<p>Good, because restrictive business and security rules remain in the policy layer.</p>
+</li>
+<li>
+<p>Good, because audit reasoning can distinguish missing permission from policy denial.</p>
+</li>
+<li>
+<p>Bad, because the model does not support explicit deny exceptions in the authorization layer.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_support_additive_grants_plus_explicit_deny_semantics"><a class="anchor" href="#_support_additive_grants_plus_explicit_deny_semantics"></a>Support additive grants plus explicit deny semantics</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because deny exceptions can be expressed directly in authorization.</p>
+</li>
+<li>
+<p>Bad, because precedence and merge behavior become more complex across direct, group, and ancestor-scope grants.</p>
+</li>
+<li>
+<p>Bad, because the boundary between authorization and policy becomes less clear.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_resolve_access_by_nearest_scope_precedence_only"><a class="anchor" href="#_resolve_access_by_nearest_scope_precedence_only"></a>Resolve access by nearest-scope precedence only</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because scope selection appears simpler at first glance.</p>
+</li>
+<li>
+<p>Bad, because broader-scope grants stop behaving as inherited access context.</p>
+</li>
+<li>
+<p>Bad, because teams would need more duplicate grants to express common access patterns.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -2758,7 +3046,7 @@ Hybrid is intentionally first-class, but the architecture does not yet define ex
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-04-02 22:11:59 UTC
+Last updated 2026-04-02 22:26:45 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
