@@ -2708,7 +2708,7 @@ The architecture also integrates with an observability stack, but operational te
 </div>
 </div>
 <div class="sect3">
-<h4 id="_resolve_which_capability_owns_which_platform_records"><a class="anchor" href="#_resolve_which_capability_owns_which_platform_records"></a>9.8.2. Resolve which capability owns which platform records</h4>
+<h4 id="_standardize_authoritative_ownership_and_cross_capability_consistency"><a class="anchor" href="#_standardize_authoritative_ownership_and_cross_capability_consistency"></a>9.8.2. Standardize authoritative ownership and cross-capability consistency</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2723,11 +2723,11 @@ The architecture also integrates with an observability stack, but operational te
 <div class="sect3">
 <h4 id="_context_and_problem_statement_6"><a class="anchor" href="#_context_and_problem_statement_6"></a>9.8.3. Context and Problem Statement</h4>
 <div class="paragraph">
-<p>The platform foundation describes clear capability modules, but it does not yet define where key records are owned and how changes to them are coordinated.
+<p>The platform foundation describes clear capability modules, but it does not yet define where key records are authoritatively owned and how changes to them are coordinated across capabilities.
 This affects principals, memberships, grants, roles, permissions, policies, subscriptions, runtime bindings, data boundaries, network boundaries, and audit records.</p>
 </div>
 <div class="paragraph">
-<p>Without an explicit ownership and consistency model, teams can make incompatible decisions about:</p>
+<p>Without an explicit ownership and consistency model, teams could still implement materially different behavior for:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2738,15 +2738,21 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 <p>transactional expectations</p>
 </li>
 <li>
-<p>update ordering across capabilities</p>
+<p>durable integration between capabilities</p>
 </li>
 <li>
-<p>recovery and reconciliation behavior</p>
+<p>update ordering and reconciliation behavior</p>
 </li>
 <li>
 <p>read and write responsibilities</p>
 </li>
+<li>
+<p>freshness expectations for owner reads versus projected reads</p>
+</li>
 </ul>
+</div>
+<div class="paragraph">
+<p>The platform therefore needs one normative state-ownership and consistency model that every implementation can follow.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2754,19 +2760,22 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 <div class="ulist">
 <ul>
 <li>
-<p>Clear data ownership</p>
+<p>Clear authoritative ownership for governed records</p>
 </li>
 <li>
-<p>Predictable change behavior</p>
-</li>
-<li>
-<p>Recovery and reconciliation strategy</p>
+<p>Predictable change behavior across capability boundaries</p>
 </li>
 <li>
 <p>Reduced coupling between capability modules</p>
 </li>
 <li>
-<p>Better basis for persistence design</p>
+<p>Recoverable downstream synchronization</p>
+</li>
+<li>
+<p>Better basis for persistence design and future implementation ADRs</p>
+</li>
+<li>
+<p>Clear separation between authoritative writes and convenience projections</p>
 </li>
 </ul>
 </div>
@@ -2790,7 +2799,202 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 <div class="sect3">
 <h4 id="_decision_outcome_6"><a class="anchor" href="#_decision_outcome_6"></a>9.8.6. Decision Outcome</h4>
 <div class="paragraph">
-<p>To be decided. This ADR exists to define the foundation state model before persistence and integration behavior are implemented implicitly.</p>
+<p>Chosen option: "Use a hybrid model with authoritative domain stores plus derived read models", because it preserves clear ownership per capability while still allowing read-optimized or cross-capability views without collapsing the platform into one shared write authority.</p>
+</div>
+<div class="sect4">
+<h5 id="_normative_ownership_model"><a class="anchor" href="#_normative_ownership_model"></a>Normative Ownership Model</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Each governed record type has exactly one authoritative write owner.</p>
+</li>
+<li>
+<p>Authoritative writes stay within the owning capability boundary.</p>
+</li>
+<li>
+<p>Non-owning capabilities may maintain projections, caches, or read models, but those copies are never authoritative.</p>
+</li>
+<li>
+<p>Derived read models may span capability boundaries, but they do not change the underlying source-of-truth assignment.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_ownership_map"><a class="anchor" href="#_normative_ownership_map"></a>Normative Ownership Map</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The Identity Provider is authoritative for external identity claims used for authentication.</p>
+</li>
+<li>
+<p>Identity and Access is authoritative for platform-specific principal records, service accounts, groups, memberships, grants, roles, and permissions.</p>
+</li>
+<li>
+<p>Tenant Hierarchy and Scope Management is authoritative for tenants, billing accounts, subscriptions, workspaces, projects / services, and environments.</p>
+</li>
+<li>
+<p>Policy Management is authoritative for platform baseline policy plus tenant, workspace, project / service, and environment policies, together with the source inputs required to compute effective policy.</p>
+</li>
+<li>
+<p>Isolation and Placement is authoritative for runtime bindings, data boundaries, network boundaries, and resolved placement state.</p>
+</li>
+<li>
+<p>Audit and Governance is authoritative for canonical audit evidence and retention-governed audit records.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_read_and_write_rules"><a class="anchor" href="#_normative_read_and_write_rules"></a>Normative Read and Write Rules</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Writes go only to the owning capability.</p>
+</li>
+<li>
+<p>Non-owning capabilities must not perform authoritative writes for another capability&#8217;s records.</p>
+</li>
+<li>
+<p>Cross-capability workflows may read owner-managed records directly or consume projections of those records.</p>
+</li>
+<li>
+<p>If a workflow requires the freshest value, it must read from the owner rather than rely on a derived read model.</p>
+</li>
+<li>
+<p>Owner reads are authoritative. Projected reads may lag and must be treated accordingly in implementation and operations.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_consistency_model"><a class="anchor" href="#_normative_consistency_model"></a>Normative Consistency Model</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Each owner may use local transactions only within its own authoritative boundary.</p>
+</li>
+<li>
+<p>Cross-capability changes are coordinated through durable asynchronous integration rather than distributed transactions.</p>
+</li>
+<li>
+<p>An owning capability commits canonical state first and then emits durable change notifications or equivalent durable integration events for dependent capabilities.</p>
+</li>
+<li>
+<p>Downstream capabilities update their own derived state asynchronously based on the owner-originated change signal.</p>
+</li>
+<li>
+<p>Eventual consistency across capabilities is acceptable by default when authoritative ownership remains clear.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_recovery_and_reconciliation_rules"><a class="anchor" href="#_normative_recovery_and_reconciliation_rules"></a>Normative Recovery and Reconciliation Rules</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Derived read models must be rebuildable from authoritative state or durable owner-originated change streams.</p>
+</li>
+<li>
+<p>Failed downstream updates must be retried or reconciled without reassigning ownership to a consumer or projection.</p>
+</li>
+<li>
+<p>Recovery logic must preserve the authoritative owner of each record type even when projections are stale or temporarily unavailable.</p>
+</li>
+<li>
+<p>Audit evidence remains authoritative in Audit and Governance even if operational projections or observability exports lag behind.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_public_behavior_locked_by_this_decision_3"><a class="anchor" href="#_public_behavior_locked_by_this_decision_3"></a>Public Behavior Locked by This Decision</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Every governed record category must have one explicit authoritative owner.</p>
+</li>
+<li>
+<p>External identity claims and platform access metadata are distinct ownership domains.</p>
+</li>
+<li>
+<p>Hierarchy and subscription records remain distinct from resolved isolation records.</p>
+</li>
+<li>
+<p>Scoped policy records remain distinct from runtime effective-policy evaluations and downstream policy-aware decisions.</p>
+</li>
+<li>
+<p>Canonical audit evidence remains distinct from observability exports, caches, or convenience projections.</p>
+</li>
+<li>
+<p>Owning capabilities must expose a durable integration mechanism for record changes that downstream capabilities depend on.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_positive_consequences_6"><a class="anchor" href="#_positive_consequences_6"></a>Positive Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Capabilities can evolve internally without collapsing into one shared write model.</p>
+</li>
+<li>
+<p>Read-optimized views are still possible without confusing them with authoritative state.</p>
+</li>
+<li>
+<p>Cross-capability workflows become easier to recover because owner state is committed before downstream propagation.</p>
+</li>
+<li>
+<p>Freshness-sensitive workflows have a clear rule: read the owner.</p>
+</li>
+<li>
+<p>Persistence and recovery planning gain a stable ownership map for future implementation decisions.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_negative_consequences_6"><a class="anchor" href="#_negative_consequences_6"></a>Negative Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Teams must manage asynchronous propagation and reconciliation instead of assuming instant global consistency.</p>
+</li>
+<li>
+<p>Projections can lag behind owner state and therefore require explicit freshness handling.</p>
+</li>
+<li>
+<p>Implementations must provide durable owner-originated change notifications rather than relying on ad hoc synchronous chaining.</p>
+</li>
+<li>
+<p>Concrete storage and transport choices still require later decisions.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_non_goals_and_deferred_decisions_3"><a class="anchor" href="#_non_goals_and_deferred_decisions_3"></a>Non-Goals and Deferred Decisions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>This ADR does not choose specific databases, message brokers, caches, or wire formats.</p>
+</li>
+<li>
+<p>This ADR does not make distributed transactions the default consistency mechanism.</p>
+</li>
+<li>
+<p>This ADR does not allow one shared platform store to become the universal write authority for all governed state.</p>
+</li>
+<li>
+<p>This ADR does not allow ownership to move based on which capability reads a record most often.</p>
+</li>
+<li>
+<p>This ADR does not allow derived read models to become write authorities.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -2798,12 +3002,106 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 <div class="ulist">
 <ul>
 <li>
-<p>Once decided, this ADR should drive updates to sections 5, 6, and 7.</p>
+<p>Section 5 should reflect the authoritative ownership map across the capability modules.</p>
 </li>
 <li>
-<p>The chosen model should clarify which capability owns authoritative writes and how cross-capability consistency is achieved.</p>
+<p>Section 6 should describe cross-capability flows as owner-first commits followed by asynchronous propagation and reconciliation where applicable.</p>
+</li>
+<li>
+<p>Section 7 should keep concrete persistence technologies open while describing authoritative stores and derived read models as distinct architectural concerns.</p>
+</li>
+<li>
+<p>Future implementation ADRs should choose concrete persistence and integration technologies without changing the ownership model defined here.</p>
+</li>
+<li>
+<p>Implementations should add automated tests for the validation scenarios below before relying on local assumptions about cross-capability state behavior.</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_validation_scenarios_3"><a class="anchor" href="#_validation_scenarios_3"></a>9.8.8. Validation Scenarios</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>A membership change is written only by Identity and Access and later becomes visible in downstream read models through asynchronous propagation.</p>
+</li>
+<li>
+<p>A tenant or environment rename is written only by Tenant Hierarchy and Scope Management and is later reflected in authorization and audit projections without changing ownership.</p>
+</li>
+<li>
+<p>A policy update is committed by Policy Management and later changes authorization outcomes after downstream refresh or direct owner read.</p>
+</li>
+<li>
+<p>A runtime binding change is committed by Isolation and Placement while Tenant Hierarchy and Scope Management remains authoritative for the environment it belongs to.</p>
+</li>
+<li>
+<p>An authorization decision needs the freshest membership or grant data and therefore reads from Identity and Access instead of a potentially stale projection.</p>
+</li>
+<li>
+<p>A derived read model falls behind or is rebuilt, and authoritative writes remain available because ownership did not move to the projection.</p>
+</li>
+<li>
+<p>A cross-capability integration fails after the owner commits state, and retry plus reconciliation restore downstream consistency without distributed rollback.</p>
+</li>
+<li>
+<p>Canonical audit evidence remains authoritative in Audit and Governance even if observability exports or convenience projections are delayed.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options_6"><a class="anchor" href="#_pros_and_cons_of_the_options_6"></a>9.8.9. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_centralize_all_governed_state_in_one_platform_store"><a class="anchor" href="#_centralize_all_governed_state_in_one_platform_store"></a>Centralize all governed state in one platform store</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because the platform appears simpler at first glance.</p>
+</li>
+<li>
+<p>Bad, because capability boundaries and ownership become weaker over time.</p>
+</li>
+<li>
+<p>Bad, because local changes in one area can couple unrelated domains into one shared write model.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_partition_ownership_by_capability_with_explicit_integration_boundaries"><a class="anchor" href="#_partition_ownership_by_capability_with_explicit_integration_boundaries"></a>Partition ownership by capability with explicit integration boundaries</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because ownership stays clear.</p>
+</li>
+<li>
+<p>Good, because capabilities can evolve more independently.</p>
+</li>
+<li>
+<p>Bad, because without derived read models cross-capability queries can become overly chatty or tightly coupled.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_use_a_hybrid_model_with_authoritative_domain_stores_plus_derived_read_models"><a class="anchor" href="#_use_a_hybrid_model_with_authoritative_domain_stores_plus_derived_read_models"></a>Use a hybrid model with authoritative domain stores plus derived read models</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because ownership remains clear while still supporting read-optimized and cross-capability views.</p>
+</li>
+<li>
+<p>Good, because authoritative writes and convenience reads stay distinct.</p>
+</li>
+<li>
+<p>Good, because downstream projections can be rebuilt without changing the source of truth.</p>
+</li>
+<li>
+<p>Bad, because teams must handle eventual consistency and projection lag explicitly.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -2820,7 +3118,7 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 </div>
 </div>
 <div class="sect3">
-<h4 id="_resolve_how_hybrid_isolation_is_selected_and_constrained"><a class="anchor" href="#_resolve_how_hybrid_isolation_is_selected_and_constrained"></a>9.9.2. Resolve how hybrid isolation is selected and constrained</h4>
+<h4 id="_standardize_how_hybrid_isolation_is_resolved_and_constrained"><a class="anchor" href="#_standardize_how_hybrid_isolation_is_resolved_and_constrained"></a>9.9.2. Standardize how hybrid isolation is resolved and constrained</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2836,10 +3134,10 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 <h4 id="_context_and_problem_statement_7"><a class="anchor" href="#_context_and_problem_statement_7"></a>9.9.3. Context and Problem Statement</h4>
 <div class="paragraph">
 <p>The platform foundation supports shared, silo, and hybrid isolation through isolation profile plus runtime, data, and network boundaries.
-Hybrid is intentionally first-class, but the architecture does not yet define exactly how hybrid placement is resolved when subscription defaults, inherited policy, and environment-specific tightening all apply.</p>
+Hybrid is intentionally first-class, but the architecture still needs explicit rules for how placement is resolved when subscription defaults, inherited policy, and environment-specific tightening all apply.</p>
 </div>
 <div class="paragraph">
-<p>The unresolved questions include:</p>
+<p>Without an explicit decision, teams could still implement materially different behavior for:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2847,15 +3145,21 @@ Hybrid is intentionally first-class, but the architecture does not yet define ex
 <p>whether runtime, data, and network boundaries may diverge independently</p>
 </li>
 <li>
-<p>whether environment-level choices may tighten subscription defaults</p>
+<p>whether environment-level resolution may tighten subscription defaults</p>
 </li>
 <li>
-<p>which policy constraints run before final placement is accepted</p>
+<p>which policy constraints are evaluated before placement is accepted</p>
 </li>
 <li>
-<p>how hybrid behavior is represented for auditing and operational review</p>
+<p>how hybrid outcomes are represented for audit and operational review</p>
+</li>
+<li>
+<p>how subscription defaults differ from final environment-specific placement decisions</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>The platform therefore needs one normative hybrid-isolation model that every implementation can follow.</p>
 </div>
 </div>
 <div class="sect3">
@@ -2873,6 +3177,12 @@ Hybrid is intentionally first-class, but the architecture does not yet define ex
 </li>
 <li>
 <p>Reduced ambiguity for platform operators and service teams</p>
+</li>
+<li>
+<p>Clear auditability of placement decisions and boundary changes</p>
+</li>
+<li>
+<p>Consistent treatment of tightening versus weakening across the hierarchy</p>
 </li>
 </ul>
 </div>
@@ -2896,7 +3206,187 @@ Hybrid is intentionally first-class, but the architecture does not yet define ex
 <div class="sect3">
 <h4 id="_decision_outcome_7"><a class="anchor" href="#_decision_outcome_7"></a>9.9.6. Decision Outcome</h4>
 <div class="paragraph">
-<p>To be decided. This ADR exists to make hybrid isolation behavior explicit before implementation and tenant onboarding depend on local interpretation.</p>
+<p>Chosen option: "Resolve runtime, data, and network boundaries independently under a common policy envelope", because it keeps hybrid isolation flexible enough for real workloads while preserving one consistent validation model for policy, inheritance, and audit.</p>
+</div>
+<div class="sect4">
+<h5 id="_normative_precedence_model"><a class="anchor" href="#_normative_precedence_model"></a>Normative Precedence Model</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The subscription isolation profile defines the default isolation intent for the tenant.</p>
+</li>
+<li>
+<p>Environment-specific resolution may tighten that default for a specific environment.</p>
+</li>
+<li>
+<p>Effective policy is then evaluated and may further constrain or reject the candidate boundaries.</p>
+</li>
+<li>
+<p>Final placement is accepted only if all resolved boundaries comply with effective policy and do not weaken the subscription default.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_boundary_resolution_model"><a class="anchor" href="#_normative_boundary_resolution_model"></a>Normative Boundary-Resolution Model</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Runtime binding, data boundary, and network boundary are resolved separately.</p>
+</li>
+<li>
+<p>In hybrid mode, those three boundaries may diverge from one another in the final result.</p>
+</li>
+<li>
+<p>Boundary divergence is valid only when each resolved boundary remains compliant with inherited policy and with the anti-weakening rule.</p>
+</li>
+<li>
+<p>Independent resolution does not change the business hierarchy or the meaning of tenant, workspace, project / service, and environment scopes.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_tightening_rule"><a class="anchor" href="#_normative_tightening_rule"></a>Normative Tightening Rule</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Environment-level resolution may move from shared behavior toward dedicated behavior.</p>
+</li>
+<li>
+<p>Environment-level resolution may not relax a stricter subscription default.</p>
+</li>
+<li>
+<p>Child scopes may tighten placement and isolation constraints, but they must not weaken mandatory parent controls.</p>
+</li>
+<li>
+<p>A silo-oriented default remains dedicated unless a later architectural decision explicitly changes that rule.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_policy_gate"><a class="anchor" href="#_normative_policy_gate"></a>Normative Policy Gate</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Policy constraints relevant to placement are evaluated before final placement is accepted.</p>
+</li>
+<li>
+<p>Relevant policy may constrain approved regions, trusted-network requirements, mandatory dedicated boundaries, retention-related constraints, or other mandatory parent controls that affect hosting or access posture.</p>
+</li>
+<li>
+<p>If any resolved boundary violates effective policy, placement must be denied or re-resolved before acceptance.</p>
+</li>
+<li>
+<p>Policy validation applies to each resolved boundary and to the final combined placement outcome.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_normative_audit_and_operability_rules"><a class="anchor" href="#_normative_audit_and_operability_rules"></a>Normative Audit and Operability Rules</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Final boundary decisions must be recorded as canonical audit evidence.</p>
+</li>
+<li>
+<p>Boundary changes must be recorded as canonical audit evidence.</p>
+</li>
+<li>
+<p>Policy-driven placement denials must be recorded as canonical audit evidence.</p>
+</li>
+<li>
+<p>Operational views may consume exported telemetry, but the authoritative record of hybrid resolution remains in Audit and Governance.</p>
+</li>
+<li>
+<p>Audit context for hybrid resolution must preserve environment identity, subscription context, resolved runtime binding, resolved data boundary, resolved network boundary, applicable policy constraints, and final outcome.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_public_behavior_locked_by_this_decision_4"><a class="anchor" href="#_public_behavior_locked_by_this_decision_4"></a>Public Behavior Locked by This Decision</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Isolation input must include the environment identity and scope path, parent subscription context, subscription plan, isolation profile, and the inherited effective policy relevant to placement.</p>
+</li>
+<li>
+<p>Isolation output must include the resolved runtime binding, resolved data boundary, resolved network boundary, placement accepted or denied, and decision context suitable for audit and operations.</p>
+</li>
+<li>
+<p>Subscription plan remains separate from isolation profile.</p>
+</li>
+<li>
+<p>Hierarchy records remain separate from resolved isolation records.</p>
+</li>
+<li>
+<p>Resolved boundaries remain separate from observability exports and audit projections.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_positive_consequences_7"><a class="anchor" href="#_positive_consequences_7"></a>Positive Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Hybrid isolation remains expressive enough to support environment-specific hardening without a second business model.</p>
+</li>
+<li>
+<p>Runtime, data, and network isolation can evolve independently while still following one validation model.</p>
+</li>
+<li>
+<p>Placement behavior becomes auditable and easier to reason about during reviews and incident analysis.</p>
+</li>
+<li>
+<p>Subscription defaults remain meaningful because environment-level logic can tighten them but not silently weaken them.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_negative_consequences_7"><a class="anchor" href="#_negative_consequences_7"></a>Negative Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Teams must reason about three related but separately resolved boundaries instead of one single placement field.</p>
+</li>
+<li>
+<p>Hybrid outcomes can be more varied and therefore require stronger validation and review tooling.</p>
+</li>
+<li>
+<p>Policy evaluation for placement becomes a first-class concern rather than a secondary afterthought.</p>
+</li>
+<li>
+<p>Concrete infrastructure mapping still requires later decisions.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_non_goals_and_deferred_decisions_4"><a class="anchor" href="#_non_goals_and_deferred_decisions_4"></a>Non-Goals and Deferred Decisions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>This ADR does not require runtime, data, and network boundaries to always move together.</p>
+</li>
+<li>
+<p>This ADR does not allow environment-level weakening of subscription defaults.</p>
+</li>
+<li>
+<p>This ADR does not restrict hybrid behavior to a short list of hardcoded combinations in the first implementation.</p>
+</li>
+<li>
+<p>This ADR does not choose concrete hosting, storage, networking, or cloud technologies.</p>
+</li>
+<li>
+<p>Any future need for named hybrid packages or stricter allowed-combination catalogs requires a follow-up ADR rather than local implementation rules.</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -2904,14 +3394,105 @@ Hybrid is intentionally first-class, but the architecture does not yet define ex
 <div class="ulist">
 <ul>
 <li>
-<p>Once decided, this ADR should drive updates to sections 6, 7, and 10.</p>
+<p>Section 6 should describe isolation resolution as independent boundary selection under one policy envelope.</p>
 </li>
 <li>
-<p>The chosen rules should be reflected in placement, policy, and audit scenarios.</p>
+<p>Section 7 should explain that hybrid placement may resolve mixed boundaries while still enforcing anti-weakening rules and policy validation.</p>
+</li>
+<li>
+<p>Section 10 should add scenarios that cover mixed-boundary hybrid results, policy-driven placement denial, and attempts to weaken stricter defaults.</p>
+</li>
+<li>
+<p>Implementations should add automated tests for the validation scenarios below before relying on local assumptions about hybrid placement behavior.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_validation_scenarios_4"><a class="anchor" href="#_validation_scenarios_4"></a>9.9.8. Validation Scenarios</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>A hybrid tenant with shared subscription defaults resolves a production environment to dedicated runtime, dedicated data, and dedicated network because environment-level tightening and policy allow it.</p>
+</li>
+<li>
+<p>A hybrid tenant resolves mixed boundaries, such as dedicated runtime with shared data and dedicated network, and the placement is accepted because all three boundaries satisfy the common policy envelope.</p>
+</li>
+<li>
+<p>An environment attempts to relax a stricter subscription default, such as moving from dedicated network to shared network, and the platform rejects the weakening.</p>
+</li>
+<li>
+<p>Policy restricts data storage to approved regions, and placement is denied when the candidate runtime or data boundary would violate that policy.</p>
+</li>
+<li>
+<p>Policy requires dedicated network isolation for production, and the platform rejects a hybrid result that leaves the network boundary shared even if runtime or data became dedicated.</p>
+</li>
+<li>
+<p>A silo subscription default remains dedicated across all environments because environment-level rules cannot weaken it.</p>
+</li>
+<li>
+<p>A boundary change for a governed environment is accepted and recorded with subscription context, resolved boundaries, policy inputs, and final outcome.</p>
+</li>
+<li>
+<p>A placement decision is denied by policy and the denial is auditable and visible in operational telemetry through exported signals.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options_7"><a class="anchor" href="#_pros_and_cons_of_the_options_7"></a>9.9.9. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_resolve_all_boundaries_together_from_one_shared_isolation_decision"><a class="anchor" href="#_resolve_all_boundaries_together_from_one_shared_isolation_decision"></a>Resolve all boundaries together from one shared isolation decision</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because the final placement model appears simpler at first glance.</p>
+</li>
+<li>
+<p>Bad, because it makes hybrid cases harder to express cleanly.</p>
+</li>
+<li>
+<p>Bad, because runtime, data, and network concerns become unnecessarily coupled.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_resolve_runtime_data_and_network_boundaries_independently_under_a_common_policy_envelope"><a class="anchor" href="#_resolve_runtime_data_and_network_boundaries_independently_under_a_common_policy_envelope"></a>Resolve runtime, data, and network boundaries independently under a common policy envelope</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because hybrid placement stays expressive without changing the business hierarchy.</p>
+</li>
+<li>
+<p>Good, because each boundary can be validated explicitly against policy and default constraints.</p>
+</li>
+<li>
+<p>Good, because mixed boundary outcomes can still be made auditable and reviewable.</p>
+</li>
+<li>
+<p>Bad, because the model requires stronger validation and clearer operational visibility.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_restrict_hybrid_behavior_to_predefined_patterns_only"><a class="anchor" href="#_restrict_hybrid_behavior_to_predefined_patterns_only"></a>Restrict hybrid behavior to predefined patterns only</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because allowed combinations are easier to enumerate.</p>
+</li>
+<li>
+<p>Bad, because the platform becomes less flexible for legitimate workload-specific isolation needs.</p>
+</li>
+<li>
+<p>Bad, because teams may start creating exceptions outside the documented model when predefined patterns are too rigid.</p>
 </li>
 </ul>
 </div>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 </div>
@@ -3344,7 +3925,7 @@ Hybrid is intentionally first-class, but the architecture does not yet define ex
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-04-02 22:34:36 UTC
+Last updated 2026-04-02 22:52:00 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
