@@ -2,7 +2,7 @@
 
 ## Status
 
-* Status: proposed
+* Status: accepted
 
 ## Standardize how hybrid isolation is resolved and constrained
 
@@ -111,9 +111,9 @@ Chosen option: "Resolve runtime, data, and network boundaries independently unde
 
 ## Consequences
 
-* Section 6 should describe isolation resolution as independent boundary selection under one policy envelope.
-* Section 7 should explain that hybrid placement may resolve mixed boundaries while still enforcing anti-weakening rules and policy validation.
-* Section 10 should add scenarios that cover mixed-boundary hybrid results, policy-driven placement denial, and attempts to weaken stricter defaults.
+* Section 6 describes isolation resolution as independent boundary selection under one policy envelope.
+* Section 7 explains that hybrid placement may resolve mixed boundaries while still enforcing anti-weakening rules and policy validation.
+* Section 10 includes scenarios that cover mixed-boundary hybrid results, policy-driven placement denial, and attempts to weaken stricter defaults.
 * Implementations should add automated tests for the validation scenarios below before relying on local assumptions about hybrid placement behavior.
 
 ## Validation Scenarios

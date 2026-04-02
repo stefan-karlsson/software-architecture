@@ -97,11 +97,21 @@ Section 1 highlights the top five quality goals. This section keeps the broader 
 |The platform resolves dedicated boundaries for the stricter environment and shared boundaries for the others without introducing a different tenant hierarchy.
 
 |QS-13
+|Isolation Flexibility
+|A hybrid tenant resolves a production environment to dedicated runtime, shared data, and dedicated network because that mixed result satisfies the common policy envelope.
+|The platform accepts the mixed-boundary placement, records the resolved boundary combination, and keeps the business hierarchy unchanged.
+
+|QS-14
+|Policy Enforceability
+|An environment attempts to weaken a stricter subscription default, such as changing a dedicated network boundary to a shared network boundary.
+|The platform rejects the weakening attempt and preserves the stronger subscription-level isolation default.
+
+|QS-15
 |Policy Enforceability
 |Policy restricts data storage to approved regions.
 |The platform allows only placements whose resolved runtime and data boundaries comply with the approved-region policy.
 
-|QS-14
+|QS-16
 |Operability
 |An operator or auditor needs to understand why a privileged action was allowed or denied.
 |The platform exposes enough decision and audit context to reconstruct the principal, scoped grants, permissions, effective policy, and resulting decision.

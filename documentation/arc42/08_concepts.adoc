@@ -29,4 +29,4 @@ Auditability is a first-class concept rather than an afterthought. Canonical aud
 
 === Isolation Model and Tier Separation
 
-Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime binding, data boundary, and network boundary resolve the actual technical isolation for each environment.
+Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime binding, data boundary, and network boundary resolve the actual technical isolation for each environment. In hybrid mode, those three boundaries may resolve independently, but subscription isolation remains the default baseline, environment-level logic may only tighten that baseline, and effective policy is the final acceptance gate before placement succeeds.

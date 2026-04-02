@@ -72,18 +72,25 @@ flowchart TD
   IsolationProfile --> RuntimeBinding["Runtime Binding"]
   IsolationProfile --> DataBoundary["Data Boundary"]
   IsolationProfile --> NetworkBoundary["Network Boundary"]
+  Environment --> Tightening["Environment-Level Tightening"]
+  Tightening --> RuntimeBinding
+  Tightening --> DataBoundary
+  Tightening --> NetworkBoundary
   Policy["Effective Policy"] --> RuntimeBinding
   Policy --> DataBoundary
   Policy --> NetworkBoundary
   RuntimeBinding --> Placement["Resolved Placement"]
   DataBoundary --> Placement
   NetworkBoundary --> Placement
+  Placement --> AcceptDeny["Placement Accepted or Denied"]
 ....
 
 . Resolve the environment and its parent subscription context.
-. Read the subscription's subscription plan and isolation profile.
+. Read the subscription's subscription plan and isolation profile as the default isolation baseline.
+. Apply any environment-level tightening that strengthens the default without weakening it.
 . Evaluate policy constraints that can affect placement, region, network, retention, or access posture.
-. Resolve runtime binding, data boundary, and network boundary together.
+. Resolve runtime binding, data boundary, and network boundary independently under one policy envelope.
+. Accept placement only when every resolved boundary complies with policy and does not weaken a stricter default.
 . Produce the effective isolation outcome for the environment without changing the business hierarchy.
 
 Runtime and placement state are committed by the owning capability first and then propagated to downstream consumers or projections through asynchronous reconciliation as needed.

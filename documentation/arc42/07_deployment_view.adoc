@@ -47,7 +47,7 @@ flowchart LR
 |Shared for some environments, dedicated for others
 |Shared or dedicated depending on environment and policy
 |Shared or dedicated depending on environment and policy
-|Tenants that need stronger isolation only for selected workloads or environments, such as production.
+|Tenants that need stronger isolation only for selected workloads or environments, such as production. Mixed boundary combinations are valid only when they remain policy-compliant and do not weaken stricter defaults.
 
 |Silo
 |Dedicated runtime allocation
@@ -70,8 +70,10 @@ What is fixed is the logical model:
 * every tenant keeps the same business hierarchy regardless of isolation profile
 * isolation is resolved from subscription and policy information
 * runtime, data, and network boundaries may differ even when the tenant hierarchy does not
+* subscription isolation defines the default baseline, and environment-level logic may tighten that baseline without weakening it
 * hybrid isolation is a first-class case rather than an exception
 * a canonical audit store is a required logical architectural concern even though its concrete storage technology remains open
 * canonical audit evidence remains distinct from operational telemetry exported to observability tools
 * authoritative owner-managed stores and derived read models are distinct architectural concerns even though their concrete persistence technologies remain open
 * projected or convenience views may lag behind canonical owner state and do not become write authorities
+* mixed hybrid boundary outcomes are valid only when every resolved boundary remains policy-compliant and non-weakening

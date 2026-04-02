@@ -78,9 +78,9 @@ The following action backlog turns the open architectural gaps into concrete nex
 |The accepted ownership model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.
 
 |A-04
-|Define hybrid isolation resolution rules, including precedence between subscription defaults, scope-level policy, and environment-level tightening.
-|ADR 0007
-|Hybrid placement behavior becomes predictable enough to implement and test without per-team interpretation.
+|Apply the accepted hybrid isolation model to runtime examples, placement decisions, and future platform tests.
+|ADR 0007, Sections 6, 7, and 10
+|The accepted hybrid model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.
 
 |A-05
 |Add one concrete end-to-end governed runtime scenario that exercises authorization, policy, audit, and isolation together.
