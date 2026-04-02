@@ -454,81 +454,65 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_stakeholders">1.3. Stakeholders</a></li>
 </ul>
 </li>
-<li><a href="#section-introduction-and-goals">2. Introduction and Goals</a>
+<li><a href="#section-architecture-constraints">2. Architecture Constraints</a></li>
+<li><a href="#section-context-and-scope">3. Context and Scope</a>
 <ul class="sectlevel2">
-<li><a href="#_requirements_overview_2">2.1. Requirements Overview</a></li>
-<li><a href="#_quality_goals_2">2.2. Quality Goals</a></li>
-<li><a href="#_stakeholders_2">2.3. Stakeholders</a></li>
+<li><a href="#_business_context">3.1. Business Context</a></li>
+<li><a href="#_technical_context">3.2. Technical Context</a></li>
 </ul>
 </li>
-<li><a href="#section-architecture-constraints">3. Architecture Constraints</a></li>
-<li><a href="#section-context-and-context">4. Context and Scope</a>
+<li><a href="#section-solution-strategy">4. Solution Strategy</a></li>
+<li><a href="#section-building-block-view">5. Building Block View</a>
 <ul class="sectlevel2">
-<li><a href="#_business_context">4.1. Business Context</a></li>
-<li><a href="#_technical_context">4.2. Technical Context</a></li>
+<li><a href="#_whitebox_overall_system_product_platform_foundation">5.1. Whitebox Overall System: Product Platform Foundation</a></li>
+<li><a href="#_platform_hierarchy">5.2. Platform Hierarchy</a></li>
+<li><a href="#_principal_and_access_model">5.3. Principal and Access Model</a></li>
+<li><a href="#_isolation_and_placement_model">5.4. Isolation and Placement Model</a></li>
 </ul>
 </li>
-<li><a href="#section-solution-strategy">5. Solution Strategy</a></li>
-<li><a href="#section-building-block-view">6. Building Block View</a>
+<li><a href="#section-runtime-view">6. Runtime View</a>
 <ul class="sectlevel2">
-<li><a href="#_product_platform_control_plane">6.1. Product Platform Control Plane</a></li>
-<li><a href="#_level_2">6.2. Level 2</a></li>
-<li><a href="#_level_3">6.3. Level 3</a></li>
+<li><a href="#_authorization_decision_flow">6.1. Authorization Decision Flow</a></li>
+<li><a href="#_policy_inheritance_and_effective_policy_evaluation">6.2. Policy Inheritance and Effective Policy Evaluation</a></li>
+<li><a href="#_isolation_and_binding_resolution">6.3. Isolation and Binding Resolution</a></li>
 </ul>
 </li>
-<li><a href="#section-runtime-view">7. Runtime View</a>
+<li><a href="#section-deployment-view">7. Deployment View</a>
 <ul class="sectlevel2">
-<li><a href="#_control_plane_request_flow">7.1. Control Plane Request Flow</a></li>
-<li><a href="#_runtime_scenario_n">7.2. &lt;Runtime Scenario n&gt;</a></li>
+<li><a href="#_logical_isolation_profiles">7.1. Logical Isolation Profiles</a></li>
+<li><a href="#_deployment_assumptions_and_explicit_gaps">7.2. Deployment Assumptions and Explicit Gaps</a></li>
 </ul>
 </li>
-<li><a href="#section-deployment-view">8. Deployment View</a>
+<li><a href="#section-concepts">8. Cross-cutting Concepts</a>
 <ul class="sectlevel2">
-<li><a href="#_infrastructure_level_1">8.1. Infrastructure Level 1</a></li>
-<li><a href="#_infrastructure_level_2">8.2. Infrastructure Level 2</a></li>
+<li><a href="#_principal_and_scope_model">8.1. Principal and Scope Model</a></li>
+<li><a href="#_grant_role_and_permission_model">8.2. Grant, Role, and Permission Model</a></li>
+<li><a href="#_policy_versus_authorization">8.3. Policy Versus Authorization</a></li>
+<li><a href="#_inheritance_model">8.4. Inheritance Model</a></li>
+<li><a href="#_audit_model">8.5. Audit Model</a></li>
+<li><a href="#_isolation_model_and_tier_separation">8.6. Isolation Model and Tier Separation</a></li>
 </ul>
 </li>
-<li><a href="#section-concepts">9. Cross-cutting Concepts</a>
+<li><a href="#section-design-decisions">9. Architecture Decisions</a>
 <ul class="sectlevel2">
-<li><a href="#_concept_1">9.1. <em>&lt;Concept 1&gt;</em></a></li>
-<li><a href="#_concept_2">9.2. <em>&lt;Concept 2&gt;</em></a></li>
-<li><a href="#_concept_n">9.3. <em>&lt;Concept n&gt;</em></a></li>
+<li><a href="#_adopt_architecture_documentation_standards_and_tooling">9.1. Adopt architecture documentation standards and tooling</a></li>
+<li><a href="#_adopt_hierarchical_scope_and_inheritance_model">9.2. Adopt hierarchical scope and inheritance model</a></li>
+<li><a href="#_separate_subscription_plan_from_isolation_profile_and_boundary_bindings">9.3. Separate subscription plan from isolation profile and boundary bindings</a></li>
 </ul>
 </li>
-<li><a href="#section-design-decisions">10. Architecture Decisions</a></li>
-<li><a href="#_adopt_architecture_documentation_standards_and_tooling">Adopt architecture documentation standards and tooling</a>
-<ul class="sectlevel1">
-<li><a href="#_status">11. Status</a></li>
-<li><a href="#_standardize_architecture_documentation_approach_for_the_product_platform">12. Standardize architecture documentation approach for the Product Platform</a></li>
-<li><a href="#_context_and_problem_statement">13. Context and Problem Statement</a></li>
-<li><a href="#_decision_drivers">14. Decision Drivers</a></li>
-<li><a href="#_considered_options">15. Considered Options</a></li>
-<li><a href="#_decision_outcome">16. Decision Outcome</a>
+<li><a href="#section-quality-scenarios">10. Quality Requirements</a>
 <ul class="sectlevel2">
-<li><a href="#_positive_consequences">16.1. Positive Consequences</a></li>
-<li><a href="#_negative_consequences">16.2. Negative Consequences</a></li>
+<li><a href="#_quality_requirements_overview">10.1. Quality Requirements Overview</a></li>
+<li><a href="#_quality_scenarios">10.2. Quality Scenarios</a></li>
 </ul>
 </li>
-<li><a href="#_pros_and_cons_of_the_options">17. Pros and Cons of the Options</a>
+<li><a href="#section-technical-risks">11. Risks and Technical Debts</a>
 <ul class="sectlevel2">
-<li><a href="#_use_arc42_c4_doctoolchain_structurizr_dsl_adrtdr_records">17.1. Use arc42 + C4 + docToolchain + Structurizr DSL + ADR/TDR records</a></li>
-<li><a href="#_use_ad_hoc_markdown_and_manually_maintained_images">17.2. Use ad-hoc Markdown and manually maintained images</a></li>
+<li><a href="#_risks">11.1. Risks</a></li>
+<li><a href="#_technical_debts">11.2. Technical Debts</a></li>
 </ul>
 </li>
-<li><a href="#section-quality-scenarios">18. Quality Requirements</a>
-<ul class="sectlevel2">
-<li><a href="#_quality_tree">18.1. Quality Tree</a></li>
-<li><a href="#_quality_scenarios">18.2. Quality Scenarios</a></li>
-</ul>
-</li>
-<li><a href="#section-technical-risks">19. Risks and Technical Debts</a>
-<ul class="sectlevel2">
-<li><a href="#_technical_debts">19.1. Technical Debts</a></li>
-</ul>
-</li>
-<li><a href="#section-glossary">20. Glossary</a></li>
-</ul>
-</li>
+<li><a href="#section-glossary">12. Glossary</a></li>
 </ul>
 </div>
 </div>
@@ -546,354 +530,231 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="section-introduction-and-goals"><a class="anchor" href="#section-introduction-and-goals"></a>1. Introduction and Goals</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The goal is to establish a scalable product platform that provides a shared foundation for product capabilities while separating platform management concerns from product-facing functionality.</p>
+<p>This section summarizes the architectural drivers for the Product Platform Foundation. It focuses on the hierarchical platform model, the governance and authorization capabilities that must be shared across all tenants, and the quality goals that drive the resulting design.</p>
 </div>
 <div class="sect2">
 <h3 id="_requirements_overview"><a class="anchor" href="#_requirements_overview"></a>1.1. Requirements Overview</h3>
 <div class="sect3">
-<h4 id="_platform_structure"><a class="anchor" href="#_platform_structure"></a>1.1.1. Platform Structure</h4>
+<h4 id="_problem_and_goal"><a class="anchor" href="#_problem_and_goal"></a>1.1.1. Problem and Goal</h4>
 <div class="paragraph">
-<p>The platform is expected to consist of two main parts:</p>
+<p>The Product Platform Foundation provides the shared architecture for identity and access, policy inheritance, auditability, hierarchical scope management, and tenant isolation. It treats <code>Platform &#8594; Tenant &#8594; Workspace &#8594; Project / Service &#8594; Environment</code> as the canonical business hierarchy.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_business_goals"><a class="anchor" href="#_business_goals"></a>1.1.2. Business Goals</h4>
+<div class="paragraph">
+<p>The platform foundation should help the organization:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>a <strong>control plane</strong></p>
+<p>manage human and machine principals consistently across all scopes</p>
 </li>
 <li>
-<p>an <strong>application plane</strong></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The separation between control plane and application plane is a fundamental architectural decision that enables independent evolution, scalability, and clear ownership boundaries.</p>
-</div>
-<div class="sect4">
-<h5 id="_control_plane"><a class="anchor" href="#_control_plane"></a>Control Plane</h5>
-<div class="paragraph">
-<p>The <strong>control plane</strong> will provide the central capabilities needed to manage, configure, govern, and operate the platform. This includes responsibilities such as administration, account, workspace and environment lifecycle management, configuration, access control, operational visibility, and other shared platform management capabilities.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_application_plane"><a class="anchor" href="#_application_plane"></a>Application Plane</h5>
-<div class="paragraph">
-<p>The <strong>application plane</strong> will contain the product-facing capabilities built on top of the platform. At this stage, the detailed scope of the application plane is not yet fully defined. This is intentional. The platform is being designed to support future product needs, even where all business capabilities are not yet known.</p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_key_requirement_incremental_growth"><a class="anchor" href="#_key_requirement_incremental_growth"></a>1.1.2. Key Requirement: Incremental Growth</h4>
-<div class="paragraph">
-<p>A key requirement is that the platform must support incremental growth. It should be possible to introduce new application capabilities over time without major redesign of the underlying foundation. The architecture should therefore promote clear separation of responsibilities, modular design, and the ability to evolve different parts of the platform independently.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_business_objectives"><a class="anchor" href="#_business_objectives"></a>1.1.3. Business Objectives</h4>
-<div class="paragraph">
-<p>From a business perspective, the platform should help the organization:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>reduce repeated work across products and teams</p>
+<p>apply one hierarchical governance model to shared, silo, and hybrid tenants</p>
 </li>
 <li>
-<p>improve consistency in how products are built and operated</p>
+<p>separate authorization, policy, and audit concerns without losing traceability</p>
 </li>
 <li>
-<p>shorten the time from idea to delivered capability</p>
+<p>support subscription plans without coupling pricing directly to hosting isolation</p>
 </li>
 <li>
-<p>provide a stronger foundation for future growth</p>
+<p>make privileged and regulated activity auditable across the full hierarchy</p>
 </li>
 <li>
-<p>support governance, security, and operational control in a consistent way</p>
+<p>allow stricter controls at lower scopes without weakening mandatory parent controls</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_flexibility_and_long_term_evolution"><a class="anchor" href="#_flexibility_and_long_term_evolution"></a>1.1.4. Flexibility and Long-Term Evolution</h4>
-<div class="paragraph">
-<p>The most important expectation is not to fully define every future application capability from the start, but to create a platform foundation that is stable enough to support long-term use and flexible enough to accommodate change.</p>
+<h4 id="_requirement_clusters"><a class="anchor" href="#_requirement_clusters"></a>1.1.3. Requirement Clusters</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Cluster</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identity and access foundation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provide principals, memberships, grants, roles, permissions, and scoped access decisions for tenant, workspace, project / service, and environment boundaries.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hierarchical scope governance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manage the canonical hierarchy of tenant, workspace, project / service, and environment, including inherited defaults, audit context, and scope-aware access.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy and audit baseline</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintain a platform policy baseline plus tenant, workspace, project, and environment policies, and audit privileged or regulated activity across all scopes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation and placement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Support shared, silo, and hybrid isolation without changing the business hierarchy by resolving runtime, data, and network boundaries from subscription and isolation information.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="sect3">
+<h4 id="_core_tasks_and_capabilities"><a class="anchor" href="#_core_tasks_and_capabilities"></a>1.1.4. Core Tasks and Capabilities</h4>
 <div class="paragraph">
-<p>At this point, the control plane is better understood than the application plane. The architecture should therefore reflect both what is already known and what is expected to emerge later. The application plane should be treated as an extensible area of the platform that will be shaped further as business needs become clearer.</p>
+<p>The architecture is primarily expected to support the following tasks:</p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>authenticate a user or service account and resolve principal identity</p>
+</li>
+<li>
+<p>resolve memberships and scoped grants for tenant, workspace, project / service, and environment boundaries</p>
+</li>
+<li>
+<p>expand roles into fine-grained permissions for the requested action</p>
+</li>
+<li>
+<p>evaluate effective policy after permission lookup and before access is allowed</p>
+</li>
+<li>
+<p>record privileged changes, secret access, production access, deployments, and billing or administration changes in the correct audit context</p>
+</li>
+<li>
+<p>resolve runtime, data, and network isolation from the subscription&#8217;s subscription plan and isolation profile</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_requirement_sources"><a class="anchor" href="#_requirement_sources"></a>1.1.5. Requirement Sources</h4>
+<div class="paragraph">
+<p>The repository does not contain linked external requirements or backlog exports. This chapter therefore uses local architecture evidence and explicit source-reference slots:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 50.0001%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Reference ID</th>
+<th class="tableblock halign-left valign-top">Source</th>
+<th class="tableblock halign-left valign-top">Status / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REQ-SRC-001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External product or platform requirements specification</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not yet linked in this repository. Reserve this slot for an approved requirements source.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REQ-SRC-002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External backlog or work-item system</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not yet linked in this repository. Reserve this slot for stable epic, feature, or story references.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REQ-EVID-001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>documentation/workspace.dsl</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Current repo evidence for the platform foundation context and capability-module decomposition.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REQ-EVID-002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This arc42 book</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Current source of truth for the hierarchical domain model, policy model, audit model, and isolation model.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_quality_goals"><a class="anchor" href="#_quality_goals"></a>1.2. Quality Goals</h3>
 <div class="paragraph">
-<p>The following quality goals describe the most important architectural characteristics of the product platform. These goals guide design decisions and ensure the platform supports long-term growth and evolution.</p>
-</div>
-<div class="paragraph">
-<p>The primary quality goals for this platform are evolvability, modularity, scalability, security, reliability, and observability.</p>
-</div>
-<div class="sect3">
-<h4 id="_evolvability"><a class="anchor" href="#_evolvability"></a>1.2.1. Evolvability</h4>
-<div class="paragraph">
-<p>The platform must support continuous evolution. New capabilities should be introduced without requiring major redesign. The architecture must accommodate future application plane functionality that is not yet defined.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_modularity"><a class="anchor" href="#_modularity"></a>1.2.2. Modularity</h4>
-<div class="paragraph">
-<p>The platform must be composed of loosely coupled components with clear boundaries. This enables independent development, deployment, and replacement of capabilities across both the control plane and application plane.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_scalability"><a class="anchor" href="#_scalability"></a>1.2.3. Scalability</h4>
-<div class="paragraph">
-<p>The platform must support growth in accounts, users, workspaces, environments, and application capabilities. The control plane and application plane should scale independently to handle increasing demand.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_security"><a class="anchor" href="#_security"></a>1.2.4. Security</h4>
-<div class="paragraph">
-<p>The platform must enforce consistent security controls, including access management, isolation between accounts, and protection of sensitive data. Security must be applied uniformly across both planes.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_reliability"><a class="anchor" href="#_reliability"></a>1.2.5. Reliability</h4>
-<div class="paragraph">
-<p>The platform must provide stable and predictable behavior. Failures in one part of the system should be isolated to minimize impact on other capabilities. The platform should support resilient operation under partial failure.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_observability"><a class="anchor" href="#_observability"></a>1.2.6. Observability</h4>
-<div class="paragraph">
-<p>The platform must provide clear insight into system behavior, usage, and operational health. Metrics, logs, and traces should enable monitoring, troubleshooting, and informed decision-making.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_stakeholders"><a class="anchor" href="#_stakeholders"></a>1.3. Stakeholders</h3>
-<div class="paragraph">
-<p>The following table lists the stakeholders of the product platform and what they can expect from this documentation.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="section-introduction-and-goals"><a class="anchor" href="#section-introduction-and-goals"></a>2. Introduction and Goals</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The goal is to establish a scalable product platform that provides a shared foundation for product capabilities while separating platform management concerns from product-facing functionality. This enables incremental delivery of future products and supports long-term evolution.</p>
-</div>
-<div class="sect2">
-<h3 id="_requirements_overview_2"><a class="anchor" href="#_requirements_overview_2"></a>2.1. Requirements Overview</h3>
-<div class="sect3">
-<h4 id="_platform_structure_2"><a class="anchor" href="#_platform_structure_2"></a>2.1.1. Platform Structure</h4>
-<div class="paragraph">
-<p>The platform is expected to consist of two main parts:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>a <strong>control plane</strong></p>
-</li>
-<li>
-<p>an <strong>application plane</strong></p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The separation between control plane and application plane is a fundamental architectural decision that enables independent evolution, scalability, and clear ownership boundaries.</p>
-</div>
-<div class="sect4">
-<h5 id="_control_plane_2"><a class="anchor" href="#_control_plane_2"></a>Control Plane</h5>
-<div class="paragraph">
-<p>The <strong>control plane</strong> will provide the central capabilities needed to manage, configure, govern, and operate the platform. This includes responsibilities such as administration, account, workspace and environment lifecycle management, configuration, access control, operational visibility, and other shared platform management capabilities.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_application_plane_2"><a class="anchor" href="#_application_plane_2"></a>Application Plane</h5>
-<div class="paragraph">
-<p>The <strong>application plane</strong> will contain the product-facing capabilities built on top of the platform. At this stage, the detailed scope of the application plane is not yet fully defined. This is intentional. The platform is being designed to support future product needs, even where all business capabilities are not yet known.</p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_key_requirement_incremental_growth_2"><a class="anchor" href="#_key_requirement_incremental_growth_2"></a>2.1.2. Key Requirement: Incremental Growth</h4>
-<div class="paragraph">
-<p>A key requirement is that the platform must support incremental growth. It should be possible to introduce new application capabilities over time without major redesign of the underlying foundation. The architecture should therefore promote clear separation of responsibilities, modular design, and the ability to evolve different parts of the platform independently.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_business_objectives_2"><a class="anchor" href="#_business_objectives_2"></a>2.1.3. Business Objectives</h4>
-<div class="paragraph">
-<p>From a business perspective, the platform should help the organization:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>reduce repeated work across products and teams</p>
-</li>
-<li>
-<p>improve consistency in how products are built and operated</p>
-</li>
-<li>
-<p>shorten the time from idea to delivered capability</p>
-</li>
-<li>
-<p>provide a stronger foundation for future growth</p>
-</li>
-<li>
-<p>support governance, security, and operational control in a consistent way</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_flexibility_and_long_term_evolution_2"><a class="anchor" href="#_flexibility_and_long_term_evolution_2"></a>2.1.4. Flexibility and Long-Term Evolution</h4>
-<div class="paragraph">
-<p>The most important expectation is not to fully define every future application capability from the start, but to create a platform foundation that is stable enough to support long-term use and flexible enough to accommodate change.</p>
-</div>
-<div class="paragraph">
-<p>At this point, the control plane is better understood than the application plane. The architecture should therefore reflect both what is already known and what is expected to emerge later. The application plane should be treated as an extensible area of the platform that will be shaped further as business needs become clearer.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_quality_goals_2"><a class="anchor" href="#_quality_goals_2"></a>2.2. Quality Goals</h3>
-<div class="paragraph">
-<p>The following quality goals describe the most important characteristics of the product platform. These goals guide architectural decisions and help ensure the platform supports long-term business needs.</p>
-</div>
-<div class="paragraph">
-<p>The most important quality goals for this platform are evolvability, modularity, scalability, and consistency.</p>
-</div>
-<div class="sect3">
-<h4 id="_scalability_2"><a class="anchor" href="#_scalability_2"></a>2.2.1. Scalability</h4>
-<div class="paragraph">
-<p>The platform must support growth in accounts, users, workspaces, environments, and application capabilities without requiring major redesign. Both the control plane and application plane should scale independently to handle increasing demand.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_modularity_2"><a class="anchor" href="#_modularity_2"></a>2.2.2. Modularity</h4>
-<div class="paragraph">
-<p>The platform must allow new capabilities to be added incrementally. Components should be loosely coupled so that teams can introduce, update, or replace functionality without impacting unrelated parts of the platform.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_evolvability_2"><a class="anchor" href="#_evolvability_2"></a>2.2.3. Evolvability</h4>
-<div class="paragraph">
-<p>The platform must support continuous evolution. Since the full scope of the application plane is not yet known, the architecture should enable future expansion while maintaining stability of existing capabilities.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_consistency"><a class="anchor" href="#_consistency"></a>2.2.4. Consistency</h4>
-<div class="paragraph">
-<p>The platform should provide consistent patterns for identity, configuration, access control, observability, and operational management. This ensures that new capabilities follow the same principles and provide a unified experience.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_reusability"><a class="anchor" href="#_reusability"></a>2.2.5. Reusability</h4>
-<div class="paragraph">
-<p>Shared capabilities should be designed for reuse across multiple products and services. This reduces duplication and speeds up delivery of new functionality.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_reliability_2"><a class="anchor" href="#_reliability_2"></a>2.2.6. Reliability</h4>
-<div class="paragraph">
-<p>The platform must provide stable and predictable behavior for both platform management and application capabilities. Failures in one part of the system should have minimal impact on other parts.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_security_2"><a class="anchor" href="#_security_2"></a>2.2.7. Security</h4>
-<div class="paragraph">
-<p>The platform must enforce consistent security controls, including access management, isolation between accounts, and protection of sensitive data across both planes.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_operational_visibility"><a class="anchor" href="#_operational_visibility"></a>2.2.8. Operational Visibility</h4>
-<div class="paragraph">
-<p>The platform should provide clear visibility into usage, configuration, and operational status. This enables teams to monitor the platform, understand behavior, and respond to issues effectively.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_maintainability"><a class="anchor" href="#_maintainability"></a>2.2.9. Maintainability</h4>
-<div class="paragraph">
-<p>The platform should be easy to understand, operate, and maintain. Clear boundaries, separation of concerns, and standard patterns should reduce complexity over time.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_stakeholders_2"><a class="anchor" href="#_stakeholders_2"></a>2.3. Stakeholders</h3>
-<div class="paragraph">
-<p>The following table lists the stakeholders of the product platform and what they can expect from this documentation.</p>
+<p>The top quality goals for this architecture are intentionally limited to five. Section 4 summarizes the strategic responses and <a href="#section-quality-scenarios">Section 10</a> contains the fuller quality model and scenarios.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.1429%;">
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Role</th>
-<th class="tableblock halign-left valign-top">Expectations</th>
+<th class="tableblock halign-left valign-top">Priority</th>
+<th class="tableblock halign-left valign-top">Quality Goal</th>
+<th class="tableblock halign-left valign-top">Scenario</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Software Architects</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
-<ul>
-<li>
-<p>Gain an overview of the product platform architecture</p>
-</li>
-<li>
-<p>Understand the separation between control plane and application plane</p>
-</li>
-<li>
-<p>Use shared architectural principles as a reference for decision-making</p>
-</li>
-<li>
-<p>Align architectural work across teams</p>
-</li>
-<li>
-<p>Support long-term scalability and evolution of the platform</p>
-</li>
-</ul>
-</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security and Least Privilege</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When a user or service account requests a privileged action, the platform should resolve only the permissions granted at the relevant scope and deny any action that is not explicitly allowed.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Developers</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
-<ul>
-<li>
-<p>Gain a clear understanding of the platform structure</p>
-</li>
-<li>
-<p>Understand where to place new functionality</p>
-</li>
-<li>
-<p>Follow consistent design principles when building solutions</p>
-</li>
-<li>
-<p>Identify opportunities to reuse shared platform capabilities</p>
-</li>
-<li>
-<p>Collaborate effectively with architects and other teams</p>
-</li>
-</ul>
-</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy Enforceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When a child scope defines a local rule, the platform should apply inherited parent policy and allow the child to tighten controls without weakening mandatory parent requirements.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Product Owners</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
-<ul>
-<li>
-<p>Understand the purpose of the platform</p>
-</li>
-<li>
-<p>See how future capabilities can be added incrementally</p>
-</li>
-<li>
-<p>Align product planning with platform evolution</p>
-</li>
-</ul>
-</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Auditability and Traceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When a privileged or regulated action occurs, the platform should record it with the correct scope, actor, decision context, and resulting effect.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation Flexibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When two tenants use different hosting models, they should keep the same business hierarchy while the platform resolves different runtime, data, and network boundaries for shared, silo, or hybrid isolation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evolvability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When the platform adds a new governed capability or stricter control, it should extend the existing hierarchy, policy, and authorization model instead of introducing a separate parallel model.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Operability remains important, but it is treated as a detailed quality requirement in <a href="#section-quality-scenarios">Section 10</a> rather than a top-five introductory goal.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_stakeholders"><a class="anchor" href="#_stakeholders"></a>1.3. Stakeholders</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Role</th>
+<th class="tableblock halign-left valign-top">Expectation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform Administrator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needs clear rules for platform baseline policy, scope hierarchy, audit coverage, and isolation behavior across all tenants.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security and Compliance Stakeholder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needs assurance that least privilege, policy inheritance, audit logging, retention, and regulated access controls are built into the platform model.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Product Engineer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needs a shared authorization, policy, and hierarchy model that can be reused consistently when new services and environments are introduced.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software Architect</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needs a clear and extensible foundation model for scopes, inheritance, isolation, and governance so future capabilities do not fragment the platform.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Product Owner</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Needs a compact explanation of why the platform uses one hierarchy for all tenants, how subscription plans differ from isolation, and how governance requirements shape the architecture.</p></td>
 </tr>
 </tbody>
 </table>
@@ -902,335 +763,698 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-architecture-constraints"><a class="anchor" href="#section-architecture-constraints"></a>3. Architecture Constraints</h2>
+<h2 id="section-architecture-constraints"><a class="anchor" href="#section-architecture-constraints"></a>2. Architecture Constraints</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>The following constraints are fixed by the chosen platform foundation model and by the documentation/tooling approach used in this repository.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 33.3333%;">
+<col style="width: 50.0001%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Category</th>
+<th class="tableblock halign-left valign-top">Constraint</th>
+<th class="tableblock halign-left valign-top">Consequence for the Architecture</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Core domain structure</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The canonical hierarchy is <code>Platform &#8594; Tenant &#8594; Workspace &#8594; Project / Service &#8594; Environment</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All access, policy, audit, inheritance, defaults, and isolation reasoning must follow this hierarchy rather than introducing a second parallel business structure.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorization model</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Access must follow <code>Principal &#8594; Membership &#8594; Grant &#8594; Role &#8594; Permission &#8594; Scope</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Roles remain reusable bundles, permissions remain the smallest action unit, and grants must always be scoped to tenant, workspace, project / service, or environment.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Principal model</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The supported principals are user, service account, and group.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Human and machine access must be represented consistently, while group membership provides aggregation without replacing scoped grants.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy model</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy is distinct from authorization and inherits downward from platform baseline to tenant, workspace, project, and environment policies.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Permission lookup happens before policy evaluation, and lower scopes may tighten controls but must not weaken mandatory parent rules.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation model</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shared, silo, and hybrid tenants must keep the same business hierarchy.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation differences are expressed through isolation profile plus runtime, data, and network boundaries, not through a second tenant model.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Commercial model</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Subscription plan and isolation profile are separate concepts.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pricing and entitlement may influence isolation choices, but they cannot be treated as the same field or the same architectural concern.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Audit model</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Privileged and regulated actions must be auditable at the correct scope.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Membership changes, grants, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor and scope context.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Documentation and generation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The repository standardizes on AsciiDoc, arc42, docToolchain, Structurizr DSL, and generated ADR includes.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maintained source must stay in AsciiDoc, C4 diagrams must come from <code>documentation/workspace.dsl</code>, and ADR updates must flow through <code>exportMarkdown</code> before HTML generation.</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-context-and-context"><a class="anchor" href="#section-context-and-context"></a>4. Context and Scope</h2>
+<h2 id="section-context-and-scope"><a class="anchor" href="#section-context-and-scope"></a>3. Context and Scope</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_business_context"><a class="anchor" href="#_business_context"></a>4.1. Business Context</h3>
+<h3 id="_business_context"><a class="anchor" href="#_business_context"></a>3.1. Business Context</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-plantuml-md5-2c2248ffa7e0acd0cf4d6138cd5de785.svg" alt="Diagram" width="70%" height="617">
+<img src="./images/diag-plantuml-md5-6a7bb4197167081211046af31910469b.svg" alt="Diagram" width="70%" height="743">
 </div>
 </div>
 <div class="paragraph">
-<p><strong>Legende</strong></p>
+<p>The system boundary in this repository is the Product Platform Foundation. It provides the shared governance architecture for principals, scopes, policy inheritance, auditability, and isolation control.</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/diag-plantuml-md5-63fddcca3a6e5f27eb5b402fef456ae2.svg" alt="Diagram" width="50%" height="278">
-</div>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Communication Partner</th>
+<th class="tableblock halign-left valign-top">Inputs to the Platform Foundation</th>
+<th class="tableblock halign-left valign-top">Outputs from the Platform Foundation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Human-initiated access, administration actions, membership changes, grant requests, policy changes, and scoped operational actions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorization decisions, hierarchy-aware access, policy-enforced outcomes, and scope-specific audit context.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Automation Client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine-initiated access through service accounts, including deployment and operational automation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Service-account authorization decisions, scoped access to projects / services and environments, and audited machine activity.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identity Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identity claims and authentication results for users and service accounts.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication and identity-validation requests from the platform foundation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Observability Stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No direct business command input is modeled.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Audit and operational telemetry emitted by the platform foundation.</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="_technical_context"><a class="anchor" href="#_technical_context"></a>4.2. Technical Context</h3>
+<h3 id="_technical_context"><a class="anchor" href="#_technical_context"></a>3.2. Technical Context</h3>
 <div class="paragraph">
-<p><strong>&lt;Diagram or Table&gt;</strong></p>
+<p>The technical context maps the same communication partners to technical interfaces and channels. Concrete API and infrastructure protocols are intentionally left open because they are not yet fixed by the architecture definition.</p>
 </div>
-<div class="paragraph">
-<p><strong>&lt;optionally: Explanation of technical interfaces&gt;</strong></p>
-</div>
-<div class="paragraph">
-<p><strong>&lt;Mapping Input/Output to Channels&gt;</strong></p>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 14.2857%;">
+<col style="width: 28.5714%;">
+<col style="width: 28.5714%;">
+<col style="width: 28.5715%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Partner</th>
+<th class="tableblock halign-left valign-top">Interface / Channel</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+<th class="tableblock halign-left valign-top">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform Foundation access interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Initiate scope administration, access changes, policy changes, and governed operations.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The exact user-facing protocol and UI structure are intentionally unspecified in the repository.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Automation Client</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Service-account-driven platform interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Initiate machine-to-platform calls for governed project / service and environment actions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The architecture requires service-account access, but not a specific API protocol or client technology.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identity Provider</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authentication and identity-claims integration</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Validate principal identity and return claims used during authorization and policy evaluation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The identity exchange is required, but protocol details are intentionally unspecified.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Observability Stack</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Telemetry export channel</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Receive audit and operational signals for monitoring, troubleshooting, and governance evidence.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The architecture proves telemetry export, but not a concrete telemetry protocol or product choice.</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-solution-strategy"><a class="anchor" href="#section-solution-strategy"></a>5. Solution Strategy</h2>
+<h2 id="section-solution-strategy"><a class="anchor" href="#section-solution-strategy"></a>4. Solution Strategy</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>This section summarizes the small number of strategic decisions that shape the platform foundation architecture. The detailed structure appears in <a href="#section-building-block-view">Section 5</a>, the behavior in <a href="#section-runtime-view">Section 6</a>, and the cross-cutting rules in <a href="#section-concepts">Section 8</a>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Decision Area</th>
+<th class="tableblock halign-left valign-top">Strategy</th>
+<th class="tableblock halign-left valign-top">Why It Matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hierarchy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use one canonical hierarchy: platform, tenant, workspace, project / service, environment.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Keeps governance, access, inheritance, and audit consistent across the platform instead of fragmenting the model.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorization</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolve access through principal, membership, grant, role, permission, and scope.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Separates identity, scope membership, and reusable permission bundles while supporting fine-grained access control.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Treat policy as distinct from authorization and evaluate it after permission lookup.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Allows mandatory controls, approval requirements, retention rules, trusted-network requirements, and regional restrictions to be enforced consistently.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Keep the same business hierarchy for all tenants and express hosting differences through isolation profile plus runtime, data, and network boundaries.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supports shared, silo, and hybrid operation without inventing separate business models for different hosting choices.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Audit and governance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Make audit context a first-class concern across memberships, grants, policy changes, production access, secrets, deployments, and billing or administration changes.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supports compliance, traceability, and operational review across the entire hierarchy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Commercial model</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Separate subscription plan from isolation profile.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prevents pricing concerns from being confused with the technical isolation model.</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-building-block-view"><a class="anchor" href="#section-building-block-view"></a>6. Building Block View</h2>
+<h2 id="section-building-block-view"><a class="anchor" href="#section-building-block-view"></a>5. Building Block View</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_product_platform_control_plane"><a class="anchor" href="#_product_platform_control_plane"></a>6.1. Product Platform Control Plane</h3>
+<h3 id="_whitebox_overall_system_product_platform_foundation"><a class="anchor" href="#_whitebox_overall_system_product_platform_foundation"></a>5.1. Whitebox Overall System: Product Platform Foundation</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-plantuml-md5-cb9b16d6c5be39d8d296f2e0144bdb63.svg" alt="Diagram" width="70%" height="819">
+<img src="./images/diag-plantuml-md5-86d0ffca1f337c7136ef8329859beaeb.svg" alt="Diagram" width="70%" height="1549">
 </div>
 </div>
 <div class="paragraph">
-<p><strong>Legend</strong></p>
+<p>The Product Platform Foundation is decomposed into five capability-oriented building blocks. They separate identity and access, policy, hierarchy management, audit, and isolation logic without changing the business hierarchy seen by tenants and internal teams.</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/diag-plantuml-md5-643ecf0e2bd04be0ee29d66a36530452.svg" alt="Diagram" width="50%" height="278">
-</div>
-</div>
-<div class="paragraph">
-<p><em><strong>&lt;Overview Diagram&gt;</strong></em></p>
-</div>
-<div style="page-break-after: always;"></div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Motivation</dt>
 <dd>
-<p><em>&lt;text explanation&gt;</em></p>
+<p>The decomposition keeps business hierarchy, authorization, policy inheritance, auditability, and isolation resolution explicit instead of mixing them into one undifferentiated service or inventing different models for shared and silo tenants.</p>
 </dd>
 <dt class="hdlist1">Contained Building Blocks</dt>
-<dd>
-<p><em>&lt;Description of contained building block (black boxes)&gt;</em></p>
-</dd>
-<dt class="hdlist1">Important Interfaces</dt>
-<dd>
-<p><em>&lt;Description of important interfaces&gt;</em></p>
-</dd>
 </dl>
 </div>
-<div style="page-break-after: always;"></div>
-<div class="sect3">
-<h4 id="_name_black_box_1"><a class="anchor" href="#_name_black_box_1"></a>6.1.1. &lt;Name black box 1&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;Purpose/Responsibility&gt;</em></p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Building Block</th>
+<th class="tableblock halign-left valign-top">Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identity and Access Capability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Manages principals, groups, memberships, grants, roles, and permissions, and resolves the authorization context for a requested action.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy Management Capability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintains platform baseline policy plus scoped tenant, workspace, project, and environment policies, and computes effective policy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tenant Hierarchy and Scope Management Capability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maintains tenants, billing accounts, subscriptions, workspaces, projects / services, and environments as the canonical scope hierarchy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Audit and Governance Capability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Records privileged and regulated activity, preserves scope context, and exports audit and operational telemetry.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation and Placement Capability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves isolation profile and the runtime, data, and network boundaries used by each environment.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Important Relationships</dt>
+</dl>
 </div>
-<div class="paragraph">
-<p><em>&lt;Interface(s)&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;(Optional) Quality/Performance Characteristics&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;(Optional) Directory/File Location&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;(Optional) Fulfilled Requirements&gt;</em></p>
-</div>
-<div class="paragraph">
-<p><em>&lt;(optional) Open Issues/Problems/Risks&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_name_black_box_2"><a class="anchor" href="#_name_black_box_2"></a>6.1.2. &lt;Name black box 2&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;black box placeholder&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_name_black_box_n"><a class="anchor" href="#_name_black_box_n"></a>6.1.3. &lt;Name black box n&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;black box placeholder&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_name_interface_1"><a class="anchor" href="#_name_interface_1"></a>6.1.4. &lt;Name interface 1&gt;</h4>
-<div class="paragraph">
-<p>&#8230;&#8203;</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_name_interface_m"><a class="anchor" href="#_name_interface_m"></a>6.1.5. &lt;Name interface m&gt;</h4>
-<div style="page-break-after: always;"></div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_level_2"><a class="anchor" href="#_level_2"></a>6.2. Level 2</h3>
-<div class="sect3">
-<h4 id="_white_box_control_plane_api"><a class="anchor" href="#_white_box_control_plane_api"></a>6.2.1. White Box Control Plane API</h4>
-<div class="imageblock">
-<div class="content">
-<img src="./images/diag-plantuml-md5-01c0a45a9292e36b2a8ee27d8c9292d2.svg" alt="Diagram" width="70%" height="835">
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Legend</strong></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/diag-plantuml-md5-ebe9dfe74f28f30087f9104158ed44ce.svg" alt="Diagram" width="50%" height="207">
-</div>
-</div>
-<div class="paragraph">
-<p><em>&lt;white box placeholder&gt;</em></p>
-</div>
-<div style="page-break-after: always;"></div>
-</div>
-<div class="sect3">
-<h4 id="_white_box_building_block_2"><a class="anchor" href="#_white_box_building_block_2"></a>6.2.2. White Box <em>&lt;building block 2&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;white box placeholder&gt;</em></p>
-</div>
-<div class="paragraph">
-<p>&#8230;&#8203;</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_white_box_building_block_m"><a class="anchor" href="#_white_box_building_block_m"></a>6.2.3. White Box <em>&lt;building block m&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;white box placeholder&gt;</em></p>
-</div>
-<div style="page-break-after: always;"></div>
-</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Relationship</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identity and Access &#8594; Tenant Hierarchy and Scope Management</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Memberships and grants are meaningful only when they can be resolved against the hierarchy and scope chain.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identity and Access &#8594; Policy Management</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Effective policy is evaluated after permissions are resolved and before access is allowed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy Management &#8594; Audit and Governance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy decisions and policy changes must be auditable at the correct scope.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation and Placement &#8594; Tenant Hierarchy and Scope Management</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation resolution depends on the subscription, project / service, and environment context.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation and Placement &#8594; Policy Management</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Placement and boundary choices must respect inherited policy constraints such as approved regions or network restrictions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All capability modules &#8594; Audit and Governance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Privileged and regulated events must preserve actor, scope, and decision context.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
-<h3 id="_level_3"><a class="anchor" href="#_level_3"></a>6.3. Level 3</h3>
-<div class="sect3">
-<h4 id="_white_box_building_block_x_1"><a class="anchor" href="#_white_box_building_block_x_1"></a>6.3.1. White Box &lt;_building block x.1_&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;white box placeholder&gt;</em></p>
+<h3 id="_platform_hierarchy"><a class="anchor" href="#_platform_hierarchy"></a>5.2. Platform Hierarchy</h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/diag-mermaid-md5-586e2859433f4fe1807d741378e919ce.svg" alt="Diagram" width="3273" height="718">
 </div>
 </div>
-<div class="sect3">
-<h4 id="_white_box_building_block_x_2"><a class="anchor" href="#_white_box_building_block_x_2"></a>6.3.2. White Box &lt;_building block x.2_&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;white box placeholder&gt;</em></p>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Scope Level</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines the global baseline for policy, governance, and shared architectural defaults.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tenant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Represents the governed organizational or customer boundary, including subscription and tenant-specific policy and audit context.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Workspace</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Groups related work within a tenant and provides a narrower boundary for membership, policy, and audit context.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Project / Service</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Represents the governed delivery or service boundary inside a workspace and remains a single unified scope level in this architecture.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Environment</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Represents the deployment-facing operational boundary where effective policy, audit, and isolation become most concrete.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="sect2">
+<h3 id="_principal_and_access_model"><a class="anchor" href="#_principal_and_access_model"></a>5.3. Principal and Access Model</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Human principal that performs governed actions in the hierarchy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Service Account</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine principal used for automation and service-to-platform access.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Group</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Collection of principals used to manage access at scale.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Membership</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Association that answers who belongs to which scope or organizational context.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Grant</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Assignment of a role at a specific scope. Grants are always scoped to tenant, workspace, project / service, or environment.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Role</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reusable permission bundle that expresses a meaningful access profile.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Permission</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Smallest action unit, such as <code>environment.deploy</code>, <code>audit.view</code>, or <code>policy.manage</code>.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="sect3">
-<h4 id="_white_box_building_block_y_1"><a class="anchor" href="#_white_box_building_block_y_1"></a>6.3.3. White Box &lt;_building block y.1_&gt;</h4>
-<div class="paragraph">
-<p><em>&lt;white box placeholder&gt;</em></p>
-</div>
+<div class="sect2">
+<h3 id="_isolation_and_placement_model"><a class="anchor" href="#_isolation_and_placement_model"></a>5.4. Isolation and Placement Model</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Element</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Subscription Plan</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Commercial entitlement such as Standard, Premium, or Enterprise.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation Profile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Technical isolation intent, such as Shared, Silo, or Hybrid.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Runtime Binding</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves where an environment runs, for example shared runtime allocation or dedicated runtime allocation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data Boundary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves how data is isolated, for example shared partition or dedicated store.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Network Boundary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves the network isolation level, for example shared or dedicated network boundary.</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
-</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-runtime-view"><a class="anchor" href="#section-runtime-view"></a>7. Runtime View</h2>
+<h2 id="section-runtime-view"><a class="anchor" href="#section-runtime-view"></a>6. Runtime View</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_control_plane_request_flow"><a class="anchor" href="#_control_plane_request_flow"></a>7.1. Control Plane Request Flow</h3>
-<div class="imageblock">
-<div class="content">
-<img src="./images/diag-plantuml-md5-d3009ee5e05a5ca43daea99556862e7e.svg" alt="Diagram" width="25%" height="643">
-</div>
-</div>
 <div class="paragraph">
-<p><strong>Legend</strong></p>
+<p>This section shows three representative flows that are architecturally relevant for the platform foundation: authorization, policy inheritance, and isolation resolution.</p>
 </div>
+<div class="sect2">
+<h3 id="_authorization_decision_flow"><a class="anchor" href="#_authorization_decision_flow"></a>6.1. Authorization Decision Flow</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-plantuml-md5-ebe9dfe74f28f30087f9104158ed44ce.svg" alt="Diagram" width="50%" height="207">
+<img src="./images/diag-mermaid-md5-7bb88b0deb768f4e9460de7e2557c6b4.svg" alt="Diagram" width="1314" height="585">
 </div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Resolve the acting principal as either a user or a service account.</p>
+</li>
+<li>
+<p>Resolve memberships and scoped grants for tenant, workspace, project / service, and environment.</p>
+</li>
+<li>
+<p>Expand the granted role set into fine-grained permissions.</p>
+</li>
+<li>
+<p>Evaluate effective policy after permission lookup.</p>
+</li>
+<li>
+<p>Return an allow or deny decision and audit the result.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_policy_inheritance_and_effective_policy_evaluation"><a class="anchor" href="#_policy_inheritance_and_effective_policy_evaluation"></a>6.2. Policy Inheritance and Effective Policy Evaluation</h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/diag-mermaid-md5-dfddde59ea784685e384aff058b65757.svg" alt="Diagram" width="853" height="638">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Start with the platform policy baseline.</p>
+</li>
+<li>
+<p>Apply tenant, workspace, project, and environment policy in hierarchy order.</p>
+</li>
+<li>
+<p>Preserve mandatory parent controls throughout evaluation.</p>
+</li>
+<li>
+<p>Allow lower scopes to tighten controls, such as requiring approval or restricting production access to a narrower group.</p>
+</li>
+<li>
+<p>Use the resulting effective policy during authorization and execution decisions.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_isolation_and_binding_resolution"><a class="anchor" href="#_isolation_and_binding_resolution"></a>6.3. Isolation and Binding Resolution</h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/diag-mermaid-md5-f68061d98e1efd8c28812bb2e14de069.svg" alt="Diagram" width="693" height="382">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Resolve the environment and its parent subscription context.</p>
+</li>
+<li>
+<p>Read the subscription&#8217;s subscription plan and isolation profile.</p>
+</li>
+<li>
+<p>Evaluate policy constraints that can affect placement, region, network, retention, or access posture.</p>
+</li>
+<li>
+<p>Resolve runtime binding, data boundary, and network boundary together.</p>
+</li>
+<li>
+<p>Produce the effective isolation outcome for the environment without changing the business hierarchy.</p>
+</li>
+</ol>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="section-deployment-view"><a class="anchor" href="#section-deployment-view"></a>7. Deployment View</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The architecture defines logical isolation profiles rather than a fixed concrete infrastructure topology. This section therefore describes how environments are placed and isolated in shared, silo, and hybrid modes, while leaving concrete hosting technology intentionally open.</p>
+</div>
+<div class="sect2">
+<h3 id="_logical_isolation_profiles"><a class="anchor" href="#_logical_isolation_profiles"></a>7.1. Logical Isolation Profiles</h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/diag-mermaid-md5-a374acd197ba03a764f5bc3b048e70bd.svg" alt="Diagram" width="346" height="1589">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 22.2222%;">
+<col style="width: 22.2222%;">
+<col style="width: 22.2222%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Isolation Profile</th>
+<th class="tableblock halign-left valign-top">Runtime Binding</th>
+<th class="tableblock halign-left valign-top">Data Boundary</th>
+<th class="tableblock halign-left valign-top">Network Boundary</th>
+<th class="tableblock halign-left valign-top">Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shared</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shared runtime allocation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shared partition or equivalent multi-tenant storage boundary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shared network boundary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cost-efficient default for tenants that do not require dedicated isolation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hybrid</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shared for some environments, dedicated for others</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shared or dedicated depending on environment and policy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shared or dedicated depending on environment and policy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tenants that need stronger isolation only for selected workloads or environments, such as production.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Silo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dedicated runtime allocation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dedicated store</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dedicated network boundary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tenants with strict isolation, regulatory, or contractual requirements.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_deployment_assumptions_and_explicit_gaps"><a class="anchor" href="#_deployment_assumptions_and_explicit_gaps"></a>7.2. Deployment Assumptions and Explicit Gaps</h3>
+<div class="paragraph">
+<p>The following deployment facts remain intentionally open in this architecture:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><em>&lt;insert runtime diagram or textual description of the scenario&gt;</em></p>
+<p>the concrete runtime platform, cluster, account, or subscription model</p>
 </li>
 <li>
-<p><em>&lt;insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.&gt;</em></p>
+<p>the concrete storage technologies behind shared partitions and dedicated stores</p>
+</li>
+<li>
+<p>the concrete network technologies behind shared and dedicated network boundaries</p>
+</li>
+<li>
+<p>the concrete regional topology and ingress or egress implementations</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>What is fixed is the logical model:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>every tenant keeps the same business hierarchy regardless of isolation profile</p>
+</li>
+<li>
+<p>isolation is resolved from subscription and policy information</p>
+</li>
+<li>
+<p>runtime, data, and network boundaries may differ even when the tenant hierarchy does not</p>
+</li>
+<li>
+<p>hybrid isolation is a first-class case rather than an exception</p>
 </li>
 </ul>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="section-concepts"><a class="anchor" href="#section-concepts"></a>8. Cross-cutting Concepts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section defines the core concepts that are reused across the hierarchy, authorization model, runtime behavior, and quality requirements.</p>
+</div>
 <div class="sect2">
-<h3 id="_runtime_scenario_n"><a class="anchor" href="#_runtime_scenario_n"></a>7.2. &lt;Runtime Scenario n&gt;</h3>
+<h3 id="_principal_and_scope_model"><a class="anchor" href="#_principal_and_scope_model"></a>8.1. Principal and Scope Model</h3>
+<div class="paragraph">
+<p>The architecture treats users and service accounts as principals and groups as a scaling mechanism for access management. Membership determines who belongs to which scope context, while the scope hierarchy remains fixed as platform, tenant, workspace, project / service, and environment.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_grant_role_and_permission_model"><a class="anchor" href="#_grant_role_and_permission_model"></a>8.2. Grant, Role, and Permission Model</h3>
+<div class="paragraph">
+<p>Access is granted through scoped grants. A grant assigns a role at a specific scope, and roles expand into permissions such as <code>workspace.view</code>, <code>project.update</code>, <code>environment.deploy</code>, <code>environment.secret.read</code>, <code>policy.manage</code>, or <code>audit.view</code>. Permissions remain the smallest action unit and grants remain the scoped assignment mechanism.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_policy_versus_authorization"><a class="anchor" href="#_policy_versus_authorization"></a>8.3. Policy Versus Authorization</h3>
+<div class="paragraph">
+<p>Policy is not the same concern as authorization. Authorization answers whether the acting principal has the required permission at the requested scope. Policy answers whether the action is still allowed under inherited rules such as MFA requirements, production approval requirements, trusted-network restrictions, retention requirements, or approved-region restrictions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_inheritance_model"><a class="anchor" href="#_inheritance_model"></a>8.4. Inheritance Model</h3>
+<div class="paragraph">
+<p>The hierarchy inherits policy, access scope interpretation, audit context, and defaults downward from platform to tenant, workspace, project / service, and environment. Lower scopes may tighten controls, but they must not weaken mandatory parent rules.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_audit_model"><a class="anchor" href="#_audit_model"></a>8.5. Audit Model</h3>
+<div class="paragraph">
+<p>Auditability is a first-class concept rather than an afterthought. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_isolation_model_and_tier_separation"><a class="anchor" href="#_isolation_model_and_tier_separation"></a>8.6. Isolation Model and Tier Separation</h3>
+<div class="paragraph">
+<p>Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime binding, data boundary, and network boundary resolve the actual technical isolation for each environment.</p>
+</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-deployment-view"><a class="anchor" href="#section-deployment-view"></a>8. Deployment View</h2>
+<h2 id="section-design-decisions"><a class="anchor" href="#section-design-decisions"></a>9. Architecture Decisions</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_infrastructure_level_1"><a class="anchor" href="#_infrastructure_level_1"></a>8.1. Infrastructure Level 1</h3>
-<div class="imageblock">
-<div class="content">
-<img src="./images/diag-plantuml-md5-9572e4e0921a49117740e497244fbbcb.svg" alt="Diagram" width="50%" height="824">
-</div>
-</div>
 <div class="paragraph">
-<p><strong>Legend</strong></p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="./images/diag-plantuml-md5-abc8164f3735de2a61bd36019976d607.svg" alt="Diagram" width="50%" height="51">
-</div>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">Motivation</dt>
-<dd>
-<p><em>&lt;explanation in text form&gt;</em></p>
-</dd>
-<dt class="hdlist1">Quality and/or Performance Features</dt>
-<dd>
-<p><em>&lt;explanation in text form&gt;</em></p>
-</dd>
-<dt class="hdlist1">Mapping of Building Blocks to Infrastructure</dt>
-<dd>
-<p><em>&lt;description of the mapping&gt;</em></p>
-</dd>
-</dl>
-</div>
-<div style="page-break-after: always;"></div>
+<p>The platform foundation currently depends on the following explicit architecture decisions.</p>
 </div>
 <div class="sect2">
-<h3 id="_infrastructure_level_2"><a class="anchor" href="#_infrastructure_level_2"></a>8.2. Infrastructure Level 2</h3>
+<h3 id="_adopt_architecture_documentation_standards_and_tooling"><a class="anchor" href="#_adopt_architecture_documentation_standards_and_tooling"></a>9.1. Adopt architecture documentation standards and tooling</h3>
 <div class="sect3">
-<h4 id="_infrastructure_element_1"><a class="anchor" href="#_infrastructure_element_1"></a>8.2.1. <em>&lt;Infrastructure Element 1&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;diagram + explanation&gt;</em></p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_infrastructure_element_2"><a class="anchor" href="#_infrastructure_element_2"></a>8.2.2. <em>&lt;Infrastructure Element 2&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;diagram + explanation&gt;</em></p>
-</div>
-<div class="paragraph">
-<p>&#8230;&#8203;</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_infrastructure_element_n"><a class="anchor" href="#_infrastructure_element_n"></a>8.2.3. <em>&lt;Infrastructure Element n&gt;</em></h4>
-<div class="paragraph">
-<p><em>&lt;diagram + explanation&gt;</em></p>
-</div>
-<div style="page-break-after: always;"></div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="section-concepts"><a class="anchor" href="#section-concepts"></a>9. Cross-cutting Concepts</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_concept_1"><a class="anchor" href="#_concept_1"></a>9.1. <em>&lt;Concept 1&gt;</em></h3>
-<div class="paragraph">
-<p><em>&lt;explanation&gt;</em></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_concept_2"><a class="anchor" href="#_concept_2"></a>9.2. <em>&lt;Concept 2&gt;</em></h3>
-<div class="paragraph">
-<p><em>&lt;explanation&gt;</em></p>
-</div>
-<div class="paragraph">
-<p>&#8230;&#8203;</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_concept_n"><a class="anchor" href="#_concept_n"></a>9.3. <em>&lt;Concept n&gt;</em></h3>
-<div class="paragraph">
-<p><em>&lt;explanation&gt;</em></p>
-</div>
-<div style="page-break-after: always;"></div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="section-design-decisions"><a class="anchor" href="#section-design-decisions"></a>10. Architecture Decisions</h2>
-<div class="sectionbody">
-
-</div>
-</div>
-<h1 id="_adopt_architecture_documentation_standards_and_tooling" class="sect0"><a class="anchor" href="#_adopt_architecture_documentation_standards_and_tooling"></a>Adopt architecture documentation standards and tooling</h1>
-<div class="sect1">
-<h2 id="_status"><a class="anchor" href="#_status"></a>11. Status</h2>
-<div class="sectionbody">
+<h4 id="_status"><a class="anchor" href="#_status"></a>9.1.1. Status</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1239,10 +1463,8 @@ building block instances depicted in this diagram.&gt;</em></p>
 </ul>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_standardize_architecture_documentation_approach_for_the_product_platform"><a class="anchor" href="#_standardize_architecture_documentation_approach_for_the_product_platform"></a>12. Standardize architecture documentation approach for the Product Platform</h2>
-<div class="sectionbody">
+<div class="sect3">
+<h4 id="_standardize_architecture_documentation_approach_for_the_product_platform"><a class="anchor" href="#_standardize_architecture_documentation_approach_for_the_product_platform"></a>9.1.2. Standardize architecture documentation approach for the Product Platform</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1254,19 +1476,15 @@ building block instances depicted in this diagram.&gt;</em></p>
 </ul>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_context_and_problem_statement"><a class="anchor" href="#_context_and_problem_statement"></a>13. Context and Problem Statement</h2>
-<div class="sectionbody">
+<div class="sect3">
+<h4 id="_context_and_problem_statement"><a class="anchor" href="#_context_and_problem_statement"></a>9.1.3. Context and Problem Statement</h4>
 <div class="paragraph">
 <p>Our architecture documentation needs to stay consistent, reviewable, and easy to evolve as the Product Platform grows.
 Without shared standards and tooling, documentation drifts in structure and quality and becomes difficult to maintain.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_decision_drivers"><a class="anchor" href="#_decision_drivers"></a>14. Decision Drivers</h2>
-<div class="sectionbody">
+<div class="sect3">
+<h4 id="_decision_drivers"><a class="anchor" href="#_decision_drivers"></a>9.1.4. Decision Drivers</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1284,10 +1502,8 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </ul>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_considered_options"><a class="anchor" href="#_considered_options"></a>15. Considered Options</h2>
-<div class="sectionbody">
+<div class="sect3">
+<h4 id="_considered_options"><a class="anchor" href="#_considered_options"></a>9.1.5. Considered Options</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1299,15 +1515,13 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </ul>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_decision_outcome"><a class="anchor" href="#_decision_outcome"></a>16. Decision Outcome</h2>
-<div class="sectionbody">
+<div class="sect3">
+<h4 id="_decision_outcome"><a class="anchor" href="#_decision_outcome"></a>9.1.6. Decision Outcome</h4>
 <div class="paragraph">
 <p>Chosen option: "Use arc42 + C4 + docToolchain + Structurizr DSL + ADR/TDR records in this repository", because it provides a structured, automatable, and version-controlled documentation baseline that fits our engineering workflow.</p>
 </div>
-<div class="sect2">
-<h3 id="_positive_consequences"><a class="anchor" href="#_positive_consequences"></a>16.1. Positive Consequences</h3>
+<div class="sect4">
+<h5 id="_positive_consequences"><a class="anchor" href="#_positive_consequences"></a>Positive Consequences</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1325,8 +1539,8 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_negative_consequences"><a class="anchor" href="#_negative_consequences"></a>16.2. Negative Consequences</h3>
+<div class="sect4">
+<h5 id="_negative_consequences"><a class="anchor" href="#_negative_consequences"></a>Negative Consequences</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1339,12 +1553,10 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_pros_and_cons_of_the_options"><a class="anchor" href="#_pros_and_cons_of_the_options"></a>17. Pros and Cons of the Options</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_use_arc42_c4_doctoolchain_structurizr_dsl_adrtdr_records"><a class="anchor" href="#_use_arc42_c4_doctoolchain_structurizr_dsl_adrtdr_records"></a>17.1. Use arc42 + C4 + docToolchain + Structurizr DSL + ADR/TDR records</h3>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options"><a class="anchor" href="#_pros_and_cons_of_the_options"></a>9.1.7. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_use_arc42_c4_doctoolchain_structurizr_dsl_adrtdr_records"><a class="anchor" href="#_use_arc42_c4_doctoolchain_structurizr_dsl_adrtdr_records"></a>Use arc42 + C4 + docToolchain + Structurizr DSL + ADR/TDR records</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1359,8 +1571,8 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_use_ad_hoc_markdown_and_manually_maintained_images"><a class="anchor" href="#_use_ad_hoc_markdown_and_manually_maintained_images"></a>17.2. Use ad-hoc Markdown and manually maintained images</h3>
+<div class="sect4">
+<h5 id="_use_ad_hoc_markdown_and_manually_maintained_images"><a class="anchor" href="#_use_ad_hoc_markdown_and_manually_maintained_images"></a>Use ad-hoc Markdown and manually maintained images</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -1374,61 +1586,284 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </li>
 </ul>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="section-quality-scenarios"><a class="anchor" href="#section-quality-scenarios"></a>18. Quality Requirements</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_quality_tree"><a class="anchor" href="#_quality_tree"></a>18.1. Quality Tree</h3>
-
 </div>
 <div class="sect2">
-<h3 id="_quality_scenarios"><a class="anchor" href="#_quality_scenarios"></a>18.2. Quality Scenarios</h3>
-<div style="page-break-after: always;"></div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="section-technical-risks"><a class="anchor" href="#section-technical-risks"></a>19. Risks and Technical Debts</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_technical_debts"><a class="anchor" href="#_technical_debts"></a>19.1. Technical Debts</h3>
+<h3 id="_adopt_hierarchical_scope_and_inheritance_model"><a class="anchor" href="#_adopt_hierarchical_scope_and_inheritance_model"></a>9.2. Adopt hierarchical scope and inheritance model</h3>
 <div class="sect3">
-<h4 id="_tdr_0001_placeholder_technical_debt_record"><a class="anchor" href="#_tdr_0001_placeholder_technical_debt_record"></a>19.1.1. TDR 0001: Placeholder Technical Debt Record</h4>
+<h4 id="_status_2"><a class="anchor" href="#_status_2"></a>9.2.1. Status</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: accepted</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_standardize_the_platform_hierarchy_and_inheritance_rules"><a class="anchor" href="#_standardize_the_platform_hierarchy_and_inheritance_rules"></a>9.2.2. Standardize the platform hierarchy and inheritance rules</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Deciders: Architecture Team</p>
+</li>
+<li>
+<p>Date: 2026-04-02</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_and_problem_statement_2"><a class="anchor" href="#_context_and_problem_statement_2"></a>9.2.3. Context and Problem Statement</h4>
 <div class="paragraph">
-<p>Date: YYYY-MM-DD</p>
+<p>The platform needs one consistent way to reason about scope, access, policy, audit context, and defaults.
+Without a shared hierarchy, different teams would likely invent incompatible models for tenant, workspace, service, and environment governance.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_drivers_2"><a class="anchor" href="#_decision_drivers_2"></a>9.2.4. Decision Drivers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Consistent scope model across the platform</p>
+</li>
+<li>
+<p>Fine-grained authorization with reusable roles</p>
+</li>
+<li>
+<p>Explicit policy inheritance from platform to environment</p>
+</li>
+<li>
+<p>Auditable privileged and regulated activity at every scope</p>
+</li>
+<li>
+<p>Ability to evolve the platform without introducing parallel hierarchies</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_considered_options_2"><a class="anchor" href="#_considered_options_2"></a>9.2.5. Considered Options</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Adopt one hierarchical scope model with downward inheritance</p>
+</li>
+<li>
+<p>Allow different hierarchies for different product or isolation models</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_outcome_2"><a class="anchor" href="#_decision_outcome_2"></a>9.2.6. Decision Outcome</h4>
+<div class="paragraph">
+<p>Chosen option: "Adopt one hierarchical scope model with downward inheritance", because it creates a single architecture for access, policy, audit, and defaults.</p>
 </div>
 <div class="sect4">
-<h5 id="_status_2"><a class="anchor" href="#_status_2"></a>Status</h5>
-<div class="paragraph">
-<p>Open</p>
+<h5 id="_positive_consequences_2"><a class="anchor" href="#_positive_consequences_2"></a>Positive Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The platform has one canonical hierarchy: Platform, Tenant, Workspace, Project / Service, Environment.</p>
+</li>
+<li>
+<p>Grants can be scoped consistently to tenant, workspace, project / service, or environment.</p>
+</li>
+<li>
+<p>Policy, audit context, and defaults can inherit downward in a predictable way.</p>
+</li>
+<li>
+<p>Shared, silo, and hybrid tenants can use the same business hierarchy.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_description"><a class="anchor" href="#_description"></a>Description</h5>
-<div class="paragraph">
-<p><em>&lt;Replace this placeholder with a real technical debt item when identified.&gt;</em></p>
+<h5 id="_negative_consequences_2"><a class="anchor" href="#_negative_consequences_2"></a>Negative Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Teams must align new capabilities to the shared hierarchy instead of inventing local models.</p>
+</li>
+<li>
+<p>Inheritance semantics must be implemented carefully to avoid accidental weakening of controls.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options_2"><a class="anchor" href="#_pros_and_cons_of_the_options_2"></a>9.2.7. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_adopt_one_hierarchical_scope_model_with_downward_inheritance"><a class="anchor" href="#_adopt_one_hierarchical_scope_model_with_downward_inheritance"></a>Adopt one hierarchical scope model with downward inheritance</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because governance remains consistent across all scopes.</p>
+</li>
+<li>
+<p>Good, because authorization and policy reasoning become more predictable.</p>
+</li>
+<li>
+<p>Bad, because the hierarchy becomes a foundational architectural constraint.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_impact"><a class="anchor" href="#_impact"></a>Impact</h5>
+<h5 id="_allow_different_hierarchies_for_different_product_or_isolation_models"><a class="anchor" href="#_allow_different_hierarchies_for_different_product_or_isolation_models"></a>Allow different hierarchies for different product or isolation models</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because local teams could optimize for narrow use cases.</p>
+</li>
+<li>
+<p>Bad, because audit, policy, and authorization semantics would fragment.</p>
+</li>
+<li>
+<p>Bad, because shared and silo tenants would no longer look identical in the domain.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_separate_subscription_plan_from_isolation_profile_and_boundary_bindings"><a class="anchor" href="#_separate_subscription_plan_from_isolation_profile_and_boundary_bindings"></a>9.3. Separate subscription plan from isolation profile and boundary bindings</h3>
+<div class="sect3">
+<h4 id="_status_3"><a class="anchor" href="#_status_3"></a>9.3.1. Status</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: accepted</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_distinguish_customer_entitlement_from_technical_isolation"><a class="anchor" href="#_distinguish_customer_entitlement_from_technical_isolation"></a>9.3.2. Distinguish customer entitlement from technical isolation</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Deciders: Architecture Team</p>
+</li>
+<li>
+<p>Date: 2026-04-02</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_and_problem_statement_3"><a class="anchor" href="#_context_and_problem_statement_3"></a>9.3.3. Context and Problem Statement</h4>
 <div class="paragraph">
-<p><em>&lt;Describe expected impact on delivery, reliability, security, performance, or cost.&gt;</em></p>
+<p>The platform must support tenants that buy different subscription plans and also require different isolation models.
+If pricing and isolation are treated as the same field, the architecture becomes harder to reason about and less flexible for shared, silo, and hybrid deployment choices.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_drivers_3"><a class="anchor" href="#_decision_drivers_3"></a>9.3.4. Decision Drivers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Clear separation between business entitlement and technical isolation</p>
+</li>
+<li>
+<p>Support for shared, silo, and hybrid operating models</p>
+</li>
+<li>
+<p>Ability to change placement and isolation without changing the tenant hierarchy</p>
+</li>
+<li>
+<p>Better policy evaluation for runtime, data, and network boundaries</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_considered_options_3"><a class="anchor" href="#_considered_options_3"></a>9.3.5. Considered Options</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Separate subscription plan from isolation profile and boundary bindings</p>
+</li>
+<li>
+<p>Use one combined concept for pricing and isolation</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_outcome_3"><a class="anchor" href="#_decision_outcome_3"></a>9.3.6. Decision Outcome</h4>
+<div class="paragraph">
+<p>Chosen option: "Separate subscription plan from isolation profile and boundary bindings", because it preserves one tenant model while allowing hosting isolation to vary independently.</p>
+</div>
+<div class="sect4">
+<h5 id="_positive_consequences_3"><a class="anchor" href="#_positive_consequences_3"></a>Positive Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>A subscription can express both commercial entitlement and technical isolation intent.</p>
+</li>
+<li>
+<p>The same tenant hierarchy works for shared, silo, and hybrid tenants.</p>
+</li>
+<li>
+<p>Runtime binding, data boundary, and network boundary can be resolved independently from pricing.</p>
+</li>
+<li>
+<p>Hybrid isolation can be modeled without redefining the business hierarchy.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_possible_solutions"><a class="anchor" href="#_possible_solutions"></a>Possible Solutions</h5>
-<div class="paragraph">
-<p><em>&lt;List candidate mitigation options and rough effort.&gt;</em></p>
+<h5 id="_negative_consequences_3"><a class="anchor" href="#_negative_consequences_3"></a>Negative Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Teams must understand two related but distinct concepts instead of one simplified field.</p>
+</li>
+<li>
+<p>Isolation resolution requires explicit logic for runtime, data, and network boundaries.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options_3"><a class="anchor" href="#_pros_and_cons_of_the_options_3"></a>9.3.7. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_separate_subscription_plan_from_isolation_profile_and_boundary_bindings_2"><a class="anchor" href="#_separate_subscription_plan_from_isolation_profile_and_boundary_bindings_2"></a>Separate subscription plan from isolation profile and boundary bindings</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because pricing and isolation remain conceptually clean.</p>
+</li>
+<li>
+<p>Good, because hybrid cases are easier to express.</p>
+</li>
+<li>
+<p>Bad, because the model contains more moving parts.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_owner"><a class="anchor" href="#_owner"></a>Owner</h5>
-<div class="paragraph">
-<p><em>&lt;Team or person responsible.&gt;</em></p>
+<h5 id="_use_one_combined_concept_for_pricing_and_isolation"><a class="anchor" href="#_use_one_combined_concept_for_pricing_and_isolation"></a>Use one combined concept for pricing and isolation</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because the data model appears simpler at first.</p>
+</li>
+<li>
+<p>Bad, because business and technical concerns become coupled.</p>
+</li>
+<li>
+<p>Bad, because tenants with similar subscription plans but different isolation needs are harder to model.</p>
+</li>
+</ul>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1437,7 +1872,238 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </div>
 </div>
 <div class="sect1">
-<h2 id="section-glossary"><a class="anchor" href="#section-glossary"></a>20. Glossary</h2>
+<h2 id="section-quality-scenarios"><a class="anchor" href="#section-quality-scenarios"></a>10. Quality Requirements</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section records the more detailed quality model and scenarios behind the platform foundation architecture. The scenarios below are derived from the defined hierarchy, authorization, policy, audit, and isolation model.</p>
+</div>
+<div class="sect2">
+<h3 id="_quality_requirements_overview"><a class="anchor" href="#_quality_requirements_overview"></a>10.1. Quality Requirements Overview</h3>
+<div class="paragraph">
+<p>Section 1 highlights the top five quality goals. This section keeps the broader overview together with the concrete scenarios.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Quality Attribute</th>
+<th class="tableblock halign-left valign-top">Focus for This Architecture</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security and Least Privilege</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only explicitly granted permissions at the relevant scope should authorize an action.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy Enforceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inherited policy must be applied consistently, and mandatory parent controls must not be weakened.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Auditability and Traceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Privileged and regulated activity must preserve actor, scope, decision, and outcome context.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation Flexibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shared, silo, and hybrid hosting must use the same business hierarchy while allowing different technical isolation outcomes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Evolvability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">New governed capabilities should extend the existing hierarchy and authorization model instead of creating a parallel model.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operators and auditors should be able to understand effective access, policy, and isolation outcomes from the recorded context and telemetry.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_quality_scenarios"><a class="anchor" href="#_quality_scenarios"></a>10.2. Quality Scenarios</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 33.3333%;">
+<col style="width: 44.4445%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID</th>
+<th class="tableblock halign-left valign-top">Quality Attribute</th>
+<th class="tableblock halign-left valign-top">Stimulus</th>
+<th class="tableblock halign-left valign-top">Expected Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security and Least Privilege</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A user requests <code>tenant.members.manage</code> without a grant that expands to that permission at the tenant scope.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform denies the action and records the denied decision with actor, scope, and requested permission context.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-02</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy Enforceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An administrator with deployment permission requests a production deployment where policy requires explicit approval.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform blocks execution until the approval requirement is satisfied and audits the policy-enforced outcome.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-03</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy Enforceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A user requests <code>environment.secret.read</code> from a network that is not trusted by policy.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform denies secret access even if the underlying permission is present and records the denied access event.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-04</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security and Least Privilege</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A child scope attempts to define a local policy that weakens a mandatory parent control such as required audit logging.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform rejects the weakening change or preserves the stronger inherited control in the effective policy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-05</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Auditability and Traceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A membership change, grant revocation, policy update, or production access event occurs.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform records the actor, scope, action, decision context, and resulting effect in the relevant audit context.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-06</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Auditability and Traceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy requires regulated audit retention for 365 days.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform preserves audit records in a way that supports the required retention period and exposes the retention rule as part of effective policy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-07</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation Flexibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Two tenants use the same hierarchy but different isolation profiles, such as <code>subscription_plan = Enterprise, isolation_profile = Silo</code> and <code>subscription_plan = Standard, isolation_profile = Shared</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The tenants keep the same business model while the platform resolves different runtime, data, and network boundaries.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-08</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation Flexibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A hybrid tenant needs a dedicated production environment while allowing non-production environments to remain shared.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform resolves dedicated boundaries for the stricter environment and shared boundaries for the others without introducing a different tenant hierarchy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-09</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy Enforceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy restricts data storage to approved regions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform allows only placements whose resolved runtime and data boundaries comply with the approved-region policy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An operator or auditor needs to understand why a privileged action was allowed or denied.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform exposes enough decision and audit context to reconstruct the principal, scoped grants, permissions, effective policy, and resulting decision.</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="section-technical-risks"><a class="anchor" href="#section-technical-risks"></a>11. Risks and Technical Debts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section captures the main architecture risks in the platform foundation model and the technical debt that remains weakly formalized.</p>
+</div>
+<div class="sect2">
+<h3 id="_risks"><a class="anchor" href="#_risks"></a>11.1. Risks</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 30%;">
+<col style="width: 30%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Priority</th>
+<th class="tableblock halign-left valign-top">ID</th>
+<th class="tableblock halign-left valign-top">Area</th>
+<th class="tableblock halign-left valign-top">Risk</th>
+<th class="tableblock halign-left valign-top">Mitigation / Next Step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R-01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inheritance semantics</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If policy inheritance is implemented inconsistently, child scopes may accidentally bypass mandatory parent controls.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Make inheritance direction and mandatory-control behavior explicit in implementation and tests, and review policy examples against the architecture rules.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R-02</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authorization complexity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fine-grained scoped grants and reusable roles can lead to grant explosion or unclear effective access if role design is uncontrolled.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use clear role design conventions, keep permissions granular, and audit grant changes at every scope.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R-03</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Audit coverage</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If privileged or regulated activity is not captured consistently, the platform can lose governance evidence even when access checks exist.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Treat audit coverage as mandatory for memberships, grants, policy changes, production access, secret access, deployments, and billing or administration changes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R-04</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hybrid isolation complexity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hybrid tenants can become difficult to reason about if runtime, data, and network boundaries are resolved independently without clear policy constraints.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Keep isolation decisions explicit, policy-driven, and visible in audit and operational telemetry.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">R-05</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Concrete infrastructure ambiguity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The architecture intentionally leaves runtime platform, storage technology, and network implementation open, which can cause teams to make divergent assumptions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Capture concrete infrastructure decisions in future ADRs once those choices are made and align sections 6 and 7 accordingly.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_technical_debts"><a class="anchor" href="#_technical_debts"></a>11.2. Technical Debts</h3>
+<div class="paragraph">
+<p>The repository does not yet contain a real Technical Debt Record for the platform foundation. The main debt is the lack of concrete tracked debt entries for issues discovered during implementation.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Debt ID</th>
+<th class="tableblock halign-left valign-top">Debt</th>
+<th class="tableblock halign-left valign-top">Impact</th>
+<th class="tableblock halign-left valign-top">Next Step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TD-01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A formal technical-debt register has not yet been populated with real TDR entries for the platform foundation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debt can remain implicit, which makes prioritization and ownership difficult once the architecture starts being implemented.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Create concrete TDRs when real implementation debt is identified and link them from this chapter.</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="section-glossary"><a class="anchor" href="#section-glossary"></a>12. Glossary</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1452,12 +2118,124 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Term-1&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;definition-1&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Platform Foundation</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>The shared architecture for identity, authorization, policy inheritance, auditability, and isolation across the platform hierarchy.</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;Term-2&gt;</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>&lt;definition-2&gt;</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Principal</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>An actor that can request access, represented as a user or service account.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>User</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Human principal.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Service Account</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Machine principal used for automation or service-to-platform access.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Group</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Collection of principals used to manage access at scale.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Membership</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Association that answers who belongs to which scope or organizational context.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Grant</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Scoped assignment of a role to a principal or group.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Role</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Reusable bundle of permissions.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Permission</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Smallest action unit, such as <code>environment.deploy</code> or <code>audit.view</code>.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Scope</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>A hierarchical boundary at which access, policy, and audit context apply. In this architecture the supported scopes are tenant, workspace, project / service, and environment.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Tenant</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Top customer or organizational scope inside the platform hierarchy.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Billing Account</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Commercial context associated with a tenant.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Subscription</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Entitlement record that carries subscription plan and isolation profile information for a tenant.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Subscription Plan</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Commercial entitlement such as Standard, Premium, or Enterprise.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Isolation Profile</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Technical isolation intent such as Shared, Silo, or Hybrid.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Workspace</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Organizing scope inside a tenant.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Project / Service</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Unified scope level used to represent a governed delivery or service boundary inside a workspace.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Environment</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Operational scope where policy, audit, and isolation decisions become concrete.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Platform Policy Baseline</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Top-level policy baseline inherited by lower scopes.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Tenant Policy</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Policy defined at the tenant scope.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Workspace Policy</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Policy defined at the workspace scope.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Project Policy</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Policy defined at the project / service scope.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Environment Policy</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Policy defined at the environment scope.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Audit Log</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Record of privileged or regulated activity together with actor, scope, decision, and outcome context.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Runtime Binding</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Resolution of where an environment actually runs.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Data Boundary</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Resolution of how environment data is isolated.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Network Boundary</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Resolution of the network isolation level for an environment.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Shared</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Isolation mode where runtime, data, and network boundaries remain shared.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Silo</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Isolation mode where runtime, data, and network boundaries are dedicated.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Hybrid</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Isolation mode where some environments or workloads are shared and others are dedicated.</em></p></td>
 </tr>
 </tbody>
 </table>
@@ -1467,7 +2245,7 @@ Without shared standards and tooling, documentation drifts in structure and qual
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-03-29 14:15:53 UTC
+Last updated 2026-04-02 21:58:52 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
