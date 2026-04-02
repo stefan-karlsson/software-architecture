@@ -61,3 +61,5 @@ The technical context maps the same communication partners to technical interfac
 |Receive audit and operational signals for monitoring, troubleshooting, and governance evidence.
 |The architecture proves telemetry export, but not a concrete telemetry protocol or product choice.
 |===
+
+The next concrete interface and trust decisions are tracked in ADR 0008 for the public access protocol profile and ADR 0009 for identity federation plus service-account credentials.

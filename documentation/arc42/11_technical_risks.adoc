@@ -63,26 +63,31 @@ The following action backlog turns the open architectural gaps into concrete nex
 |Action ID |Action |Primary Artifact |Expected Result
 
 |A-01
-|Apply the accepted effective-access semantics to runtime examples, quality scenarios, and future platform tests.
-|ADR 0004, Sections 6 and 10
-|The accepted authorization model is reflected consistently in architecture examples today and is ready to drive later implementation tests.
+|Resolve the platform access interface and automation protocol profile.
+|ADR 0008, Section 3
+|The platform gains one concrete public interaction model for browser-based administration and service-account-driven automation.
 
 |A-02
-|Apply the accepted audit evidence architecture to runtime examples, storage decisions, and future platform tests.
-|ADR 0005, Sections 5, 7, and 10
-|The accepted audit model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.
+|Resolve the identity federation and service-account credential model.
+|ADR 0009, Sections 3 and 8
+|The platform gains one concrete trust and token model for users and machine principals.
 
 |A-03
-|Apply the accepted ownership and consistency model to future persistence, integration, and test decisions.
-|ADR 0006, Sections 5, 6, 7, and 8
-|The accepted ownership model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.
+|Resolve the canonical audit store and evidence export technology profile.
+|ADR 0010, Sections 7, 8, and 10
+|The accepted audit model gains one concrete storage, archive, and export direction that can later be accepted or revised.
 
 |A-04
-|Apply the accepted hybrid isolation model to runtime examples, placement decisions, and future platform tests.
-|ADR 0007, Sections 6, 7, and 10
-|The accepted hybrid model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.
+|Resolve the authoritative state integration and projection technology profile.
+|ADR 0011, Sections 6, 7, and 8
+|The accepted ownership model gains one concrete propagation, replay, and projection direction for implementation planning.
 
 |A-05
+|Resolve the runtime topology and network isolation implementation profile.
+|ADR 0012, Sections 6 and 7
+|The accepted isolation model gains one concrete hosting and network-boundary direction for shared, silo, and hybrid placement.
+
+|A-06
 |Add one concrete end-to-end governed runtime scenario that exercises authorization, policy, audit, and isolation together.
 |Sections 6 and 10
 |The runtime and quality chapters gain one implementation-oriented example that can be used for design review and later test planning.

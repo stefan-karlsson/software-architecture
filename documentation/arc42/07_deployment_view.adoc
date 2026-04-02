@@ -77,3 +77,5 @@ What is fixed is the logical model:
 * authoritative owner-managed stores and derived read models are distinct architectural concerns even though their concrete persistence technologies remain open
 * projected or convenience views may lag behind canonical owner state and do not become write authorities
 * mixed hybrid boundary outcomes are valid only when every resolved boundary remains policy-compliant and non-weakening
+
+The next concrete implementation-profile decisions are tracked in ADR 0010 for canonical audit storage and export, ADR 0011 for owner-state integration and projections, and ADR 0012 for runtime topology plus network isolation.

@@ -6,6 +6,7 @@ This section defines the core concepts that are reused across the hierarchy, aut
 === Principal and Scope Model
 
 The architecture treats users and service accounts as principals and groups as a scaling mechanism for access management. Membership determines who belongs to which scope context, while the scope hierarchy remains fixed as platform, tenant, workspace, project / service, and environment. Groups are intentionally flat in the first implementation and do not contain other groups.
+Concrete public interface and credential decisions for those principals are tracked separately in ADR 0008 and ADR 0009.
 
 === Grant, Role, and Permission Model
 
@@ -22,11 +23,14 @@ The hierarchy inherits policy, access scope interpretation, audit context, and d
 === Ownership and Consistency Model
 
 Each governed record type has one authoritative write owner, and owner reads are authoritative when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain non-authoritative and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.
+The next concrete implementation decision for owner-state propagation and projection technology is tracked in ADR 0011.
 
 === Audit Model
 
 Auditability is a first-class concept rather than an afterthought. Canonical audit evidence is the governance source of truth, remains distinct from observability exports, and is append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When audit evidence needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.
+The next concrete implementation decision for canonical audit storage and evidence export is tracked in ADR 0010.
 
 === Isolation Model and Tier Separation
 
 Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime binding, data boundary, and network boundary resolve the actual technical isolation for each environment. In hybrid mode, those three boundaries may resolve independently, but subscription isolation remains the default baseline, environment-level logic may only tighten that baseline, and effective policy is the final acceptance gate before placement succeeds.
+The next concrete implementation decision for runtime topology and network isolation is tracked in ADR 0012.
