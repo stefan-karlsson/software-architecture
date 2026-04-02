@@ -2,7 +2,7 @@
 
 ## Status
 
-* Status: proposed
+* Status: accepted
 
 ## Standardize authoritative ownership and cross-capability consistency
 
@@ -95,10 +95,10 @@ Chosen option: "Use a hybrid model with authoritative domain stores plus derived
 ### Positive Consequences
 
 * Capabilities can evolve internally without collapsing into one shared write model.
-* Read-optimized views are still possible without confusing them with authoritative state.
-* Cross-capability workflows become easier to recover because owner state is committed before downstream propagation.
+* Read-optimized views remain possible without confusing them with authoritative state.
+* Cross-capability workflows are easier to recover because owner state is committed before downstream propagation.
 * Freshness-sensitive workflows have a clear rule: read the owner.
-* Persistence and recovery planning gain a stable ownership map for future implementation decisions.
+* Persistence and recovery planning now have a stable ownership map for future implementation decisions.
 
 ### Negative Consequences
 
@@ -117,9 +117,9 @@ Chosen option: "Use a hybrid model with authoritative domain stores plus derived
 
 ## Consequences
 
-* Section 5 should reflect the authoritative ownership map across the capability modules.
-* Section 6 should describe cross-capability flows as owner-first commits followed by asynchronous propagation and reconciliation where applicable.
-* Section 7 should keep concrete persistence technologies open while describing authoritative stores and derived read models as distinct architectural concerns.
+* Section 5 reflects the authoritative ownership map across the capability modules.
+* Section 6 describes cross-capability flows as owner-first commits followed by asynchronous propagation and reconciliation where applicable.
+* Section 7 keeps concrete persistence technologies open while describing authoritative stores and derived read models as distinct architectural concerns.
 * Future implementation ADRs should choose concrete persistence and integration technologies without changing the ownership model defined here.
 * Implementations should add automated tests for the validation scenarios below before relying on local assumptions about cross-capability state behavior.
 

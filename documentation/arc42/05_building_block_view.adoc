@@ -19,19 +19,19 @@ Contained Building Blocks::
 |Building Block |Responsibility
 
 |Identity and Access Capability
-|Manages principals, groups, memberships, grants, roles, and permissions, and resolves the authorization context for a requested action.
+|Authoritatively owns platform-specific principal records, service accounts, groups, memberships, grants, roles, and permissions, and resolves the authorization context for a requested action.
 
 |Policy Management Capability
-|Maintains platform baseline policy plus scoped tenant, workspace, project, and environment policies, and computes effective policy.
+|Authoritatively owns platform baseline policy plus scoped tenant, workspace, project, and environment policies, and computes effective policy.
 
 |Tenant Hierarchy and Scope Management Capability
-|Maintains tenants, billing accounts, subscriptions, workspaces, projects / services, and environments as the canonical scope hierarchy.
+|Authoritatively owns tenants, billing accounts, subscriptions, workspaces, projects / services, and environments as the canonical scope hierarchy.
 
 |Audit and Governance Capability
 |Owns canonical audit evidence, preserves scope and decision context, enforces governance-oriented audit behavior, and exports operational telemetry as a secondary concern.
 
 |Isolation and Placement Capability
-|Resolves isolation profile and the runtime, data, and network boundaries used by each environment.
+|Authoritatively owns resolved runtime bindings, data boundaries, network boundaries, and placement state for each environment.
 |===
 
 Important Relationships::
@@ -40,7 +40,7 @@ Important Relationships::
 |Relationship |Description
 
 |Identity and Access -> Tenant Hierarchy and Scope Management
-|Memberships and grants are meaningful only when they can be resolved against the hierarchy and scope chain.
+|Memberships and grants are meaningful only when they can be resolved against the hierarchy and scope chain. Cross-capability reads may use projections, but authoritative writes remain with the owning capability.
 
 |Identity and Access -> Policy Management
 |Effective policy is evaluated after permissions are resolved and before access is allowed.
@@ -49,7 +49,7 @@ Important Relationships::
 |Policy decisions and policy changes must be preserved as canonical audit evidence at the correct scope.
 
 |Isolation and Placement -> Tenant Hierarchy and Scope Management
-|Isolation resolution depends on the subscription, project / service, and environment context.
+|Isolation resolution depends on subscription, project / service, and environment context owned by the hierarchy capability, while resolved placement state remains owned by Isolation and Placement.
 
 |Isolation and Placement -> Policy Management
 |Placement and boundary choices must respect inherited policy constraints such as approved regions or network restrictions.

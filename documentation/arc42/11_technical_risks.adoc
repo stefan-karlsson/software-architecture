@@ -73,9 +73,9 @@ The following action backlog turns the open architectural gaps into concrete nex
 |The accepted audit model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.
 
 |A-03
-|Define state ownership and consistency boundaries for principals, memberships, grants, policies, subscriptions, runtime bindings, and audit records.
-|ADR 0006
-|The platform gains a clear source-of-truth model and a basis for persistence, consistency, and recovery decisions.
+|Apply the accepted ownership and consistency model to future persistence, integration, and test decisions.
+|ADR 0006, Sections 5, 6, 7, and 8
+|The accepted ownership model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.
 
 |A-04
 |Define hybrid isolation resolution rules, including precedence between subscription defaults, scope-level policy, and environment-level tightening.

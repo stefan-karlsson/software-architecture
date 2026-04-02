@@ -6,6 +6,8 @@
 
 This section shows three representative flows that are architecturally relevant for the platform foundation: authorization, policy inheritance, and isolation resolution.
 
+Across these flows, canonical state remains owner-first: authoritative updates happen inside the owning capability boundary, while downstream projections and cross-capability read models may be updated asynchronously and can lag behind owner state.
+
 === Authorization Decision Flow
 
 [mermaid, format=svg]
@@ -35,6 +37,8 @@ sequenceDiagram
 . Evaluate effective policy only after permission lookup succeeds.
 . Return an allow or deny decision and audit missing-permission denials, policy denials, and successful allows.
 
+When a decision requires the freshest membership, grant, or policy data, the responsible flow reads from the owning capability rather than relying on a projected read model.
+
 === Policy Inheritance and Effective Policy Evaluation
 
 [mermaid, format=svg]
@@ -54,6 +58,8 @@ flowchart TD
 . Preserve mandatory parent controls throughout evaluation.
 . Allow lower scopes to tighten controls, such as requiring approval or restricting production access to a narrower group.
 . Use the resulting effective policy during authorization and execution decisions.
+
+Derived policy-aware read models may assist downstream consumers, but authoritative policy state remains with Policy Management and downstream projections may lag.
 
 === Isolation and Binding Resolution
 
@@ -79,3 +85,5 @@ flowchart TD
 . Evaluate policy constraints that can affect placement, region, network, retention, or access posture.
 . Resolve runtime binding, data boundary, and network boundary together.
 . Produce the effective isolation outcome for the environment without changing the business hierarchy.
+
+Runtime and placement state are committed by the owning capability first and then propagated to downstream consumers or projections through asynchronous reconciliation as needed.
