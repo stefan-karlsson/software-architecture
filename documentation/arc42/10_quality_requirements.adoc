@@ -47,41 +47,51 @@ Section 1 highlights the top five quality goals. This section keeps the broader 
 |The platform blocks execution until the approval requirement is satisfied and audits the policy-enforced outcome.
 
 |QS-03
+|Security and Least Privilege
+|A user receives the required permission only through a group-derived grant at the workspace scope and requests the corresponding action within a project inside that workspace.
+|The platform unions the group-derived permission with any direct permissions, recognizes the ancestor-scope match, and allows the action if policy also allows it.
+
+|QS-04
+|Security and Least Privilege
+|A user has a tenant-scoped grant that expands to `project.view` and requests that permission for an environment inside a descendant project / service.
+|The platform recognizes the ancestor-scope grant as matching, allows the request only if policy also allows it, and records the scope chain in the decision context.
+
+|QS-05
 |Policy Enforceability
 |A user requests `environment.secret.read` from a network that is not trusted by policy.
 |The platform denies secret access even if the underlying permission is present and records the denied access event.
 
-|QS-04
+|QS-06
 |Security and Least Privilege
 |A child scope attempts to define a local policy that weakens a mandatory parent control such as required audit logging.
 |The platform rejects the weakening change or preserves the stronger inherited control in the effective policy.
 
-|QS-05
+|QS-07
 |Auditability and Traceability
 |A membership change, grant revocation, policy update, or production access event occurs.
 |The platform records the actor, scope, action, decision context, and resulting effect in the relevant audit context.
 
-|QS-06
+|QS-08
 |Auditability and Traceability
 |Policy requires regulated audit retention for 365 days.
 |The platform preserves audit records in a way that supports the required retention period and exposes the retention rule as part of effective policy.
 
-|QS-07
+|QS-09
 |Isolation Flexibility
 |Two tenants use the same hierarchy but different isolation profiles, such as `subscription_plan = Enterprise, isolation_profile = Silo` and `subscription_plan = Standard, isolation_profile = Shared`.
 |The tenants keep the same business model while the platform resolves different runtime, data, and network boundaries.
 
-|QS-08
+|QS-10
 |Isolation Flexibility
 |A hybrid tenant needs a dedicated production environment while allowing non-production environments to remain shared.
 |The platform resolves dedicated boundaries for the stricter environment and shared boundaries for the others without introducing a different tenant hierarchy.
 
-|QS-09
+|QS-11
 |Policy Enforceability
 |Policy restricts data storage to approved regions.
 |The platform allows only placements whose resolved runtime and data boundaries comply with the approved-region policy.
 
-|QS-10
+|QS-12
 |Operability
 |An operator or auditor needs to understand why a privileged action was allowed or denied.
 |The platform exposes enough decision and audit context to reconstruct the principal, scoped grants, permissions, effective policy, and resulting decision.

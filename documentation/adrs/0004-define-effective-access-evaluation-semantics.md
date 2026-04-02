@@ -2,7 +2,7 @@
 
 ## Status
 
-* Status: proposed
+* Status: accepted
 
 ## Standardize how effective access is resolved across scopes
 
@@ -90,7 +90,7 @@ Chosen option: "Resolve access through additive grants only, with policy handlin
 
 ### Positive Consequences
 
-* Teams can implement one consistent effective-access model across the platform.
+* Teams have one consistent effective-access model across the platform.
 * Direct and group-derived access remains understandable because both use additive union semantics.
 * Default deny remains simple: missing permission means denied access.
 * Restrictive controls such as MFA, approval, trusted-network checks, or region rules stay in the policy layer.
@@ -113,9 +113,9 @@ Chosen option: "Resolve access through additive grants only, with policy handlin
 
 ## Consequences
 
-* Section 6 should reflect the exact authorization algorithm defined by this ADR.
-* Section 8 should describe additive union semantics, downward scope interpretation, and flat group behavior explicitly.
-* Section 10 should add scenarios that cover direct versus group-derived grants and ancestor-scope matching.
+* Section 6 reflects the exact authorization algorithm defined by this ADR.
+* Section 8 describes additive union semantics, downward scope interpretation, and flat group behavior explicitly.
+* Section 10 includes scenarios that cover direct versus group-derived grants and ancestor-scope matching.
 * Implementations should add automated tests for the validation scenarios below before relying on local authorization behavior.
 
 ## Validation Scenarios

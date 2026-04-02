@@ -5,15 +5,15 @@ This section defines the core concepts that are reused across the hierarchy, aut
 
 === Principal and Scope Model
 
-The architecture treats users and service accounts as principals and groups as a scaling mechanism for access management. Membership determines who belongs to which scope context, while the scope hierarchy remains fixed as platform, tenant, workspace, project / service, and environment.
+The architecture treats users and service accounts as principals and groups as a scaling mechanism for access management. Membership determines who belongs to which scope context, while the scope hierarchy remains fixed as platform, tenant, workspace, project / service, and environment. Groups are intentionally flat in the first implementation and do not contain other groups.
 
 === Grant, Role, and Permission Model
 
-Access is granted through scoped grants. A grant assigns a role at a specific scope, and roles expand into permissions such as `workspace.view`, `project.update`, `environment.deploy`, `environment.secret.read`, `policy.manage`, or `audit.view`. Permissions remain the smallest action unit and grants remain the scoped assignment mechanism.
+Access is granted through scoped grants. A grant assigns a role at a specific scope, and roles expand into permissions such as `workspace.view`, `project.update`, `environment.deploy`, `environment.secret.read`, `policy.manage`, or `audit.view`. Permissions remain the smallest action unit and grants remain the scoped assignment mechanism. Effective access is additive: direct grants and group-derived grants combine by union, and broader-scope grants apply downward by scope interpretation to descendant scopes instead of being copied to child records.
 
 === Policy Versus Authorization
 
-Policy is not the same concern as authorization. Authorization answers whether the acting principal has the required permission at the requested scope. Policy answers whether the action is still allowed under inherited rules such as MFA requirements, production approval requirements, trusted-network restrictions, retention requirements, or approved-region restrictions.
+Policy is not the same concern as authorization. Authorization answers whether the acting principal has the required permission at the requested scope and denies by default when no matching grant expands to that permission. Policy answers whether the action is still allowed under inherited rules such as MFA requirements, production approval requirements, trusted-network restrictions, retention requirements, or approved-region restrictions. Policy is evaluated only after permission resolution succeeds.
 
 === Inheritance Model
 

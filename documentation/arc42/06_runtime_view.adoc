@@ -18,20 +18,22 @@ sequenceDiagram
   participant Audit as Audit and Governance
 
   Principal->>IAM: 1. Resolve principal
-  IAM->>Scope: 2. Resolve memberships and scoped grants
-  Scope-->>IAM: Scope chain and effective memberships
-  IAM->>IAM: 3. Expand roles into permissions
-  IAM->>Policy: 4. Evaluate effective policy for requested action
-  Policy-->>IAM: 5. Allow or deny decision
-  IAM->>Audit: 6. Audit the decision
-  IAM-->>Principal: 7. Return allow or deny
+  IAM->>Scope: 2. Resolve direct memberships, flat group memberships, and scoped grants
+  Scope-->>IAM: Scope chain plus direct and group-derived grant context
+  IAM->>IAM: 3. Expand roles and union permissions
+  IAM->>IAM: 4. Default deny if required permission is absent
+  IAM->>Policy: 5. Evaluate effective policy only when permission is present
+  Policy-->>IAM: 6. Allow or deny decision
+  IAM->>Audit: 7. Audit missing-permission denials, policy denials, and successful allows
+  IAM-->>Principal: 8. Return allow or deny
 ....
 
 . Resolve the acting principal as either a user or a service account.
-. Resolve memberships and scoped grants for tenant, workspace, project / service, and environment.
-. Expand the granted role set into fine-grained permissions.
-. Evaluate effective policy after permission lookup.
-. Return an allow or deny decision and audit the result.
+. Resolve direct memberships, flat group memberships, and scoped grants for tenant, workspace, project / service, and environment.
+. Expand the granted role set into fine-grained permissions and union direct and group-derived permissions.
+. Deny by default when the required permission is absent at the requested scope or any ancestor scope.
+. Evaluate effective policy only after permission lookup succeeds.
+. Return an allow or deny decision and audit missing-permission denials, policy denials, and successful allows.
 
 === Policy Inheritance and Effective Policy Evaluation
 

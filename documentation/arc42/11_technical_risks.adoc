@@ -63,9 +63,9 @@ The following action backlog turns the open architectural gaps into concrete nex
 |Action ID |Action |Primary Artifact |Expected Result
 
 |A-01
-|Define effective-access evaluation semantics, including merge rules for direct grants, group-derived grants, scope overlap, and deny behavior.
-|ADR 0004
-|The authorization model becomes decision-complete enough to implement consistently across services and scopes.
+|Apply the accepted effective-access semantics to runtime examples, quality scenarios, and future platform tests.
+|ADR 0004, Sections 6 and 10
+|The accepted authorization model is reflected consistently in architecture examples today and is ready to drive later implementation tests.
 
 |A-02
 |Define the audit evidence architecture, including durable storage, retention ownership, immutability expectations, and the relationship between audit evidence and observability telemetry.
