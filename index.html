@@ -495,9 +495,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#section-design-decisions">9. Architecture Decisions</a>
 <ul class="sectlevel2">
-<li><a href="#_adopt_architecture_documentation_standards_and_tooling">9.1. Adopt architecture documentation standards and tooling</a></li>
-<li><a href="#_adopt_hierarchical_scope_and_inheritance_model">9.2. Adopt hierarchical scope and inheritance model</a></li>
-<li><a href="#_separate_subscription_plan_from_isolation_profile_and_boundary_bindings">9.3. Separate subscription plan from isolation profile and boundary bindings</a></li>
+<li><a href="#_accepted_decisions">9.1. Accepted Decisions</a></li>
+<li><a href="#_adopt_architecture_documentation_standards_and_tooling">9.2. Adopt architecture documentation standards and tooling</a></li>
+<li><a href="#_adopt_hierarchical_scope_and_inheritance_model">9.3. Adopt hierarchical scope and inheritance model</a></li>
+<li><a href="#_separate_subscription_plan_from_isolation_profile_and_boundary_bindings">9.4. Separate subscription plan from isolation profile and boundary bindings</a></li>
+<li><a href="#_proposed_decisions_to_resolve_next">9.5. Proposed Decisions To Resolve Next</a></li>
+<li><a href="#_define_effective_access_evaluation_semantics">9.6. Define effective-access evaluation semantics</a></li>
+<li><a href="#_define_audit_evidence_and_retention_architecture">9.7. Define audit evidence and retention architecture</a></li>
+<li><a href="#_define_foundation_state_ownership_and_consistency_boundaries">9.8. Define foundation state ownership and consistency boundaries</a></li>
+<li><a href="#_define_hybrid_isolation_resolution_rules">9.9. Define hybrid isolation resolution rules</a></li>
 </ul>
 </li>
 <li><a href="#section-quality-scenarios">10. Quality Requirements</a>
@@ -510,6 +516,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_risks">11.1. Risks</a></li>
 <li><a href="#_technical_debts">11.2. Technical Debts</a></li>
+<li><a href="#_recommended_next_actions">11.3. Recommended Next Actions</a></li>
 </ul>
 </li>
 <li><a href="#section-glossary">12. Glossary</a></li>
@@ -1449,12 +1456,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="section-design-decisions"><a class="anchor" href="#section-design-decisions"></a>9. Architecture Decisions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The platform foundation currently depends on the following explicit architecture decisions.</p>
+<p>The platform foundation currently depends on the following accepted architecture decisions.</p>
 </div>
 <div class="sect2">
-<h3 id="_adopt_architecture_documentation_standards_and_tooling"><a class="anchor" href="#_adopt_architecture_documentation_standards_and_tooling"></a>9.1. Adopt architecture documentation standards and tooling</h3>
+<h3 id="_accepted_decisions"><a class="anchor" href="#_accepted_decisions"></a>9.1. Accepted Decisions</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_adopt_architecture_documentation_standards_and_tooling"><a class="anchor" href="#_adopt_architecture_documentation_standards_and_tooling"></a>9.2. Adopt architecture documentation standards and tooling</h3>
 <div class="sect3">
-<h4 id="_status"><a class="anchor" href="#_status"></a>9.1.1. Status</h4>
+<h4 id="_status"><a class="anchor" href="#_status"></a>9.2.1. Status</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1464,7 +1475,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect3">
-<h4 id="_standardize_architecture_documentation_approach_for_the_product_platform"><a class="anchor" href="#_standardize_architecture_documentation_approach_for_the_product_platform"></a>9.1.2. Standardize architecture documentation approach for the Product Platform</h4>
+<h4 id="_standardize_architecture_documentation_approach_for_the_product_platform"><a class="anchor" href="#_standardize_architecture_documentation_approach_for_the_product_platform"></a>9.2.2. Standardize architecture documentation approach for the Product Platform</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1477,14 +1488,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect3">
-<h4 id="_context_and_problem_statement"><a class="anchor" href="#_context_and_problem_statement"></a>9.1.3. Context and Problem Statement</h4>
+<h4 id="_context_and_problem_statement"><a class="anchor" href="#_context_and_problem_statement"></a>9.2.3. Context and Problem Statement</h4>
 <div class="paragraph">
 <p>Our architecture documentation needs to stay consistent, reviewable, and easy to evolve as the Product Platform grows.
 Without shared standards and tooling, documentation drifts in structure and quality and becomes difficult to maintain.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_drivers"><a class="anchor" href="#_decision_drivers"></a>9.1.4. Decision Drivers</h4>
+<h4 id="_decision_drivers"><a class="anchor" href="#_decision_drivers"></a>9.2.4. Decision Drivers</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1503,7 +1514,7 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </div>
 </div>
 <div class="sect3">
-<h4 id="_considered_options"><a class="anchor" href="#_considered_options"></a>9.1.5. Considered Options</h4>
+<h4 id="_considered_options"><a class="anchor" href="#_considered_options"></a>9.2.5. Considered Options</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1516,7 +1527,7 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_outcome"><a class="anchor" href="#_decision_outcome"></a>9.1.6. Decision Outcome</h4>
+<h4 id="_decision_outcome"><a class="anchor" href="#_decision_outcome"></a>9.2.6. Decision Outcome</h4>
 <div class="paragraph">
 <p>Chosen option: "Use arc42 + C4 + docToolchain + Structurizr DSL + ADR/TDR records in this repository", because it provides a structured, automatable, and version-controlled documentation baseline that fits our engineering workflow.</p>
 </div>
@@ -1554,7 +1565,7 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </div>
 </div>
 <div class="sect3">
-<h4 id="_pros_and_cons_of_the_options"><a class="anchor" href="#_pros_and_cons_of_the_options"></a>9.1.7. Pros and Cons of the Options</h4>
+<h4 id="_pros_and_cons_of_the_options"><a class="anchor" href="#_pros_and_cons_of_the_options"></a>9.2.7. Pros and Cons of the Options</h4>
 <div class="sect4">
 <h5 id="_use_arc42_c4_doctoolchain_structurizr_dsl_adrtdr_records"><a class="anchor" href="#_use_arc42_c4_doctoolchain_structurizr_dsl_adrtdr_records"></a>Use arc42 + C4 + docToolchain + Structurizr DSL + ADR/TDR records</h5>
 <div class="ulist">
@@ -1590,9 +1601,9 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </div>
 </div>
 <div class="sect2">
-<h3 id="_adopt_hierarchical_scope_and_inheritance_model"><a class="anchor" href="#_adopt_hierarchical_scope_and_inheritance_model"></a>9.2. Adopt hierarchical scope and inheritance model</h3>
+<h3 id="_adopt_hierarchical_scope_and_inheritance_model"><a class="anchor" href="#_adopt_hierarchical_scope_and_inheritance_model"></a>9.3. Adopt hierarchical scope and inheritance model</h3>
 <div class="sect3">
-<h4 id="_status_2"><a class="anchor" href="#_status_2"></a>9.2.1. Status</h4>
+<h4 id="_status_2"><a class="anchor" href="#_status_2"></a>9.3.1. Status</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1602,7 +1613,7 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </div>
 </div>
 <div class="sect3">
-<h4 id="_standardize_the_platform_hierarchy_and_inheritance_rules"><a class="anchor" href="#_standardize_the_platform_hierarchy_and_inheritance_rules"></a>9.2.2. Standardize the platform hierarchy and inheritance rules</h4>
+<h4 id="_standardize_the_platform_hierarchy_and_inheritance_rules"><a class="anchor" href="#_standardize_the_platform_hierarchy_and_inheritance_rules"></a>9.3.2. Standardize the platform hierarchy and inheritance rules</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1615,14 +1626,14 @@ Without shared standards and tooling, documentation drifts in structure and qual
 </div>
 </div>
 <div class="sect3">
-<h4 id="_context_and_problem_statement_2"><a class="anchor" href="#_context_and_problem_statement_2"></a>9.2.3. Context and Problem Statement</h4>
+<h4 id="_context_and_problem_statement_2"><a class="anchor" href="#_context_and_problem_statement_2"></a>9.3.3. Context and Problem Statement</h4>
 <div class="paragraph">
 <p>The platform needs one consistent way to reason about scope, access, policy, audit context, and defaults.
 Without a shared hierarchy, different teams would likely invent incompatible models for tenant, workspace, service, and environment governance.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_drivers_2"><a class="anchor" href="#_decision_drivers_2"></a>9.2.4. Decision Drivers</h4>
+<h4 id="_decision_drivers_2"><a class="anchor" href="#_decision_drivers_2"></a>9.3.4. Decision Drivers</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1644,7 +1655,7 @@ Without a shared hierarchy, different teams would likely invent incompatible mod
 </div>
 </div>
 <div class="sect3">
-<h4 id="_considered_options_2"><a class="anchor" href="#_considered_options_2"></a>9.2.5. Considered Options</h4>
+<h4 id="_considered_options_2"><a class="anchor" href="#_considered_options_2"></a>9.3.5. Considered Options</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1657,7 +1668,7 @@ Without a shared hierarchy, different teams would likely invent incompatible mod
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_outcome_2"><a class="anchor" href="#_decision_outcome_2"></a>9.2.6. Decision Outcome</h4>
+<h4 id="_decision_outcome_2"><a class="anchor" href="#_decision_outcome_2"></a>9.3.6. Decision Outcome</h4>
 <div class="paragraph">
 <p>Chosen option: "Adopt one hierarchical scope model with downward inheritance", because it creates a single architecture for access, policy, audit, and defaults.</p>
 </div>
@@ -1695,7 +1706,7 @@ Without a shared hierarchy, different teams would likely invent incompatible mod
 </div>
 </div>
 <div class="sect3">
-<h4 id="_pros_and_cons_of_the_options_2"><a class="anchor" href="#_pros_and_cons_of_the_options_2"></a>9.2.7. Pros and Cons of the Options</h4>
+<h4 id="_pros_and_cons_of_the_options_2"><a class="anchor" href="#_pros_and_cons_of_the_options_2"></a>9.3.7. Pros and Cons of the Options</h4>
 <div class="sect4">
 <h5 id="_adopt_one_hierarchical_scope_model_with_downward_inheritance"><a class="anchor" href="#_adopt_one_hierarchical_scope_model_with_downward_inheritance"></a>Adopt one hierarchical scope model with downward inheritance</h5>
 <div class="ulist">
@@ -1731,9 +1742,9 @@ Without a shared hierarchy, different teams would likely invent incompatible mod
 </div>
 </div>
 <div class="sect2">
-<h3 id="_separate_subscription_plan_from_isolation_profile_and_boundary_bindings"><a class="anchor" href="#_separate_subscription_plan_from_isolation_profile_and_boundary_bindings"></a>9.3. Separate subscription plan from isolation profile and boundary bindings</h3>
+<h3 id="_separate_subscription_plan_from_isolation_profile_and_boundary_bindings"><a class="anchor" href="#_separate_subscription_plan_from_isolation_profile_and_boundary_bindings"></a>9.4. Separate subscription plan from isolation profile and boundary bindings</h3>
 <div class="sect3">
-<h4 id="_status_3"><a class="anchor" href="#_status_3"></a>9.3.1. Status</h4>
+<h4 id="_status_3"><a class="anchor" href="#_status_3"></a>9.4.1. Status</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1743,7 +1754,7 @@ Without a shared hierarchy, different teams would likely invent incompatible mod
 </div>
 </div>
 <div class="sect3">
-<h4 id="_distinguish_customer_entitlement_from_technical_isolation"><a class="anchor" href="#_distinguish_customer_entitlement_from_technical_isolation"></a>9.3.2. Distinguish customer entitlement from technical isolation</h4>
+<h4 id="_distinguish_customer_entitlement_from_technical_isolation"><a class="anchor" href="#_distinguish_customer_entitlement_from_technical_isolation"></a>9.4.2. Distinguish customer entitlement from technical isolation</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1756,14 +1767,14 @@ Without a shared hierarchy, different teams would likely invent incompatible mod
 </div>
 </div>
 <div class="sect3">
-<h4 id="_context_and_problem_statement_3"><a class="anchor" href="#_context_and_problem_statement_3"></a>9.3.3. Context and Problem Statement</h4>
+<h4 id="_context_and_problem_statement_3"><a class="anchor" href="#_context_and_problem_statement_3"></a>9.4.3. Context and Problem Statement</h4>
 <div class="paragraph">
 <p>The platform must support tenants that buy different subscription plans and also require different isolation models.
 If pricing and isolation are treated as the same field, the architecture becomes harder to reason about and less flexible for shared, silo, and hybrid deployment choices.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_drivers_3"><a class="anchor" href="#_decision_drivers_3"></a>9.3.4. Decision Drivers</h4>
+<h4 id="_decision_drivers_3"><a class="anchor" href="#_decision_drivers_3"></a>9.4.4. Decision Drivers</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1782,7 +1793,7 @@ If pricing and isolation are treated as the same field, the architecture becomes
 </div>
 </div>
 <div class="sect3">
-<h4 id="_considered_options_3"><a class="anchor" href="#_considered_options_3"></a>9.3.5. Considered Options</h4>
+<h4 id="_considered_options_3"><a class="anchor" href="#_considered_options_3"></a>9.4.5. Considered Options</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1795,7 +1806,7 @@ If pricing and isolation are treated as the same field, the architecture becomes
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_outcome_3"><a class="anchor" href="#_decision_outcome_3"></a>9.3.6. Decision Outcome</h4>
+<h4 id="_decision_outcome_3"><a class="anchor" href="#_decision_outcome_3"></a>9.4.6. Decision Outcome</h4>
 <div class="paragraph">
 <p>Chosen option: "Separate subscription plan from isolation profile and boundary bindings", because it preserves one tenant model while allowing hosting isolation to vary independently.</p>
 </div>
@@ -1833,7 +1844,7 @@ If pricing and isolation are treated as the same field, the architecture becomes
 </div>
 </div>
 <div class="sect3">
-<h4 id="_pros_and_cons_of_the_options_3"><a class="anchor" href="#_pros_and_cons_of_the_options_3"></a>9.3.7. Pros and Cons of the Options</h4>
+<h4 id="_pros_and_cons_of_the_options_3"><a class="anchor" href="#_pros_and_cons_of_the_options_3"></a>9.4.7. Pros and Cons of the Options</h4>
 <div class="sect4">
 <h5 id="_separate_subscription_plan_from_isolation_profile_and_boundary_bindings_2"><a class="anchor" href="#_separate_subscription_plan_from_isolation_profile_and_boundary_bindings_2"></a>Separate subscription plan from isolation profile and boundary bindings</h5>
 <div class="ulist">
@@ -1865,8 +1876,456 @@ If pricing and isolation are treated as the same field, the architecture becomes
 </li>
 </ul>
 </div>
-<div style="page-break-after: always;"></div>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_proposed_decisions_to_resolve_next"><a class="anchor" href="#_proposed_decisions_to_resolve_next"></a>9.5. Proposed Decisions To Resolve Next</h3>
+<div class="paragraph">
+<p>The following proposed ADRs capture the next architectural decisions that should be resolved to make the platform foundation implementation-ready.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_define_effective_access_evaluation_semantics"><a class="anchor" href="#_define_effective_access_evaluation_semantics"></a>9.6. Define effective-access evaluation semantics</h3>
+<div class="sect3">
+<h4 id="_status_4"><a class="anchor" href="#_status_4"></a>9.6.1. Status</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: proposed</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_resolve_how_effective_access_is_computed_across_scopes"><a class="anchor" href="#_resolve_how_effective_access_is_computed_across_scopes"></a>9.6.2. Resolve how effective access is computed across scopes</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Deciders: Architecture Team</p>
+</li>
+<li>
+<p>Date: 2026-04-03</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_and_problem_statement_4"><a class="anchor" href="#_context_and_problem_statement_4"></a>9.6.3. Context and Problem Statement</h4>
+<div class="paragraph">
+<p>The platform foundation defines the authorization chain as <code>Principal &#8594; Membership &#8594; Grant &#8594; Role &#8594; Permission &#8594; Scope</code>.
+That model is architecturally sound, but it is not yet decision-complete for implementation because several effective-access semantics remain unspecified.</p>
+</div>
+<div class="paragraph">
+<p>Examples of unresolved questions include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>how direct grants and group-derived grants combine</p>
+</li>
+<li>
+<p>whether explicit deny exists and how it behaves</p>
+</li>
+<li>
+<p>how overlapping grants at different scopes are merged</p>
+</li>
+<li>
+<p>whether broader-scope grants flow downward automatically or are interpreted only through scope resolution</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Without these decisions, different teams can implement materially different access behavior while still claiming to follow the architecture.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_drivers_4"><a class="anchor" href="#_decision_drivers_4"></a>9.6.4. Decision Drivers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Consistent authorization behavior across all platform capabilities</p>
+</li>
+<li>
+<p>Least-privilege enforcement</p>
+</li>
+<li>
+<p>Predictable scope resolution</p>
+</li>
+<li>
+<p>Testable allow/deny behavior</p>
+</li>
+<li>
+<p>Reduced risk of grant explosion and ambiguous access</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_considered_options_4"><a class="anchor" href="#_considered_options_4"></a>9.6.5. Considered Options</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Resolve access through additive grants only, with policy handling all denials and restrictions</p>
+</li>
+<li>
+<p>Support additive grants plus explicit deny semantics</p>
+</li>
+<li>
+<p>Resolve access by nearest-scope precedence only</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_outcome_4"><a class="anchor" href="#_decision_outcome_4"></a>9.6.6. Decision Outcome</h4>
+<div class="paragraph">
+<p>To be decided. This ADR exists to make the effective-access semantics explicit before implementation proceeds.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences"><a class="anchor" href="#_consequences"></a>9.6.7. Consequences</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Once decided, this ADR should drive updates to sections 6, 8, and 10.</p>
+</li>
+<li>
+<p>The chosen semantics should be reflected in test cases for scope inheritance, group membership, and privileged actions.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_define_audit_evidence_and_retention_architecture"><a class="anchor" href="#_define_audit_evidence_and_retention_architecture"></a>9.7. Define audit evidence and retention architecture</h3>
+<div class="sect3">
+<h4 id="_status_5"><a class="anchor" href="#_status_5"></a>9.7.1. Status</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: proposed</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_resolve_how_audit_evidence_is_stored_retained_and_protected"><a class="anchor" href="#_resolve_how_audit_evidence_is_stored_retained_and_protected"></a>9.7.2. Resolve how audit evidence is stored, retained, and protected</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Deciders: Architecture Team</p>
+</li>
+<li>
+<p>Date: 2026-04-03</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_and_problem_statement_5"><a class="anchor" href="#_context_and_problem_statement_5"></a>9.7.3. Context and Problem Statement</h4>
+<div class="paragraph">
+<p>The platform foundation requires auditability for memberships, grants, policy changes, production access, secret access, deployments, and billing or administration changes.
+The architecture also integrates with an observability stack, but it does not yet define whether compliance-grade audit evidence is the same thing as operational telemetry.</p>
+</div>
+<div class="paragraph">
+<p>The platform therefore still needs explicit decisions about:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the system of record for audit evidence</p>
+</li>
+<li>
+<p>required retention behavior</p>
+</li>
+<li>
+<p>immutability and tamper-resistance expectations</p>
+</li>
+<li>
+<p>export and reporting expectations</p>
+</li>
+<li>
+<p>the boundary between audit evidence and general observability data</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_drivers_5"><a class="anchor" href="#_decision_drivers_5"></a>9.7.4. Decision Drivers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Compliance and governance expectations</p>
+</li>
+<li>
+<p>Traceable privileged activity</p>
+</li>
+<li>
+<p>Durable retention of regulated events</p>
+</li>
+<li>
+<p>Separation of evidence from convenience telemetry</p>
+</li>
+<li>
+<p>Support for later operational and security review</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_considered_options_5"><a class="anchor" href="#_considered_options_5"></a>9.7.5. Considered Options</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Use the observability stack as the only audit system of record</p>
+</li>
+<li>
+<p>Use a dedicated audit store and export selected signals to observability</p>
+</li>
+<li>
+<p>Use a mixed model with audit-grade storage plus operational summaries</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_outcome_5"><a class="anchor" href="#_decision_outcome_5"></a>9.7.6. Decision Outcome</h4>
+<div class="paragraph">
+<p>To be decided. This ADR exists to define the audit evidence architecture before implementation or compliance controls depend on implicit assumptions.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences_2"><a class="anchor" href="#_consequences_2"></a>9.7.7. Consequences</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Once decided, this ADR should drive updates to sections 5, 7, 10, and 11.</p>
+</li>
+<li>
+<p>The chosen model should define retention ownership, query/reporting expectations, and integrity guarantees.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_define_foundation_state_ownership_and_consistency_boundaries"><a class="anchor" href="#_define_foundation_state_ownership_and_consistency_boundaries"></a>9.8. Define foundation state ownership and consistency boundaries</h3>
+<div class="sect3">
+<h4 id="_status_6"><a class="anchor" href="#_status_6"></a>9.8.1. Status</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: proposed</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_resolve_which_capability_owns_which_platform_records"><a class="anchor" href="#_resolve_which_capability_owns_which_platform_records"></a>9.8.2. Resolve which capability owns which platform records</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Deciders: Architecture Team</p>
+</li>
+<li>
+<p>Date: 2026-04-03</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_and_problem_statement_6"><a class="anchor" href="#_context_and_problem_statement_6"></a>9.8.3. Context and Problem Statement</h4>
+<div class="paragraph">
+<p>The platform foundation describes clear capability modules, but it does not yet define where key records are owned and how changes to them are coordinated.
+This affects principals, memberships, grants, roles, permissions, policies, subscriptions, runtime bindings, data boundaries, network boundaries, and audit records.</p>
+</div>
+<div class="paragraph">
+<p>Without an explicit ownership and consistency model, teams can make incompatible decisions about:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>source-of-truth boundaries</p>
+</li>
+<li>
+<p>transactional expectations</p>
+</li>
+<li>
+<p>update ordering across capabilities</p>
+</li>
+<li>
+<p>recovery and reconciliation behavior</p>
+</li>
+<li>
+<p>read and write responsibilities</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_drivers_6"><a class="anchor" href="#_decision_drivers_6"></a>9.8.4. Decision Drivers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Clear data ownership</p>
+</li>
+<li>
+<p>Predictable change behavior</p>
+</li>
+<li>
+<p>Recovery and reconciliation strategy</p>
+</li>
+<li>
+<p>Reduced coupling between capability modules</p>
+</li>
+<li>
+<p>Better basis for persistence design</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_considered_options_6"><a class="anchor" href="#_considered_options_6"></a>9.8.5. Considered Options</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Centralize all governed state in one platform store</p>
+</li>
+<li>
+<p>Partition ownership by capability with explicit integration boundaries</p>
+</li>
+<li>
+<p>Use a hybrid model with authoritative domain stores plus derived read models</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_outcome_6"><a class="anchor" href="#_decision_outcome_6"></a>9.8.6. Decision Outcome</h4>
+<div class="paragraph">
+<p>To be decided. This ADR exists to define the foundation state model before persistence and integration behavior are implemented implicitly.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences_3"><a class="anchor" href="#_consequences_3"></a>9.8.7. Consequences</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Once decided, this ADR should drive updates to sections 5, 6, and 7.</p>
+</li>
+<li>
+<p>The chosen model should clarify which capability owns authoritative writes and how cross-capability consistency is achieved.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_define_hybrid_isolation_resolution_rules"><a class="anchor" href="#_define_hybrid_isolation_resolution_rules"></a>9.9. Define hybrid isolation resolution rules</h3>
+<div class="sect3">
+<h4 id="_status_7"><a class="anchor" href="#_status_7"></a>9.9.1. Status</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: proposed</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_resolve_how_hybrid_isolation_is_selected_and_constrained"><a class="anchor" href="#_resolve_how_hybrid_isolation_is_selected_and_constrained"></a>9.9.2. Resolve how hybrid isolation is selected and constrained</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Deciders: Architecture Team</p>
+</li>
+<li>
+<p>Date: 2026-04-03</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_and_problem_statement_7"><a class="anchor" href="#_context_and_problem_statement_7"></a>9.9.3. Context and Problem Statement</h4>
+<div class="paragraph">
+<p>The platform foundation supports shared, silo, and hybrid isolation through isolation profile plus runtime, data, and network boundaries.
+Hybrid is intentionally first-class, but the architecture does not yet define exactly how hybrid placement is resolved when subscription defaults, inherited policy, and environment-specific tightening all apply.</p>
+</div>
+<div class="paragraph">
+<p>The unresolved questions include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>whether runtime, data, and network boundaries may diverge independently</p>
+</li>
+<li>
+<p>whether environment-level choices may tighten subscription defaults</p>
+</li>
+<li>
+<p>which policy constraints run before final placement is accepted</p>
+</li>
+<li>
+<p>how hybrid behavior is represented for auditing and operational review</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_drivers_7"><a class="anchor" href="#_decision_drivers_7"></a>9.9.4. Decision Drivers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Predictable placement behavior</p>
+</li>
+<li>
+<p>Clear relationship between subscription plan, isolation profile, and policy</p>
+</li>
+<li>
+<p>Testable hybrid behavior</p>
+</li>
+<li>
+<p>Reduced ambiguity for platform operators and service teams</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_considered_options_7"><a class="anchor" href="#_considered_options_7"></a>9.9.5. Considered Options</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Resolve all boundaries together from one shared isolation decision</p>
+</li>
+<li>
+<p>Resolve runtime, data, and network boundaries independently under a common policy envelope</p>
+</li>
+<li>
+<p>Restrict hybrid behavior to predefined patterns only</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_outcome_7"><a class="anchor" href="#_decision_outcome_7"></a>9.9.6. Decision Outcome</h4>
+<div class="paragraph">
+<p>To be decided. This ADR exists to make hybrid isolation behavior explicit before implementation and tenant onboarding depend on local interpretation.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences_4"><a class="anchor" href="#_consequences_4"></a>9.9.7. Consequences</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Once decided, this ADR should drive updates to sections 6, 7, and 10.</p>
+</li>
+<li>
+<p>The chosen rules should be reflected in placement, policy, and audit scenarios.</p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
@@ -2098,6 +2557,60 @@ If pricing and isolation are treated as the same field, the architecture becomes
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect2">
+<h3 id="_recommended_next_actions"><a class="anchor" href="#_recommended_next_actions"></a>11.3. Recommended Next Actions</h3>
+<div class="paragraph">
+<p>The following action backlog turns the open architectural gaps into concrete next steps that can be resolved one by one.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 33.3333%;">
+<col style="width: 22.2222%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Action ID</th>
+<th class="tableblock halign-left valign-top">Action</th>
+<th class="tableblock halign-left valign-top">Primary Artifact</th>
+<th class="tableblock halign-left valign-top">Expected Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A-01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Define effective-access evaluation semantics, including merge rules for direct grants, group-derived grants, scope overlap, and deny behavior.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The authorization model becomes decision-complete enough to implement consistently across services and scopes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A-02</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Define the audit evidence architecture, including durable storage, retention ownership, immutability expectations, and the relationship between audit evidence and observability telemetry.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Audit requirements become implementable and distinguish compliance evidence from general operational telemetry.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A-03</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Define state ownership and consistency boundaries for principals, memberships, grants, policies, subscriptions, runtime bindings, and audit records.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0006</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform gains a clear source-of-truth model and a basis for persistence, consistency, and recovery decisions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A-04</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Define hybrid isolation resolution rules, including precedence between subscription defaults, scope-level policy, and environment-level tightening.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0007</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hybrid placement behavior becomes predictable enough to implement and test without per-team interpretation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A-05</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Add one concrete end-to-end governed runtime scenario that exercises authorization, policy, audit, and isolation together.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sections 6 and 10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The runtime and quality chapters gain one implementation-oriented example that can be used for design review and later test planning.</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -2245,7 +2758,7 @@ If pricing and isolation are treated as the same field, the architecture becomes
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-04-02 21:58:52 UTC
+Last updated 2026-04-02 22:11:59 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
