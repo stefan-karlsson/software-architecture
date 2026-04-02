@@ -489,8 +489,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_grant_role_and_permission_model">8.2. Grant, Role, and Permission Model</a></li>
 <li><a href="#_policy_versus_authorization">8.3. Policy Versus Authorization</a></li>
 <li><a href="#_inheritance_model">8.4. Inheritance Model</a></li>
-<li><a href="#_audit_model">8.5. Audit Model</a></li>
-<li><a href="#_isolation_model_and_tier_separation">8.6. Isolation Model and Tier Separation</a></li>
+<li><a href="#_ownership_and_consistency_model">8.5. Ownership and Consistency Model</a></li>
+<li><a href="#_audit_model">8.6. Audit Model</a></li>
+<li><a href="#_isolation_model_and_tier_separation">8.7. Isolation Model and Tier Separation</a></li>
 </ul>
 </li>
 <li><a href="#section-design-decisions">9. Architecture Decisions</a>
@@ -501,9 +502,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_separate_subscription_plan_from_isolation_profile_and_boundary_bindings">9.4. Separate subscription plan from isolation profile and boundary bindings</a></li>
 <li><a href="#_define_effective_access_evaluation_semantics">9.5. Define effective-access evaluation semantics</a></li>
 <li><a href="#_define_audit_evidence_and_retention_architecture">9.6. Define audit evidence and retention architecture</a></li>
-<li><a href="#_proposed_decisions_to_resolve_next">9.7. Proposed Decisions To Resolve Next</a></li>
-<li><a href="#_define_foundation_state_ownership_and_consistency_boundaries">9.8. Define foundation state ownership and consistency boundaries</a></li>
-<li><a href="#_define_hybrid_isolation_resolution_rules">9.9. Define hybrid isolation resolution rules</a></li>
+<li><a href="#_define_foundation_state_ownership_and_consistency_boundaries">9.7. Define foundation state ownership and consistency boundaries</a></li>
+<li><a href="#_define_hybrid_isolation_resolution_rules">9.8. Define hybrid isolation resolution rules</a></li>
+<li><a href="#_proposed_decisions_to_resolve_next">9.9. Proposed Decisions To Resolve Next</a></li>
 </ul>
 </li>
 <li><a href="#section-quality-scenarios">10. Quality Requirements</a>
@@ -1027,15 +1028,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Identity and Access Capability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Manages principals, groups, memberships, grants, roles, and permissions, and resolves the authorization context for a requested action.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authoritatively owns platform-specific principal records, service accounts, groups, memberships, grants, roles, and permissions, and resolves the authorization context for a requested action.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Policy Management Capability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maintains platform baseline policy plus scoped tenant, workspace, project, and environment policies, and computes effective policy.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authoritatively owns platform baseline policy plus scoped tenant, workspace, project, and environment policies, and computes effective policy.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Tenant Hierarchy and Scope Management Capability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Maintains tenants, billing accounts, subscriptions, workspaces, projects / services, and environments as the canonical scope hierarchy.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authoritatively owns tenants, billing accounts, subscriptions, workspaces, projects / services, and environments as the canonical scope hierarchy.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Audit and Governance Capability</p></td>
@@ -1043,7 +1044,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Isolation and Placement Capability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves isolation profile and the runtime, data, and network boundaries used by each environment.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authoritatively owns resolved runtime bindings, data boundaries, network boundaries, and placement state for each environment.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1066,7 +1067,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Identity and Access &#8594; Tenant Hierarchy and Scope Management</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Memberships and grants are meaningful only when they can be resolved against the hierarchy and scope chain.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Memberships and grants are meaningful only when they can be resolved against the hierarchy and scope chain. Cross-capability reads may use projections, but authoritative writes remain with the owning capability.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Identity and Access &#8594; Policy Management</p></td>
@@ -1078,7 +1079,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Isolation and Placement &#8594; Tenant Hierarchy and Scope Management</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation resolution depends on the subscription, project / service, and environment context.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation resolution depends on subscription, project / service, and environment context owned by the hierarchy capability, while resolved placement state remains owned by Isolation and Placement.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Isolation and Placement &#8594; Policy Management</p></td>
@@ -1224,6 +1225,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>This section shows three representative flows that are architecturally relevant for the platform foundation: authorization, policy inheritance, and isolation resolution.</p>
 </div>
+<div class="paragraph">
+<p>Across these flows, canonical state remains owner-first: authoritative updates happen inside the owning capability boundary, while downstream projections and cross-capability read models may be updated asynchronously and can lag behind owner state.</p>
+</div>
 <div class="sect2">
 <h3 id="_authorization_decision_flow"><a class="anchor" href="#_authorization_decision_flow"></a>6.1. Authorization Decision Flow</h3>
 <div class="imageblock">
@@ -1253,6 +1257,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>When a decision requires the freshest membership, grant, or policy data, the responsible flow reads from the owning capability rather than relying on a projected read model.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_policy_inheritance_and_effective_policy_evaluation"><a class="anchor" href="#_policy_inheritance_and_effective_policy_evaluation"></a>6.2. Policy Inheritance and Effective Policy Evaluation</h3>
@@ -1280,12 +1287,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>Derived policy-aware read models may assist downstream consumers, but authoritative policy state remains with Policy Management and downstream projections may lag.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_isolation_and_binding_resolution"><a class="anchor" href="#_isolation_and_binding_resolution"></a>6.3. Isolation and Binding Resolution</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-mermaid-md5-f68061d98e1efd8c28812bb2e14de069.svg" alt="Diagram" width="693" height="382">
+<img src="./images/diag-mermaid-md5-c5e3ba090df1633c1f25a78f536e51a7.svg" alt="Diagram" width="1007" height="534">
 </div>
 </div>
 <div class="olist arabic">
@@ -1294,18 +1304,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Resolve the environment and its parent subscription context.</p>
 </li>
 <li>
-<p>Read the subscription&#8217;s subscription plan and isolation profile.</p>
+<p>Read the subscription&#8217;s subscription plan and isolation profile as the default isolation baseline.</p>
+</li>
+<li>
+<p>Apply any environment-level tightening that strengthens the default without weakening it.</p>
 </li>
 <li>
 <p>Evaluate policy constraints that can affect placement, region, network, retention, or access posture.</p>
 </li>
 <li>
-<p>Resolve runtime binding, data boundary, and network boundary together.</p>
+<p>Resolve runtime binding, data boundary, and network boundary independently under one policy envelope.</p>
+</li>
+<li>
+<p>Accept placement only when every resolved boundary complies with policy and does not weaken a stricter default.</p>
 </li>
 <li>
 <p>Produce the effective isolation outcome for the environment without changing the business hierarchy.</p>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p>Runtime and placement state are committed by the owning capability first and then propagated to downstream consumers or projections through asynchronous reconciliation as needed.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1354,7 +1373,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Shared for some environments, dedicated for others</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Shared or dedicated depending on environment and policy</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Shared or dedicated depending on environment and policy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tenants that need stronger isolation only for selected workloads or environments, such as production.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tenants that need stronger isolation only for selected workloads or environments, such as production. Mixed boundary combinations are valid only when they remain policy-compliant and do not weaken stricter defaults.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Silo</p></td>
@@ -1402,6 +1421,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>runtime, data, and network boundaries may differ even when the tenant hierarchy does not</p>
 </li>
 <li>
+<p>subscription isolation defines the default baseline, and environment-level logic may tighten that baseline without weakening it</p>
+</li>
+<li>
 <p>hybrid isolation is a first-class case rather than an exception</p>
 </li>
 <li>
@@ -1409,6 +1431,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li>
 <p>canonical audit evidence remains distinct from operational telemetry exported to observability tools</p>
+</li>
+<li>
+<p>authoritative owner-managed stores and derived read models are distinct architectural concerns even though their concrete persistence technologies remain open</p>
+</li>
+<li>
+<p>projected or convenience views may lag behind canonical owner state and do not become write authorities</p>
+</li>
+<li>
+<p>mixed hybrid boundary outcomes are valid only when every resolved boundary remains policy-compliant and non-weakening</p>
 </li>
 </ul>
 </div>
@@ -1447,15 +1478,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div class="sect2">
-<h3 id="_audit_model"><a class="anchor" href="#_audit_model"></a>8.5. Audit Model</h3>
+<h3 id="_ownership_and_consistency_model"><a class="anchor" href="#_ownership_and_consistency_model"></a>8.5. Ownership and Consistency Model</h3>
+<div class="paragraph">
+<p>Each governed record type has one authoritative write owner, and owner reads are authoritative when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain non-authoritative and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_audit_model"><a class="anchor" href="#_audit_model"></a>8.6. Audit Model</h3>
 <div class="paragraph">
 <p>Auditability is a first-class concept rather than an afterthought. Canonical audit evidence is the governance source of truth, remains distinct from observability exports, and is append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When audit evidence needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_isolation_model_and_tier_separation"><a class="anchor" href="#_isolation_model_and_tier_separation"></a>8.6. Isolation Model and Tier Separation</h3>
+<h3 id="_isolation_model_and_tier_separation"><a class="anchor" href="#_isolation_model_and_tier_separation"></a>8.7. Isolation Model and Tier Separation</h3>
 <div class="paragraph">
-<p>Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime binding, data boundary, and network boundary resolve the actual technical isolation for each environment.</p>
+<p>Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime binding, data boundary, and network boundary resolve the actual technical isolation for each environment. In hybrid mode, those three boundaries may resolve independently, but subscription isolation remains the default baseline, environment-level logic may only tighten that baseline, and effective policy is the final acceptance gate before placement succeeds.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -2699,25 +2736,19 @@ The architecture also integrates with an observability stack, but operational te
 </div>
 </div>
 <div class="sect2">
-<h3 id="_proposed_decisions_to_resolve_next"><a class="anchor" href="#_proposed_decisions_to_resolve_next"></a>9.7. Proposed Decisions To Resolve Next</h3>
-<div class="paragraph">
-<p>The following proposed ADRs capture the next architectural decisions that should be resolved to make the platform foundation implementation-ready.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_define_foundation_state_ownership_and_consistency_boundaries"><a class="anchor" href="#_define_foundation_state_ownership_and_consistency_boundaries"></a>9.8. Define foundation state ownership and consistency boundaries</h3>
+<h3 id="_define_foundation_state_ownership_and_consistency_boundaries"><a class="anchor" href="#_define_foundation_state_ownership_and_consistency_boundaries"></a>9.7. Define foundation state ownership and consistency boundaries</h3>
 <div class="sect3">
-<h4 id="_status_6"><a class="anchor" href="#_status_6"></a>9.8.1. Status</h4>
+<h4 id="_status_6"><a class="anchor" href="#_status_6"></a>9.7.1. Status</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>Status: proposed</p>
+<p>Status: accepted</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_standardize_authoritative_ownership_and_cross_capability_consistency"><a class="anchor" href="#_standardize_authoritative_ownership_and_cross_capability_consistency"></a>9.8.2. Standardize authoritative ownership and cross-capability consistency</h4>
+<h4 id="_standardize_authoritative_ownership_and_cross_capability_consistency"><a class="anchor" href="#_standardize_authoritative_ownership_and_cross_capability_consistency"></a>9.7.2. Standardize authoritative ownership and cross-capability consistency</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2730,7 +2761,7 @@ The architecture also integrates with an observability stack, but operational te
 </div>
 </div>
 <div class="sect3">
-<h4 id="_context_and_problem_statement_6"><a class="anchor" href="#_context_and_problem_statement_6"></a>9.8.3. Context and Problem Statement</h4>
+<h4 id="_context_and_problem_statement_6"><a class="anchor" href="#_context_and_problem_statement_6"></a>9.7.3. Context and Problem Statement</h4>
 <div class="paragraph">
 <p>The platform foundation describes clear capability modules, but it does not yet define where key records are authoritatively owned and how changes to them are coordinated across capabilities.
 This affects principals, memberships, grants, roles, permissions, policies, subscriptions, runtime bindings, data boundaries, network boundaries, and audit records.</p>
@@ -2765,7 +2796,7 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_drivers_6"><a class="anchor" href="#_decision_drivers_6"></a>9.8.4. Decision Drivers</h4>
+<h4 id="_decision_drivers_6"><a class="anchor" href="#_decision_drivers_6"></a>9.7.4. Decision Drivers</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2790,7 +2821,7 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 </div>
 </div>
 <div class="sect3">
-<h4 id="_considered_options_6"><a class="anchor" href="#_considered_options_6"></a>9.8.5. Considered Options</h4>
+<h4 id="_considered_options_6"><a class="anchor" href="#_considered_options_6"></a>9.7.5. Considered Options</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2806,7 +2837,7 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_outcome_6"><a class="anchor" href="#_decision_outcome_6"></a>9.8.6. Decision Outcome</h4>
+<h4 id="_decision_outcome_6"><a class="anchor" href="#_decision_outcome_6"></a>9.7.6. Decision Outcome</h4>
 <div class="paragraph">
 <p>Chosen option: "Use a hybrid model with authoritative domain stores plus derived read models", because it preserves clear ownership per capability while still allowing read-optimized or cross-capability views without collapsing the platform into one shared write authority.</p>
 </div>
@@ -2950,16 +2981,16 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 <p>Capabilities can evolve internally without collapsing into one shared write model.</p>
 </li>
 <li>
-<p>Read-optimized views are still possible without confusing them with authoritative state.</p>
+<p>Read-optimized views remain possible without confusing them with authoritative state.</p>
 </li>
 <li>
-<p>Cross-capability workflows become easier to recover because owner state is committed before downstream propagation.</p>
+<p>Cross-capability workflows are easier to recover because owner state is committed before downstream propagation.</p>
 </li>
 <li>
 <p>Freshness-sensitive workflows have a clear rule: read the owner.</p>
 </li>
 <li>
-<p>Persistence and recovery planning gain a stable ownership map for future implementation decisions.</p>
+<p>Persistence and recovery planning now have a stable ownership map for future implementation decisions.</p>
 </li>
 </ul>
 </div>
@@ -3007,17 +3038,17 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 </div>
 </div>
 <div class="sect3">
-<h4 id="_consequences_3"><a class="anchor" href="#_consequences_3"></a>9.8.7. Consequences</h4>
+<h4 id="_consequences_3"><a class="anchor" href="#_consequences_3"></a>9.7.7. Consequences</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>Section 5 should reflect the authoritative ownership map across the capability modules.</p>
+<p>Section 5 reflects the authoritative ownership map across the capability modules.</p>
 </li>
 <li>
-<p>Section 6 should describe cross-capability flows as owner-first commits followed by asynchronous propagation and reconciliation where applicable.</p>
+<p>Section 6 describes cross-capability flows as owner-first commits followed by asynchronous propagation and reconciliation where applicable.</p>
 </li>
 <li>
-<p>Section 7 should keep concrete persistence technologies open while describing authoritative stores and derived read models as distinct architectural concerns.</p>
+<p>Section 7 keeps concrete persistence technologies open while describing authoritative stores and derived read models as distinct architectural concerns.</p>
 </li>
 <li>
 <p>Future implementation ADRs should choose concrete persistence and integration technologies without changing the ownership model defined here.</p>
@@ -3029,7 +3060,7 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 </div>
 </div>
 <div class="sect3">
-<h4 id="_validation_scenarios_3"><a class="anchor" href="#_validation_scenarios_3"></a>9.8.8. Validation Scenarios</h4>
+<h4 id="_validation_scenarios_3"><a class="anchor" href="#_validation_scenarios_3"></a>9.7.8. Validation Scenarios</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3060,7 +3091,7 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 </div>
 </div>
 <div class="sect3">
-<h4 id="_pros_and_cons_of_the_options_6"><a class="anchor" href="#_pros_and_cons_of_the_options_6"></a>9.8.9. Pros and Cons of the Options</h4>
+<h4 id="_pros_and_cons_of_the_options_6"><a class="anchor" href="#_pros_and_cons_of_the_options_6"></a>9.7.9. Pros and Cons of the Options</h4>
 <div class="sect4">
 <h5 id="_centralize_all_governed_state_in_one_platform_store"><a class="anchor" href="#_centralize_all_governed_state_in_one_platform_store"></a>Centralize all governed state in one platform store</h5>
 <div class="ulist">
@@ -3115,19 +3146,19 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 </div>
 </div>
 <div class="sect2">
-<h3 id="_define_hybrid_isolation_resolution_rules"><a class="anchor" href="#_define_hybrid_isolation_resolution_rules"></a>9.9. Define hybrid isolation resolution rules</h3>
+<h3 id="_define_hybrid_isolation_resolution_rules"><a class="anchor" href="#_define_hybrid_isolation_resolution_rules"></a>9.8. Define hybrid isolation resolution rules</h3>
 <div class="sect3">
-<h4 id="_status_7"><a class="anchor" href="#_status_7"></a>9.9.1. Status</h4>
+<h4 id="_status_7"><a class="anchor" href="#_status_7"></a>9.8.1. Status</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>Status: proposed</p>
+<p>Status: accepted</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_standardize_how_hybrid_isolation_is_resolved_and_constrained"><a class="anchor" href="#_standardize_how_hybrid_isolation_is_resolved_and_constrained"></a>9.9.2. Standardize how hybrid isolation is resolved and constrained</h4>
+<h4 id="_standardize_how_hybrid_isolation_is_resolved_and_constrained"><a class="anchor" href="#_standardize_how_hybrid_isolation_is_resolved_and_constrained"></a>9.8.2. Standardize how hybrid isolation is resolved and constrained</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3140,7 +3171,7 @@ This affects principals, memberships, grants, roles, permissions, policies, subs
 </div>
 </div>
 <div class="sect3">
-<h4 id="_context_and_problem_statement_7"><a class="anchor" href="#_context_and_problem_statement_7"></a>9.9.3. Context and Problem Statement</h4>
+<h4 id="_context_and_problem_statement_7"><a class="anchor" href="#_context_and_problem_statement_7"></a>9.8.3. Context and Problem Statement</h4>
 <div class="paragraph">
 <p>The platform foundation supports shared, silo, and hybrid isolation through isolation profile plus runtime, data, and network boundaries.
 Hybrid is intentionally first-class, but the architecture still needs explicit rules for how placement is resolved when subscription defaults, inherited policy, and environment-specific tightening all apply.</p>
@@ -3172,7 +3203,7 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_drivers_7"><a class="anchor" href="#_decision_drivers_7"></a>9.9.4. Decision Drivers</h4>
+<h4 id="_decision_drivers_7"><a class="anchor" href="#_decision_drivers_7"></a>9.8.4. Decision Drivers</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3197,7 +3228,7 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </div>
 </div>
 <div class="sect3">
-<h4 id="_considered_options_7"><a class="anchor" href="#_considered_options_7"></a>9.9.5. Considered Options</h4>
+<h4 id="_considered_options_7"><a class="anchor" href="#_considered_options_7"></a>9.8.5. Considered Options</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3213,7 +3244,7 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_outcome_7"><a class="anchor" href="#_decision_outcome_7"></a>9.9.6. Decision Outcome</h4>
+<h4 id="_decision_outcome_7"><a class="anchor" href="#_decision_outcome_7"></a>9.8.6. Decision Outcome</h4>
 <div class="paragraph">
 <p>Chosen option: "Resolve runtime, data, and network boundaries independently under a common policy envelope", because it keeps hybrid isolation flexible enough for real workloads while preserving one consistent validation model for policy, inheritance, and audit.</p>
 </div>
@@ -3399,17 +3430,17 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </div>
 </div>
 <div class="sect3">
-<h4 id="_consequences_4"><a class="anchor" href="#_consequences_4"></a>9.9.7. Consequences</h4>
+<h4 id="_consequences_4"><a class="anchor" href="#_consequences_4"></a>9.8.7. Consequences</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>Section 6 should describe isolation resolution as independent boundary selection under one policy envelope.</p>
+<p>Section 6 describes isolation resolution as independent boundary selection under one policy envelope.</p>
 </li>
 <li>
-<p>Section 7 should explain that hybrid placement may resolve mixed boundaries while still enforcing anti-weakening rules and policy validation.</p>
+<p>Section 7 explains that hybrid placement may resolve mixed boundaries while still enforcing anti-weakening rules and policy validation.</p>
 </li>
 <li>
-<p>Section 10 should add scenarios that cover mixed-boundary hybrid results, policy-driven placement denial, and attempts to weaken stricter defaults.</p>
+<p>Section 10 includes scenarios that cover mixed-boundary hybrid results, policy-driven placement denial, and attempts to weaken stricter defaults.</p>
 </li>
 <li>
 <p>Implementations should add automated tests for the validation scenarios below before relying on local assumptions about hybrid placement behavior.</p>
@@ -3418,7 +3449,7 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </div>
 </div>
 <div class="sect3">
-<h4 id="_validation_scenarios_4"><a class="anchor" href="#_validation_scenarios_4"></a>9.9.8. Validation Scenarios</h4>
+<h4 id="_validation_scenarios_4"><a class="anchor" href="#_validation_scenarios_4"></a>9.8.8. Validation Scenarios</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -3449,7 +3480,7 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </div>
 </div>
 <div class="sect3">
-<h4 id="_pros_and_cons_of_the_options_7"><a class="anchor" href="#_pros_and_cons_of_the_options_7"></a>9.9.9. Pros and Cons of the Options</h4>
+<h4 id="_pros_and_cons_of_the_options_7"><a class="anchor" href="#_pros_and_cons_of_the_options_7"></a>9.8.9. Pros and Cons of the Options</h4>
 <div class="sect4">
 <h5 id="_resolve_all_boundaries_together_from_one_shared_isolation_decision"><a class="anchor" href="#_resolve_all_boundaries_together_from_one_shared_isolation_decision"></a>Resolve all boundaries together from one shared isolation decision</h5>
 <div class="ulist">
@@ -3500,9 +3531,15 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </li>
 </ul>
 </div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_proposed_decisions_to_resolve_next"><a class="anchor" href="#_proposed_decisions_to_resolve_next"></a>9.9. Proposed Decisions To Resolve Next</h3>
+<div class="paragraph">
+<p>There are currently no additional proposed ADRs awaiting acceptance in this repository.</p>
+</div>
 <div style="page-break-after: always;"></div>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -3648,12 +3685,24 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">QS-13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Isolation Flexibility</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A hybrid tenant resolves a production environment to dedicated runtime, shared data, and dedicated network because that mixed result satisfies the common policy envelope.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform accepts the mixed-boundary placement, records the resolved boundary combination, and keeps the business hierarchy unchanged.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy Enforceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An environment attempts to weaken a stricter subscription default, such as changing a dedicated network boundary to a shared network boundary.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform rejects the weakening attempt and preserves the stronger subscription-level isolation default.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-15</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Policy Enforceability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Policy restricts data storage to approved regions.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The platform allows only placements whose resolved runtime and data boundaries comply with the approved-region policy.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">QS-14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-16</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Operability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An operator or auditor needs to understand why a privileged action was allowed or denied.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The platform exposes enough decision and audit context to reconstruct the principal, scoped grants, permissions, effective policy, and resulting decision.</p></td>
@@ -3793,15 +3842,15 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-03</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Define state ownership and consistency boundaries for principals, memberships, grants, policies, subscriptions, runtime bindings, and audit records.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0006</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The platform gains a clear source-of-truth model and a basis for persistence, consistency, and recovery decisions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apply the accepted ownership and consistency model to future persistence, integration, and test decisions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0006, Sections 5, 6, 7, and 8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The accepted ownership model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-04</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Define hybrid isolation resolution rules, including precedence between subscription defaults, scope-level policy, and environment-level tightening.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0007</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Hybrid placement behavior becomes predictable enough to implement and test without per-team interpretation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apply the accepted hybrid isolation model to runtime examples, placement decisions, and future platform tests.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0007, Sections 6, 7, and 10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The accepted hybrid model is reflected consistently in architecture examples today and is ready to drive later implementation decisions and tests.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-05</p></td>
@@ -3958,7 +4007,7 @@ Hybrid is intentionally first-class, but the architecture still needs explicit r
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-04-02 23:04:34 UTC
+Last updated 2026-04-02 23:12:30 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
