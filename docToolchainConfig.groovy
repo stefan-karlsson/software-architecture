@@ -21,6 +21,7 @@ inputFiles = [
 //these will be copied as resources to ./images
 //folders are relative to inputPath
 imageDirs = [
+    'images',
     /** imageDirs **/
 ]
 

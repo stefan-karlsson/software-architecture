@@ -38,6 +38,18 @@ open build/html5/software-architecture.html
 The HTML book expects both generated ADR includes and generated PlantUML diagrams to exist before rendering.
 Mermaid diagrams are rendered directly from the AsciiDoc chapters through the existing Kroki-backed diagram configuration.
 
+== Working with diagrams.net
+
+This repository also supports editable diagrams.net assets committed directly as `*.dio.svg` files under `documentation/images`.
+
+Use this workflow:
+
+* open the `*.dio.svg` file directly in diagrams.net / draw.io
+* edit and save the file in place so the SVG stays both renderable and editable
+* reference the file from AsciiDoc with `image::<name>.dio.svg[]`
+
+`documentation/arc42/_config.adoc` already sets `:imagesdir: ./images`, and `docToolchainConfig.groovy` now copies `documentation/images` as a documentation resource directory for HTML and PDF builds.
+
 == Included Tool Versions
 
 Pinned/target versions in this starter (validated on March 29, 2026):
