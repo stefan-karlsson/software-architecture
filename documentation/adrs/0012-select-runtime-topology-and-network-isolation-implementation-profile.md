@@ -2,7 +2,7 @@
 
 ## Status
 
-* Status: proposed
+* Status: accepted
 
 ## Choose the concrete hosting profile for shared, silo, and hybrid isolation
 
@@ -12,7 +12,7 @@
 ## Context and Problem Statement
 
 The accepted isolation architecture defines shared, silo, and hybrid profiles, independent runtime, data, and network boundary resolution, anti-weakening rules, and policy-gated placement.
-What remains open is the concrete runtime topology and network-isolation implementation profile that turns those logical rules into an operational hosting model.
+This ADR now fixes the concrete runtime topology and network-isolation profile that turns those logical rules into an operational hosting model.
 
 Without a concrete decision, teams can still make materially different assumptions about:
 
@@ -22,7 +22,7 @@ Without a concrete decision, teams can still make materially different assumptio
 * how regional placement and ingress or egress boundaries are enforced
 * how the same business hierarchy is preserved across materially different technical placements
 
-The platform therefore needs one proposed implementation profile for runtime topology and network isolation.
+The platform therefore needs one accepted implementation profile for runtime topology and network isolation.
 
 ## Decision Drivers
 
@@ -39,31 +39,25 @@ The platform therefore needs one proposed implementation profile for runtime top
 * One shared runtime estate with namespace-only isolation for all profiles
 * Full per-tenant stack duplication for every tenant regardless of profile
 
-## Proposed Decision Direction
+## Decision Outcome
 
-Leading option: "Cell-based runtime topology with shared cells, dedicated cells, and dedicated network segments selected by isolation outcome", because it can support shared, silo, and hybrid placement without forcing either one universal shared estate or universal per-tenant duplication.
+Chosen option: "Cell-based runtime topology with shared cells, dedicated cells, and dedicated network segments selected by isolation outcome", because it can support shared, silo, and hybrid placement without forcing either one universal shared estate or universal per-tenant duplication.
 
-### Proposed Hosting Profile
+### Normative Hosting Profile
 
 * The platform runs workloads in a cell-based topology rather than one monolithic shared runtime estate.
+* A runtime cell is an isolated hosting unit used to place shared or dedicated environments without changing the business hierarchy.
 * Shared-profile environments use shared runtime cells, shared data services where allowed, and shared network boundaries.
 * Silo-profile environments use dedicated runtime cells, dedicated data services, and dedicated network segments or accounts.
 * Hybrid-profile environments may resolve each environment to shared or dedicated runtime, data, and network boundaries independently, but only within the accepted policy and anti-weakening rules.
 * Dedicated network isolation should map to dedicated network segments and, where required, dedicated infrastructure accounts or subscriptions rather than namespace-only separation.
 
-### Public Behavior Expected From This Direction
+### Public Behavior Locked by This Decision
 
 * Placement outputs must identify the runtime cell, data boundary class, and network boundary class selected for each governed environment.
 * Mixed hybrid outcomes remain valid when they are policy-compliant and do not weaken stricter subscription defaults.
 * The same tenant, workspace, workload, and environment hierarchy remains intact regardless of whether the final technical placement is shared or dedicated.
-* Placement changes and denials remain authoritative audit events.
-
-### Questions To Resolve Before Acceptance
-
-* Which workload orchestrator and compute substrate best fit the cell model
-* How many regions or regional cells are required in the first implementation
-* Which data-service patterns support shared partitions versus dedicated stores
-* How ingress, egress, and private connectivity should be modeled for dedicated network boundaries
+* Placement changes and denials remain official audit evidence.
 
 ### Positive Consequences
 
@@ -84,12 +78,16 @@ Leading option: "Cell-based runtime topology with shared cells, dedicated cells,
 * This ADR does not require every tenant to receive a fully dedicated stack.
 * This ADR does not allow hybrid placement to change the business hierarchy.
 * This ADR does not define the full region or disaster-recovery topology.
+* This ADR does not choose which workload orchestrator and compute substrate best fit the cell model.
+* This ADR does not choose how many regions or regional cells are required in the first implementation.
+* This ADR does not choose which data-service patterns support shared partitions versus dedicated stores.
+* This ADR does not define ingress, egress, or private-connectivity design for dedicated network boundaries.
 
 ## Consequences
 
-* Section 7 should point to this ADR as the concrete infrastructure follow-on to the accepted logical isolation model.
+* Section 7 should point to this ADR as the accepted hosting direction for the logical isolation model.
 * Future platform-engineering work should assume a cell-based hosting pattern instead of either one universal shared estate or universal per-tenant duplication.
-* Any later proposal to use namespace-only isolation for dedicated network outcomes should explicitly challenge the accepted isolation semantics and this proposed direction.
+* Any later proposal to use namespace-only isolation for dedicated network outcomes should explicitly challenge the accepted isolation semantics and this accepted direction.
 
 ## Validation Questions
 

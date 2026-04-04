@@ -4,7 +4,7 @@
 [[section-deployment-view]]
 == Deployment View
 
-The architecture defines logical isolation profiles rather than a fixed concrete infrastructure topology. This section therefore describes how environments are placed and isolated in shared, silo, and hybrid modes, while leaving concrete hosting technology intentionally open. A strict C4 deployment view is deferred until concrete deployment nodes, stores, and hosting topology are chosen.
+The architecture defines logical isolation profiles together with an accepted cell-based hosting pattern, while still leaving vendor and product choices open. This section therefore describes how environments are placed and isolated in shared, silo, and hybrid modes without locking cloud, orchestrator, storage, or network products too early. A strict C4 deployment view is deferred until concrete deployment nodes, stores, and hosting products are chosen.
 
 === Logical Isolation Profiles
 
@@ -69,6 +69,7 @@ What is fixed is the logical model:
 
 * every tenant keeps the same business hierarchy regardless of isolation profile
 * isolation is resolved from subscription and policy information
+* environments are placed into shared or dedicated runtime cells rather than one universal shared runtime estate
 * runtime, data, and network boundaries may differ even when the tenant hierarchy does not
 * subscription isolation defines the default baseline, and environment-level logic may tighten that baseline without weakening it
 * hybrid isolation is a first-class case rather than an exception
@@ -78,4 +79,4 @@ What is fixed is the logical model:
 * projected or convenience views may lag behind system-of-record owner state and do not become write authorities
 * mixed hybrid boundary outcomes are valid only when every resolved boundary remains policy-compliant and non-weakening
 
-link:../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[ADR 0010] defines the accepted audit storage and export direction. link:../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc[ADR 0011] defines the accepted owner-managed state propagation and projection pattern. The remaining concrete implementation-profile decision is tracked in link:../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[ADR 0012] for runtime topology plus network isolation.
+link:../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[ADR 0010] defines the accepted audit storage and export direction. link:../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc[ADR 0011] defines the accepted owner-managed state propagation and projection pattern. link:../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[ADR 0012] defines the accepted cell-based hosting direction for runtime topology and network isolation.

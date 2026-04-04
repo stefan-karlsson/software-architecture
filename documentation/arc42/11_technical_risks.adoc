@@ -36,8 +36,8 @@ This section captures the main architecture risks in the Platform Control Plane 
 |5
 |R-05
 |Concrete infrastructure ambiguity
-|The architecture now fixes the audit storage direction and the owner-managed state propagation pattern, but it still leaves broker product choice, projection-store choice, runtime platform, and network implementation open, which can cause teams to make divergent assumptions.
-|Use ADR 0010 and ADR 0011 as fixed baselines, then capture the remaining product and hosting choices in future ADRs and align sections 6 and 7 accordingly.
+|The architecture now fixes the audit storage direction, the owner-managed state propagation pattern, and the cell-based hosting direction, but it still leaves broker product choice, projection-store choice, runtime platform, data-service choice, and detailed network implementation open, which can cause teams to make divergent assumptions.
+|Use ADR 0010, ADR 0011, and ADR 0012 as fixed baselines, then capture the remaining product and detailed deployment choices in future ADRs and align sections 6 and 7 accordingly.
 
 |6
 |R-06
@@ -68,18 +68,13 @@ The repository does not yet contain a real Technical Debt Record for the Platfor
 
 === Recommended Next Actions
 
-The following action backlog turns the open architectural gaps into concrete next steps that can be resolved one by one.
+The following action backlog turns the remaining architecture work into concrete next steps.
 
 [options="header",cols="1,3,2,3"]
 |===
 |Action ID |Action |Primary Artifact |Expected Result
 
 |A-01
-|Resolve the runtime topology and network isolation implementation profile.
-|link:../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[ADR 0012], Sections 6 and 7
-|The accepted isolation model gains one concrete hosting and network-boundary direction for shared, silo, and hybrid placement.
-
-|A-02
 |Add one concrete end-to-end governed runtime scenario that exercises authorization, policy, audit, and isolation together.
 |Sections 6 and 10
 |The runtime and quality chapters gain one implementation-oriented example that can be used for design review and later test planning.

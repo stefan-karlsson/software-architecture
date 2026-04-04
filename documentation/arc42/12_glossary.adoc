@@ -125,6 +125,9 @@
 |Runtime Allocation
 |Resolution of where an environment actually runs.
 
+|Runtime Cell
+|Isolated runtime hosting unit used to place shared or dedicated environments without changing the underlying business hierarchy.
+
 |Transactional Outbox
 |Durable change record captured with the owner commit so downstream propagation can be retried or replayed without losing the original change.
 
