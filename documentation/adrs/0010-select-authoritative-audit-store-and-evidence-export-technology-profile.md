@@ -45,19 +45,19 @@ Chosen option: "Append-only relational audit store plus immutable object archive
 
 ### Normative Audit Technology Profile
 
-* The official audit record is committed first to an append-only relational audit store optimized for indexed retrieval and governance queries.
-* Immutable archival copies are written to object storage as the audit archive for long-term retention and recovery support.
+* The official audit record is committed first to an append-only audit record store optimized for indexed retrieval and governance queries.
+* Immutable archival copies are written to object storage as the audit record archive for long-term retention and recovery support.
 * Observability tools receive derived audit and operational exports, for example through OpenTelemetry-based pipelines or equivalent structured export mechanisms.
 * Corrections and enrichments remain modeled as linked follow-up records rather than in-place updates to the official audit record.
-* Privileged and regulated actions are not treated as successfully committed until the official audit store has durably accepted the required evidence.
+* Privileged and regulated actions are not treated as successfully committed until the audit record store has durably accepted the required evidence.
 
 ### Public Behavior Locked by This Decision
 
 * Official audit records must preserve stable event identifiers, timestamps, actor context, scope path, action type, decision or outcome, correlation identifiers, and retention metadata.
-* Compliance review, evidence export, and retention enforcement read from the official audit store and audit archive, not from observability tooling.
+* Compliance review, evidence export, and retention enforcement read from the audit record store and audit record archive, not from observability tooling.
 * Observability exports should preserve correlation identifiers back to the official audit record.
 * Failure of the observability path must not invalidate an already committed official audit record.
-* The audit archive supports long-term retention and recovery, but routine governance review continues to read from the official audit store.
+* The audit record archive supports long-term retention and recovery, but routine governance review continues to read from the audit record store.
 
 ### Positive Consequences
 
@@ -68,7 +68,7 @@ Chosen option: "Append-only relational audit store plus immutable object archive
 
 ### Negative Consequences
 
-* The platform must operate both official audit storage and export paths.
+* The platform must operate both audit-record storage and export paths.
 * Retention and archive workflows require stronger operational discipline than a telemetry-only approach.
 * Concrete database and archival product choices still need a later acceptance decision.
 
@@ -76,7 +76,7 @@ Chosen option: "Append-only relational audit store plus immutable object archive
 
 * This ADR does not choose a specific relational database product, object-storage vendor, or telemetry product.
 * This ADR does not define the full audit schema for every event family.
-* This ADR does not allow observability tooling to become the official audit store.
+* This ADR does not allow observability tooling to become the audit record store.
 * This ADR does not require the archive layer to be the primary query interface for routine audit review.
 * This ADR does not fix whether the relational store is tuned primarily for writes, evidence retrieval, or mixed workloads.
 * This ADR does not fix the exact immutability controls for the object-storage archive layer.
@@ -91,10 +91,10 @@ Chosen option: "Append-only relational audit store plus immutable object archive
 
 ## Validation Scenarios
 
-* The observability export path is unavailable while the official audit store remains available, and governed actions still complete with the official audit record preserved.
+* The observability export path is unavailable while the audit record store remains available, and governed actions still complete with the official audit record preserved.
 * A privileged action cannot durably commit the official audit record, and the platform does not report the action as successfully committed.
-* Retention enforcement or evidence export runs from the official audit store and audit archive rather than inferred telemetry.
-* An operator correlates an observability signal back to the official audit record through a shared correlation identifier without treating the observability backend as the source of truth.
+* Retention enforcement or evidence export runs from the audit record store and audit record archive rather than inferred telemetry.
+* An operator correlates an observability signal back to the official audit record through a shared correlation identifier without treating the observability backend as the official record.
 
 ## Pros and Cons of the Options
 

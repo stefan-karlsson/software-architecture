@@ -80,6 +80,9 @@
 |Environment
 |Operational scope where policy, audit, and isolation decisions become concrete.
 
+|Platform Hierarchy
+|Shared tenant, workspace, workload, and environment structure used to interpret access, policy, audit context, and defaults across the platform.
+
 |Policy
 |The rules and guardrails that can restrict or shape actions, access outcomes, and environment placement.
 
@@ -104,29 +107,32 @@
 |Environment Policy
 |Policy defined at the environment scope.
 
-|Audit Evidence
+|Audit Records
 |Official record of privileged or regulated activity together with actor, scope, decision, and outcome context.
 
-|Official Audit Store
-|Append-only audit store that serves as the system of record for audit evidence and supports governance retrieval and evidence review.
+|Audit Record Store
+|Append-only audit store that keeps the official record for audit records and supports governance retrieval and review.
 
-|Audit Archive
-|Immutable object-storage copy of audit evidence used for long-term retention and recovery.
+|Audit Record Archive
+|Immutable object-storage copy of audit records used for long-term retention and recovery.
 
 |Shared Browser Foundations
 |Shared browser contracts, design-system assets, session and sign-in foundations, telemetry conventions, navigation primitives, and client integration code reused across the platform browser surfaces.
 
-|Remote
-|Independently delivered browser capability that renders inside the tenant portal or administration portal through host-defined integration boundaries.
+|Browser Feature Module
+|Browser unit a feature team ships independently and a tenant app or administration app composes through host-defined integration boundaries.
+
+|Platform Management API
+|Versioned public API used by browser applications and automation clients to perform governed platform actions.
 
 |Projection
 |Secondary read model built from owner-managed state or replayable change notifications to support cross-capability queries without taking over write ownership.
 
-|Runtime Allocation
+|Environment Placement
 |Resolution of where an environment actually runs.
 
-|Runtime Cell
-|Isolated runtime hosting unit used to place shared or dedicated environments without changing the underlying business hierarchy.
+|Runtime Unit
+|Isolated runtime unit used to host shared or dedicated environments without changing the underlying business hierarchy.
 
 |Transactional Outbox
 |Durable change record captured with the owner commit so downstream propagation can be retried or replayed without losing the original change.

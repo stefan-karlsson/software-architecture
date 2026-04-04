@@ -46,18 +46,18 @@ Chosen option: "Cell-based runtime topology with shared cells, dedicated cells, 
 ### Normative Hosting Profile
 
 * The platform runs workloads in a cell-based topology rather than one monolithic shared runtime estate.
-* A runtime cell is an isolated hosting unit used to place shared or dedicated environments without changing the business hierarchy.
-* Shared-profile environments use shared runtime cells, shared data services where allowed, and shared network boundaries.
-* Silo-profile environments use dedicated runtime cells, dedicated data services, and dedicated network segments or accounts.
+* A runtime unit is the isolated runtime target used to place shared or dedicated environments without changing the business hierarchy.
+* Shared-profile environments use shared runtime units, shared data services where allowed, and shared network boundaries.
+* Silo-profile environments use dedicated runtime units, dedicated data services, and dedicated network segments or accounts.
 * Hybrid-profile environments may resolve each environment to shared or dedicated runtime, data, and network boundaries independently, but only within the accepted policy and anti-weakening rules.
 * Dedicated network isolation should map to dedicated network segments and, where required, dedicated infrastructure accounts or subscriptions rather than namespace-only separation.
 
 ### Public Behavior Locked by This Decision
 
-* Placement outputs must identify the runtime cell, data boundary class, and network boundary class selected for each governed environment.
+* Placement outputs must identify the runtime unit, data boundary class, and network boundary class selected for each governed environment.
 * Mixed hybrid outcomes remain valid when they are policy-compliant and do not weaken stricter subscription defaults.
 * The same tenant, workspace, workload, and environment hierarchy remains intact regardless of whether the final technical placement is shared or dedicated.
-* Placement changes and denials remain official audit evidence.
+* Placement changes and denials remain audit records.
 
 ### Positive Consequences
 

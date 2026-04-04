@@ -87,7 +87,7 @@ Chosen option: "Use a dedicated audit store and export selected signals to obser
 ### Public Behavior Locked by This Decision
 
 * Official audit records must preserve at minimum: event identifier, event timestamp, actor identity, actor type, action or event type, target scope, scope path, decision or outcome, source capability, correlation identifier, and retention context.
-* The capabilities that produce governed audit evidence include Identity and Access, Policy, Scope Hierarchy, and Environment Isolation.
+* The capabilities that produce governed audit evidence include Identity and Access, Policy, Platform Hierarchy, and Environment Isolation.
 * Audit review, compliance export, and governance evidence retrieval must read from the official audit store.
 * Operational dashboards, alerts, and troubleshooting flows may read from observability exports.
 * Export to observability may summarize or redact data for operational use, but it must not replace official audit retention.

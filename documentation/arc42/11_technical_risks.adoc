@@ -24,7 +24,7 @@ This section captures the main architecture risks in the Platform Control Plane 
 |3
 |R-03
 |Audit coverage
-|If privileged or regulated activity is not captured consistently, the platform can lose governance evidence even when access checks exist.
+|If privileged or regulated activity is not captured consistently, the platform can lose audit records needed for governance review even when access checks exist.
 |Treat audit coverage as mandatory for memberships, grants, policy changes, production access, secret access, deployments, and billing or administration changes.
 
 |4
@@ -48,8 +48,8 @@ This section captures the main architecture risks in the Platform Control Plane 
 |7
 |R-07
 |Browser application composition
-|If the tenant portal, administration portal, remotes, shared browser foundations, or portal contracts are governed weakly, teams can still reintroduce fragmented frontend platforms or break browser experiences at runtime.
-|Treat ADR 0013 as the fixed browser baseline, keep portal responsibilities and ownership handoffs explicit, enforce portal-to-remote contracts, and treat compatibility plus bounded failure behavior as mandatory architecture concerns.
+|If the tenant app, administration app, browser feature modules, shared browser foundations, or app contracts are governed weakly, teams can still reintroduce fragmented frontend platforms or break browser experiences at runtime.
+|Treat ADR 0013 as the fixed browser baseline, keep app responsibilities and ownership handoffs explicit, enforce app-to-browser-feature-module contracts, and treat compatibility plus bounded failure behavior as mandatory architecture concerns.
 |===
 
 === Technical Debts

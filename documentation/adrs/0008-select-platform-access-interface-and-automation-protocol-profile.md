@@ -48,7 +48,7 @@ Chosen option: "Browser-based administrative UI plus versioned HTTPS JSON REST A
 * Human administration uses in-scope browser containers of the Platform Control Plane.
 * Those browser containers follow [ADR 0013](./0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.md) for accepted browser-surface responsibilities, thin shells, shared browser foundations, and remote-based capability delivery.
 * Interactive and automation clients both use a versioned HTTPS JSON REST API as the primary public platform interface.
-* The browser containers act as clients of the same public Platform Governance API rather than relying on a hidden second control API.
+* The browser containers act as clients of the same public Platform Management API rather than relying on a hidden second control API.
 * Service-account-driven automation uses the same scope-aware API surface as interactive administration, subject to different credentials and policy outcomes.
 * The accepted baseline does not introduce a separate machine-only public protocol for automation.
 * Long-running governed operations should be modeled as explicit job or operation resources rather than opaque fire-and-forget commands.
@@ -94,7 +94,7 @@ Chosen option: "Browser-based administrative UI plus versioned HTTPS JSON REST A
 
 ## Validation Scenarios
 
-* A human administrator performs hierarchy, policy, and grant-management workflows through browser surfaces that act as clients of the shared public Platform Governance API.
+* A human administrator performs hierarchy, policy, and grant-management workflows through browser surfaces that act as clients of the shared public Platform Management API.
 * Service-account-driven automation invokes governed environment actions through the same public REST API without requiring a second machine-only control protocol.
 * A long-running governed operation exposes auditable job or operation state instead of hiding asynchronous behavior behind an immediate success response.
 * A client receives distinguishable responses for authorization denial, policy denial, validation failure, and asynchronous processing state.

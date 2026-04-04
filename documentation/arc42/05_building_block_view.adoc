@@ -8,13 +8,13 @@
 include::../diagrams/Capabilities.puml[]
 ....
 
-The Platform Control Plane is decomposed into user-facing runtime containers plus a shared Platform Governance API container. Inside that API container, the backend is organized into five capability-oriented logical building blocks. Browser-facing marketing, tenant, admin, and sign-in experiences sit around those backend building blocks, but the control plane itself remains centered on identity and access, policy, scope hierarchy, audit evidence, and environment isolation without changing the business hierarchy seen by tenants and internal teams.
+The Platform Control Plane is decomposed into user-facing runtime containers plus a shared Platform Management API container. Inside that API container, the backend is organized into five capability-oriented logical building blocks. Browser-facing marketing, tenant, admin, and sign-in experiences sit around those backend building blocks, but the control plane itself remains centered on identity and access, policy, platform hierarchy, audit records, and environment isolation without changing the business hierarchy seen by tenants and internal teams.
 
 Motivation::
-The decomposition keeps runtime boundaries and logical building blocks distinct. Browser applications and the Platform Governance API are the C4 runtime containers, while the backend governance responsibilities remain explicit as internal building blocks instead of being misrepresented as separately deployable services.
+The decomposition keeps runtime boundaries and logical building blocks distinct. Browser applications and the Platform Management API are the C4 runtime containers, while the backend governance responsibilities remain explicit as internal building blocks instead of being misrepresented as separately deployable services.
 
 Modeling note::
-The five backend areas below are logical building blocks modeled as internal components of the Platform Governance API container in the C4 workspace. They are not presented here as proven separately deployable containers.
+The five backend areas below are logical building blocks modeled as internal components of the Platform Management API container in the C4 workspace. They are not presented here as proven separately deployable containers.
 
 Contained Building Blocks::
 [options="header",cols="1,3"]
@@ -27,14 +27,14 @@ Contained Building Blocks::
 |Policy
 |Authoritatively owns platform baseline rules and scoped tenant, workspace, workload, and environment policy rules, and computes the combined effective policy.
 
-|Scope Hierarchy
+|Platform Hierarchy
 |Authoritatively owns tenants, billing accounts, subscriptions, workspaces, workloads, and environments as the shared scope hierarchy.
 
-|Audit Evidence
-|Owns official audit evidence, preserves scope and decision context, enforces governance-oriented audit behavior, and exports operational telemetry as a secondary concern.
+|Audit Records
+|Owns audit records, preserves scope and decision context, enforces governance-oriented audit behavior, and exports operational telemetry as a secondary concern.
 
 |Environment Isolation
-|Authoritatively owns resolved runtime allocations, data boundaries, network boundaries, and placement state for each environment.
+|Authoritatively owns resolved environment placements, data boundaries, network boundaries, and placement state for each environment.
 |===
 
 Important Relationships::
@@ -42,27 +42,27 @@ Important Relationships::
 |===
 |Relationship |Description
 
-|Identity and Access -> Scope Hierarchy
-|Memberships and grants are meaningful only when they can be resolved against the hierarchy and scope chain. Cross-capability reads may use projections, but writes to the system of record remain with the owning capability.
+|Identity and Access -> Platform Hierarchy
+|Memberships and grants are meaningful only when they can be resolved against the hierarchy and scope chain. Cross-capability reads may use projections, but writes to the official record remain with the owning capability.
 
 |Identity and Access -> Policy
 |The combined effective policy is evaluated after permissions are resolved and before access is allowed.
 
-|Policy -> Audit Evidence
-|Policy decisions and policy changes must be preserved as official audit evidence at the correct scope.
+|Policy -> Audit Records
+|Policy decisions and policy changes must be preserved as audit records at the correct scope.
 
-|Environment Isolation -> Scope Hierarchy
+|Environment Isolation -> Platform Hierarchy
 |Isolation resolution depends on subscription, workload, and environment context owned by the hierarchy capability, while resolved placement state remains owned by Environment Isolation.
 
 |Environment Isolation -> Policy
 |Placement and boundary choices must respect inherited rules and guardrails such as approved regions or network restrictions.
 
-|All capability modules -> Audit Evidence
-|Privileged and regulated events must preserve actor, scope, and decision context in official audit evidence, while telemetry export remains a secondary downstream concern.
+|All capability modules -> Audit Records
+|Privileged and regulated events must preserve actor, scope, and decision context in audit records, while telemetry export remains a secondary downstream concern.
 |===
 
 Browser application note::
-The platform browser landscape is defined separately in <<section-concepts,Browser Application Composition Model>> and in link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc[ADR 0013]. The tenant portal and administration portal remain thin browser hosts, the marketing site remains separate, the sign-in experience is centralized, and business-heavy browser capabilities are delivered through remotes inside the same Platform Control Plane software-system boundary.
+The platform browser landscape is defined separately in <<section-concepts,Browser Application Composition Model>> and in link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc[ADR 0013]. The tenant app and administration app remain thin browser hosts, the marketing app remains separate, the sign-in experience is centralized, and business-heavy browser capabilities are delivered through browser feature modules inside the same Platform Control Plane software-system boundary.
 
 === Platform Hierarchy
 
@@ -86,19 +86,19 @@ flowchart TD
   Subscription --> SubscriptionPlan["Subscription Plan"]
   Subscription --> IsolationProfile["Isolation Profile"]
   Tenant --> TenantPolicy["Tenant Policy"]
-  Tenant --> TenantAuditEvidence["Tenant Audit Evidence"]
+  Tenant --> TenantAuditRecords["Tenant Audit Records"]
   Tenant --> Workspace["Workspace"]
   Workspace --> WorkspacePolicy["Workspace Policy"]
-  Workspace --> WorkspaceAuditEvidence["Workspace Audit Evidence"]
+  Workspace --> WorkspaceAuditRecords["Workspace Audit Records"]
   Workspace --> Workload["Workload"]
   Workload --> WorkloadPolicy["Workload Policy"]
-  Workload --> WorkloadAuditEvidence["Workload Audit Evidence"]
+  Workload --> WorkloadAuditRecords["Workload Audit Records"]
   Workload --> Environment["Environment"]
   Environment --> EnvironmentPolicy["Environment Policy"]
-  Environment --> EnvironmentAuditEvidence["Environment Audit Evidence"]
-  Environment --> RuntimeAllocation["Runtime Allocation"]
-  RuntimeAllocation --> SharedRuntime["Shared Runtime Allocation"]
-  RuntimeAllocation --> DedicatedRuntime["Dedicated Runtime Allocation"]
+  Environment --> EnvironmentAuditRecords["Environment Audit Records"]
+  Environment --> EnvironmentPlacement["Environment Placement"]
+  EnvironmentPlacement --> SharedRuntime["Shared Environment Placement"]
+  EnvironmentPlacement --> DedicatedRuntime["Dedicated Environment Placement"]
   Environment --> DataBoundary["Data Boundary"]
   DataBoundary --> SharedPartition["Shared Partition"]
   DataBoundary --> DedicatedStore["Dedicated Store"]
@@ -167,8 +167,8 @@ flowchart TD
 |Isolation Profile
 |Technical isolation intent, such as Shared, Silo, or Hybrid.
 
-|Runtime Allocation
-|Resolves where an environment runs, for example shared runtime allocation or dedicated runtime allocation.
+|Environment Placement
+|Resolves where an environment runs, for example shared environment placement or dedicated environment placement.
 
 |Data Boundary
 |Resolves how data is isolated, for example shared partition or dedicated store.

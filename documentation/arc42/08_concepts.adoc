@@ -5,7 +5,7 @@ This section defines the core concepts that are reused across the hierarchy, aut
 
 === Browser Application Composition Model
 
-Inside the Platform Control Plane software-system boundary, the browser landscape is intentionally split by purpose. `www.example.com` hosts the marketing site, `app.example.com` hosts the tenant portal, `admin.example.com` hosts the administration portal, and `login.example.com` hosts the sign-in portal. The tenant and administration portals stay thin and compose business-heavy capabilities from remotes, while all browser containers use the shared Platform Governance API.
+Inside the Platform Control Plane software-system boundary, the browser landscape is intentionally split by purpose. `www.example.com` hosts the marketing app, `app.example.com` hosts the tenant app, `admin.example.com` hosts the administration app, and `login.example.com` hosts the sign-in app. The tenant and administration apps stay thin and compose business-heavy capabilities from browser feature modules that feature teams ship, while all browser containers use the shared Platform Management API.
 
 image::platform-browser-shell-architecture.dio.svg[Platform browser application landscape, width=100%]
 
@@ -13,26 +13,26 @@ image::platform-browser-shell-architecture.dio.svg[Platform browser application 
 |===
 |Element |Responsibility
 
-|Marketing Site
+|Marketing App
 |Owns public-facing marketing, product communication, and acquisition journeys at `www.example.com`.
 
-|Tenant Portal
+|Tenant App
 |Owns the tenant browser entrypoint at `app.example.com`, plus tenant navigation, layout, session handoff, and feature composition.
 
-|Administration Portal
+|Administration App
 |Owns the administrative browser entrypoint at `admin.example.com`, plus admin navigation, layout, session handoff, and feature composition.
 
-|Sign-In Portal
+|Sign-In App
 |Owns the shared sign-in and sign-out experience at `login.example.com`.
 
-|Business Remote
-|Owns business-heavy browser capabilities and renders inside the tenant portal or administration portal through host-defined integration contracts.
+|Browser Feature Module
+|Owns business-heavy browser capabilities that a feature team ships and that the tenant app or administration app composes through host-defined integration boundaries.
 
 |Shared Browser Foundations
 |Provides shared browser contracts, API clients, SDKs/libraries, design-system assets, telemetry conventions, navigation primitives, and related browser-platform code across all browser surfaces.
 |===
 
-The browser containers above are runtime containers in the C4 model. The backend capabilities they rely on are modeled separately as internal building blocks/components of the Platform Governance API container rather than as peer runtime containers.
+The browser containers above are runtime containers in the C4 model. The backend capabilities they rely on are modeled separately as internal building blocks/components of the Platform Management API container rather than as peer runtime containers.
 
 [options="header",cols="1,3"]
 |===
@@ -41,23 +41,23 @@ The browser containers above are runtime containers in the C4 model. The backend
 |Surface split
 |Marketing, tenant, admin, and login experiences remain separate browser surfaces with distinct responsibilities.
 
-|Thin-shell rule
-|The tenant and administration portals keep navigation, layout, session handoff, composition, and error isolation responsibilities, but they do not absorb domain-heavy business capabilities.
+|Thin-app rule
+|The tenant and administration apps keep navigation, layout, session handoff, composition, and error isolation responsibilities, but they do not absorb domain-heavy business capabilities.
 
 |Composition
-|Business capabilities are delivered through remotes that the tenant and administration portals compose at runtime.
+|Business capabilities are delivered through browser feature modules that the tenant and administration apps compose at runtime.
 
 |Integration
-|Remotes integrate with backend public APIs and do not use direct frontend-to-frontend coupling as their primary runtime integration mechanism.
+|Browser feature modules integrate with backend public APIs and do not use direct frontend-to-frontend coupling as their primary runtime integration mechanism.
 
 |Autonomy
-|Teams may deploy remotes independently from their host shells as long as they stay inside the shared contracts and compatibility expectations.
+|Teams may deploy browser feature modules independently from their host apps as long as they stay inside the shared contracts and compatibility expectations.
 
 |Failure isolation
-|Each host shell must be able to isolate a failing or unavailable remote without taking down the whole browser application surface.
+|Each host app must be able to isolate a failing or unavailable browser feature module without taking down the whole browser application surface.
 |===
 
-link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc[ADR 0013] defines the accepted browser-composition baseline for these surfaces, remotes, and shared browser foundations.
+link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc[ADR 0013] defines the accepted browser-composition baseline for these surfaces, browser feature modules, and shared browser foundations.
 
 === Actor and Scope Model
 
@@ -80,15 +80,15 @@ The hierarchy applies inherited policy rules, access scope interpretation, audit
 
 === Ownership and Consistency Model
 
-Each governed record type has one write owner that serves as the system of record, and direct owner reads are used when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain secondary copies and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.
+Each governed record type has one write owner that keeps the official record, and direct owner reads are used when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain secondary copies and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.
 link:../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc[ADR 0011] defines the accepted propagation pattern for that model: owner-managed state is committed first, the same transaction captures a transactional outbox entry or equivalent durable change record, downstream consumers update their own projections asynchronously, and freshness-sensitive flows still read the owner directly.
 
 === Audit Model
 
-Auditability is a first-class concept rather than an afterthought. Authoritative audit evidence is the governance source of truth, remains distinct from observability exports, and is append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When audit evidence needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.
-link:../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[ADR 0010] defines the accepted storage direction for that model: an official audit store for governance retrieval, an audit archive for long-term retention and recovery, and derived observability exports for operational use.
+Auditability is a first-class concept rather than an afterthought. Audit records are the official record for governance review, remain distinct from observability exports, and are append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When an audit record needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.
+link:../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[ADR 0010] defines the accepted storage direction for that model: an audit record store for governance retrieval, an audit record archive for long-term retention and recovery, and derived observability exports for operational use.
 
 === Isolation Model and Tier Separation
 
-Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime allocation, data boundary, and network boundary resolve the actual technical isolation for each environment. In hybrid mode, those three boundaries may resolve independently, but subscription isolation remains the default baseline, environment-level logic may only tighten that baseline, and the combined effective policy is the final acceptance gate before placement succeeds.
-link:../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[ADR 0012] defines the accepted hosting direction for that model: environments are placed in shared or dedicated runtime cells under one policy-governed hierarchy, and dedicated network outcomes must use stronger boundaries than namespace-only separation.
+Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Environment placement, data boundary, and network boundary resolve the actual technical isolation for each environment. In hybrid mode, those three boundaries may resolve independently, but subscription isolation remains the default baseline, environment-level logic may only tighten that baseline, and the combined effective policy is the final acceptance gate before placement succeeds.
+link:../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[ADR 0012] defines the accepted hosting direction for that model: environments are placed in shared or dedicated runtime units under one policy-governed hierarchy, and dedicated network outcomes must use stronger boundaries than namespace-only separation.

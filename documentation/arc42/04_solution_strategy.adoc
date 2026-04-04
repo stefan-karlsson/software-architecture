@@ -23,13 +23,13 @@ This section summarizes the small number of strategic decisions that shape the P
 |Keep the same business hierarchy for all tenants and express hosting differences through isolation profile plus runtime, data, and network boundaries.
 |Supports shared, silo, and hybrid operation without inventing separate business models for different hosting choices.
 
-|Audit evidence
+|Audit records
 |Make audit context a first-class concern across memberships, grants, policy changes, production access, secrets, deployments, and billing or administration changes.
 |Supports compliance, traceability, and operational review across the entire hierarchy.
 
 |Browser applications
-|Use a dedicated marketing site, tenant portal, administration portal, and sign-in portal; keep the tenant and administration portals thin and load business features from remotes.
-|Separates distinct browser journeys while still scaling frontend work across teams through remotes, shared browser foundations, and clear portal responsibilities.
+|Use a dedicated marketing app, tenant app, administration app, and sign-in app; keep the tenant and administration apps thin and load business features from browser feature modules.
+|Separates distinct browser journeys while still scaling frontend work across teams through browser feature modules, shared browser foundations, and clear app responsibilities.
 
 |Commercial model
 |Separate subscription plan from isolation profile.

@@ -79,7 +79,7 @@ Section 1 highlights the top five quality goals. This section keeps the broader 
 |QS-09
 |Auditability and Traceability
 |The observability stack is unavailable while a governed action succeeds and the official audit record can still be durably written.
-|The platform preserves the official audit record and does not depend on observability exports as the source of truth for governance evidence.
+|The platform preserves the official audit record and does not depend on observability exports as the official record for governance review.
 
 |QS-10
 |Auditability and Traceability
@@ -119,15 +119,15 @@ Section 1 highlights the top five quality goals. This section keeps the broader 
 |QS-17
 |Evolvability
 |A new feature team needs to deliver a browser capability for one bounded area of the platform.
-|The team delivers a remote within the tenant or administration portal's agreed integration boundary and ships independently without creating a separate frontend platform.
+|The team delivers a browser feature module within the tenant or administration app's agreed integration boundary and ships independently without creating a separate frontend platform.
 
 |QS-18
 |Operability
-|A referenced remote fails to load or is temporarily unavailable during runtime composition.
-|The host shell isolates the failing remote, keeps navigation and unaffected remotes usable, and renders a bounded error state instead of collapsing the whole browser application surface.
+|A referenced browser feature module fails to load or is temporarily unavailable during runtime composition.
+|The host app isolates the failing browser feature module, keeps navigation and unaffected browser feature modules usable, and renders a bounded error state instead of collapsing the whole browser application surface.
 
 |QS-19
 |Operability
-|Two feature teams ship remotes at different cadences across the tenant and administration portals.
-|Shared browser contracts and portal responsibilities preserve consistent authentication context, layout, navigation, and interaction behavior while allowing independent remote release cadence.
+|Two feature teams ship browser feature modules at different cadences across the tenant and administration apps.
+|Shared browser contracts and app responsibilities preserve consistent authentication context, layout, navigation, and interaction behavior while allowing independent browser-feature-module release cadence.
 |===

@@ -15,9 +15,9 @@ Across these flows, owner-managed state follows the accepted propagation pattern
 sequenceDiagram
   actor Requester
   participant IAM as Identity and Access
-  participant Scope as Scope Hierarchy
+  participant Scope as Platform Hierarchy
   participant Policy as Policy
-  participant Audit as Audit Evidence
+  participant Audit as Audit Records
 
   Requester->>IAM: 1. Resolve actor identity
   IAM->>Scope: 2. Resolve direct memberships, flat group memberships, and scoped grants
@@ -59,7 +59,7 @@ flowchart TD
 . Allow lower scopes to tighten controls, such as requiring approval or restricting production access to a narrower group.
 . Use the resulting combined effective policy during authorization and execution decisions.
 
-Derived policy-aware read models may assist downstream consumers, but Policy remains the system of record and downstream projections may lag.
+Derived policy-aware read models may assist downstream consumers, but Policy remains the official record for policy state and downstream projections may lag.
 
 === Environment Isolation Resolution
 
@@ -69,17 +69,17 @@ flowchart TD
   Subscription["Subscription"] --> Plan["Subscription Plan"]
   Subscription --> IsolationProfile["Isolation Profile"]
   Environment["Environment"] --> IsolationProfile
-  IsolationProfile --> RuntimeAllocation["Runtime Allocation"]
+  IsolationProfile --> EnvironmentPlacement["Environment Placement"]
   IsolationProfile --> DataBoundary["Data Boundary"]
   IsolationProfile --> NetworkBoundary["Network Boundary"]
   Environment --> Tightening["Environment-Level Tightening"]
-  Tightening --> RuntimeAllocation
+  Tightening --> EnvironmentPlacement
   Tightening --> DataBoundary
   Tightening --> NetworkBoundary
-  Policy["Combined Effective Policy"] --> RuntimeAllocation
+  Policy["Combined Effective Policy"] --> EnvironmentPlacement
   Policy --> DataBoundary
   Policy --> NetworkBoundary
-  RuntimeAllocation --> Placement["Resolved Placement"]
+  EnvironmentPlacement --> Placement["Resolved Placement"]
   DataBoundary --> Placement
   NetworkBoundary --> Placement
   Placement --> AcceptDeny["Placement Accepted or Denied"]
@@ -89,7 +89,7 @@ flowchart TD
 . Read the subscription's subscription plan and isolation profile as the default isolation baseline.
 . Apply any environment-level tightening that strengthens the default without weakening it.
 . Evaluate policy constraints that can affect placement, region, network, retention, or access posture.
-. Resolve runtime allocation, data boundary, and network boundary independently under one policy envelope.
+. Resolve environment placement, data boundary, and network boundary independently under one policy envelope.
 . Accept placement only when every resolved boundary complies with policy and does not weaken a stricter default.
 . Produce the effective isolation outcome for the environment without changing the business hierarchy.
 

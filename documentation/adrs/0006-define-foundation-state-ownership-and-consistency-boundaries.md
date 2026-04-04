@@ -12,7 +12,7 @@
 ## Context and Problem Statement
 
 The Platform Control Plane describes clear capability modules, but it does not yet define where key records are authoritatively owned and how changes to them are coordinated across capabilities.
-This affects identity records, memberships, grants, roles, permissions, policies, subscriptions, runtime allocations, data boundaries, network boundaries, and audit records.
+This affects identity records, memberships, grants, roles, permissions, policies, subscriptions, environment placements, data boundaries, network boundaries, and audit records.
 
 Without an explicit ownership and consistency model, teams could still implement materially different behavior for:
 
@@ -55,9 +55,9 @@ Chosen option: "Use a hybrid model with authoritative domain stores plus derived
 
 * The Identity Provider is authoritative for external identity claims used for authentication.
 * Identity and Access is authoritative for platform-specific identity records, service accounts, groups, memberships, grants, roles, and permissions.
-* Scope Hierarchy is authoritative for tenants, billing accounts, subscriptions, workspaces, workloads, and environments.
+* Platform Hierarchy is authoritative for tenants, billing accounts, subscriptions, workspaces, workloads, and environments.
 * Policy is authoritative for platform baseline policy plus tenant, workspace, workload, and environment policies, together with the source inputs required to compute the combined effective policy.
-* Environment Isolation is authoritative for runtime allocations, data boundaries, network boundaries, and resolved placement state.
+* Environment Isolation is authoritative for environment placements, data boundaries, network boundaries, and resolved placement state.
 * Audit Evidence is authoritative for audit evidence and retention-governed audit records.
 
 ### Normative Read and Write Rules
@@ -126,9 +126,9 @@ Chosen option: "Use a hybrid model with authoritative domain stores plus derived
 ## Validation Scenarios
 
 * A membership change is written only by Identity and Access and later becomes visible in downstream read models through asynchronous propagation.
-* A tenant or environment rename is written only by Scope Hierarchy and is later reflected in authorization and audit projections without changing ownership.
+* A tenant or environment rename is written only by Platform Hierarchy and is later reflected in authorization and audit projections without changing ownership.
 * A policy update is committed by Policy and later changes authorization outcomes after downstream refresh or direct owner read.
-* A runtime allocation change is committed by Environment Isolation while Scope Hierarchy remains authoritative for the environment it belongs to.
+* An environment placement change is committed by Environment Isolation while Platform Hierarchy remains authoritative for the environment it belongs to.
 * An authorization decision needs the freshest membership or grant data and therefore reads from Identity and Access instead of a potentially stale projection.
 * A derived read model falls behind or is rebuilt, and authoritative writes remain available because ownership did not move to the projection.
 * A cross-capability integration fails after the owner commits state, and retry plus reconciliation restore downstream consistency without distributed rollback.

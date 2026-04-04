@@ -72,7 +72,7 @@ The repository does not contain linked external requirements or backlog exports.
 
 |REQ-EVID-002
 |This arc42 book
-|Current source of truth for the hierarchical domain model, policy model, audit model, and isolation model.
+|Current repo reference for the hierarchical domain model, policy model, audit model, and isolation model.
 |===
 
 === Quality Goals
