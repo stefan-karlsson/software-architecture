@@ -509,9 +509,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_select_identity_federation_and_service_account_credential_model">9.10. Select identity federation and service-account credential model</a></li>
 <li><a href="#_select_authoritative_audit_store_and_evidence_export_technology_profile">9.11. Select authoritative audit store and evidence export technology profile</a></li>
 <li><a href="#_select_owner_managed_state_integration_and_projection_technology_profile">9.12. Select owner-managed state integration and projection technology profile</a></li>
-<li><a href="#_adopt_a_multi_surface_browser_architecture_with_thin_shells_remotes_and_shared_browser_foundations">9.13. Adopt a multi-surface browser architecture with thin shells, remotes, and shared browser foundations</a></li>
-<li><a href="#_proposed_decisions_to_resolve_next">9.14. Proposed Decisions To Resolve Next</a></li>
-<li><a href="#_select_runtime_topology_and_network_isolation_implementation_profile">9.15. Select runtime topology and network isolation implementation profile</a></li>
+<li><a href="#_select_runtime_topology_and_network_isolation_implementation_profile">9.13. Select runtime topology and network isolation implementation profile</a></li>
+<li><a href="#_adopt_a_multi_surface_browser_architecture_with_thin_apps_browser_feature_modules_and_shared_browser_foundations">9.14. Adopt a multi-surface browser architecture with thin apps, browser feature modules, and shared browser foundations</a></li>
 </ul>
 </li>
 <li><a href="#section-quality-scenarios">10. Quality Requirements</a>
@@ -681,7 +680,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">REQ-EVID-002</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">This arc42 book</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Current source of truth for the hierarchical domain model, policy model, audit model, and isolation model.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Current repo reference for the hierarchical domain model, policy model, audit model, and isolation model.</p></td>
 </tr>
 </tbody>
 </table>
@@ -896,7 +895,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_technical_context"><a class="anchor" href="#_technical_context"></a>3.2. Technical Context</h3>
 <div class="paragraph">
-<p>The technical context maps the same communication partners to technical interfaces and channels. Inside the Platform Control Plane boundary, the user-facing runtime containers separate public marketing, tenant work, platform administration, and sign-in into distinct browser surfaces. Those browser containers use one shared public Platform Governance API, while external automation clients use the same API directly.</p>
+<p>The technical context maps the same communication partners to technical interfaces and channels. Inside the Platform Control Plane boundary, the user-facing runtime containers separate public marketing, tenant work, platform administration, and sign-in into distinct browser surfaces. Those browser containers use one shared public Platform Management API, while external automation clients use the same API directly.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -941,7 +940,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tbody>
 </table>
 <div class="paragraph">
-<p>Within the system boundary, the marketing site, tenant portal, administration portal, and sign-in portal are separate runtime containers with distinct user-facing responsibilities. Shared browser foundations keep sign-in, navigation, and interaction expectations coherent across those containers, as defined in <a href="../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc">ADR 0013</a>.</p>
+<p>Within the system boundary, the marketing app, tenant app, administration app, and sign-in app are separate runtime containers with distinct user-facing responsibilities. Shared browser foundations keep sign-in, navigation, and interaction expectations coherent across those containers, as defined in <a href="../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc">ADR 0013</a>.</p>
 </div>
 <div class="paragraph">
 <p><a href="../adrs/0008-select-platform-access-interface-and-automation-protocol-profile.adoc">ADR 0008</a> defines the accepted public access profile: browser-based administration through the in-scope browser surfaces and a versioned HTTPS JSON REST API used by both browser clients and automation. <a href="../adrs/0009-select-identity-federation-and-service-account-credential-model.adoc">ADR 0009</a> defines the accepted trust and credential direction: external OIDC-compatible federation for users plus short-lived OAuth-style bearer tokens for service accounts. <a href="../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc">ADR 0013</a> defines the accepted browser-composition baseline for those surfaces.</p>
@@ -991,14 +990,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Supports shared, silo, and hybrid operation without inventing separate business models for different hosting choices.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit evidence</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Audit records</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Make audit context a first-class concern across memberships, grants, policy changes, production access, secrets, deployments, and billing or administration changes.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Supports compliance, traceability, and operational review across the entire hierarchy.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Browser applications</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Use a dedicated marketing site, tenant portal, administration portal, and sign-in portal; keep the tenant and administration portals thin and load business features from remotes.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Separates distinct browser journeys while still scaling frontend work across teams through remotes, shared browser foundations, and clear portal responsibilities.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use a dedicated marketing app, tenant app, administration app, and sign-in app; keep the tenant and administration apps thin and load business features from browser feature modules.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Separates distinct browser journeys while still scaling frontend work across teams through browser feature modules, shared browser foundations, and clear app responsibilities.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Commercial model</p></td>
@@ -1017,21 +1016,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_whitebox_overall_system_platform_control_plane"><a class="anchor" href="#_whitebox_overall_system_platform_control_plane"></a>5.1. Whitebox Overall System: Platform Control Plane</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-plantuml-md5-d6f25ab86c8ea0ace9546980db1eaed1.svg" alt="Diagram" width="70%" height="1443">
+<img src="./images/diag-plantuml-md5-6dd1ea61e858339090ba0b7c81deb376.svg" alt="Diagram" width="70%" height="1492">
 </div>
 </div>
 <div class="paragraph">
-<p>The Platform Control Plane is decomposed into user-facing runtime containers plus a shared Platform Governance API container. Inside that API container, the backend is organized into five capability-oriented logical building blocks. Browser-facing marketing, tenant, admin, and sign-in experiences sit around those backend building blocks, but the control plane itself remains centered on identity and access, policy, scope hierarchy, audit evidence, and environment isolation without changing the business hierarchy seen by tenants and internal teams.</p>
+<p>The Platform Control Plane is decomposed into user-facing runtime containers plus a shared Platform Management API container. Inside that API container, the backend is organized into five capability-oriented logical building blocks. Browser-facing marketing, tenant, admin, and sign-in experiences sit around those backend building blocks, but the control plane itself remains centered on identity and access, policy, platform hierarchy, audit records, and environment isolation without changing the business hierarchy seen by tenants and internal teams.</p>
 </div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Motivation</dt>
 <dd>
-<p>The decomposition keeps runtime boundaries and logical building blocks distinct. Browser applications and the Platform Governance API are the C4 runtime containers, while the backend governance responsibilities remain explicit as internal building blocks instead of being misrepresented as separately deployable services.</p>
+<p>The decomposition keeps runtime boundaries and logical building blocks distinct. Browser applications and the Platform Management API are the C4 runtime containers, while the backend governance responsibilities remain explicit as internal building blocks instead of being misrepresented as separately deployable services.</p>
 </dd>
 <dt class="hdlist1">Modeling note</dt>
 <dd>
-<p>The five backend areas below are logical building blocks modeled as internal components of the Platform Governance API container in the C4 workspace. They are not presented here as proven separately deployable containers.</p>
+<p>The five backend areas below are logical building blocks modeled as internal components of the Platform Management API container in the C4 workspace. They are not presented here as proven separately deployable containers.</p>
 </dd>
 <dt class="hdlist1">Contained Building Blocks</dt>
 </dl>
@@ -1057,16 +1056,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Authoritatively owns platform baseline rules and scoped tenant, workspace, workload, and environment policy rules, and computes the combined effective policy.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Scope Hierarchy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform Hierarchy</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Authoritatively owns tenants, billing accounts, subscriptions, workspaces, workloads, and environments as the shared scope hierarchy.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Audit Evidence</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Owns official audit evidence, preserves scope and decision context, enforces governance-oriented audit behavior, and exports operational telemetry as a secondary concern.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Audit Records</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Owns audit records, preserves scope and decision context, enforces governance-oriented audit behavior, and exports operational telemetry as a secondary concern.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Environment Isolation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Authoritatively owns resolved runtime allocations, data boundaries, network boundaries, and placement state for each environment.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Authoritatively owns resolved environment placements, data boundaries, network boundaries, and placement state for each environment.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1088,19 +1087,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Identity and Access &#8594; Scope Hierarchy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Memberships and grants are meaningful only when they can be resolved against the hierarchy and scope chain. Cross-capability reads may use projections, but writes to the system of record remain with the owning capability.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identity and Access &#8594; Platform Hierarchy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Memberships and grants are meaningful only when they can be resolved against the hierarchy and scope chain. Cross-capability reads may use projections, but writes to the official record remain with the owning capability.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Identity and Access &#8594; Policy</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The combined effective policy is evaluated after permissions are resolved and before access is allowed.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Policy &#8594; Audit Evidence</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Policy decisions and policy changes must be preserved as official audit evidence at the correct scope.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy &#8594; Audit Records</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy decisions and policy changes must be preserved as audit records at the correct scope.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Environment Isolation &#8594; Scope Hierarchy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Environment Isolation &#8594; Platform Hierarchy</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Isolation resolution depends on subscription, workload, and environment context owned by the hierarchy capability, while resolved placement state remains owned by Environment Isolation.</p></td>
 </tr>
 <tr>
@@ -1108,8 +1107,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Placement and boundary choices must respect inherited rules and guardrails such as approved regions or network restrictions.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">All capability modules &#8594; Audit Evidence</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Privileged and regulated events must preserve actor, scope, and decision context in official audit evidence, while telemetry export remains a secondary downstream concern.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All capability modules &#8594; Audit Records</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Privileged and regulated events must preserve actor, scope, and decision context in audit records, while telemetry export remains a secondary downstream concern.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1117,7 +1116,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <dl>
 <dt class="hdlist1">Browser application note</dt>
 <dd>
-<p>The platform browser landscape is defined separately in <a href="#section-concepts">Browser Application Composition Model</a> and in <a href="../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc">ADR 0013</a>. The tenant portal and administration portal remain thin browser hosts, the marketing site remains separate, the sign-in experience is centralized, and business-heavy browser capabilities are delivered through remotes inside the same Platform Control Plane software-system boundary.</p>
+<p>The platform browser landscape is defined separately in <a href="#section-concepts">Browser Application Composition Model</a> and in <a href="../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc">ADR 0013</a>. The tenant app and administration app remain thin browser hosts, the marketing app remains separate, the sign-in experience is centralized, and business-heavy browser capabilities are delivered through browser feature modules inside the same Platform Control Plane software-system boundary.</p>
 </dd>
 </dl>
 </div>
@@ -1126,7 +1125,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_platform_hierarchy"><a class="anchor" href="#_platform_hierarchy"></a>5.2. Platform Hierarchy</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-mermaid-md5-8a8b0370e95862a6172b12326c6966ea.svg" alt="Diagram" width="3301" height="742">
+<img src="./images/diag-mermaid-md5-f321d16552f383740d0df71f7431d948.svg" alt="Diagram" width="3295" height="718">
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1232,8 +1231,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Technical isolation intent, such as Shared, Silo, or Hybrid.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Runtime Allocation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves where an environment runs, for example shared runtime allocation or dedicated runtime allocation.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Environment Placement</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resolves where an environment runs, for example shared environment placement or dedicated environment placement.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Data Boundary</p></td>
@@ -1262,7 +1261,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h3 id="_authorization_decision_flow"><a class="anchor" href="#_authorization_decision_flow"></a>6.1. Authorization Decision Flow</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-mermaid-md5-a1394d7f7bd1c3bc905a4e40743eac10.svg" alt="Diagram" width="1507" height="663">
+<img src="./images/diag-mermaid-md5-10791af9327398bfc109e7de8b24f465.svg" alt="Diagram" width="1510" height="663">
 </div>
 </div>
 <div class="olist arabic">
@@ -1318,14 +1317,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ol>
 </div>
 <div class="paragraph">
-<p>Derived policy-aware read models may assist downstream consumers, but Policy remains the system of record and downstream projections may lag.</p>
+<p>Derived policy-aware read models may assist downstream consumers, but Policy remains the official record for policy state and downstream projections may lag.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_environment_isolation_resolution"><a class="anchor" href="#_environment_isolation_resolution"></a>6.3. Environment Isolation Resolution</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-mermaid-md5-df373f42c9acb7ba43a27ed89119005f.svg" alt="Diagram" width="1050" height="534">
+<img src="./images/diag-mermaid-md5-203f51ac6fa3f31b66b9c52c6a2aed49.svg" alt="Diagram" width="1058" height="534">
 </div>
 </div>
 <div class="olist arabic">
@@ -1343,7 +1342,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>Evaluate policy constraints that can affect placement, region, network, retention, or access posture.</p>
 </li>
 <li>
-<p>Resolve runtime allocation, data boundary, and network boundary independently under one policy envelope.</p>
+<p>Resolve environment placement, data boundary, and network boundary independently under one policy envelope.</p>
 </li>
 <li>
 <p>Accept placement only when every resolved boundary complies with policy and does not weaken a stricter default.</p>
@@ -1364,13 +1363,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="section-deployment-view"><a class="anchor" href="#section-deployment-view"></a>7. Deployment View</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The architecture defines logical isolation profiles rather than a fixed concrete infrastructure topology. This section therefore describes how environments are placed and isolated in shared, silo, and hybrid modes, while leaving concrete hosting technology intentionally open. A strict C4 deployment view is deferred until concrete deployment nodes, stores, and hosting topology are chosen.</p>
+<p>The architecture defines logical isolation profiles together with an accepted hosting pattern built from shared and dedicated runtime units, while still leaving vendor and product choices open. This section therefore describes how environments are placed and isolated in shared, silo, and hybrid modes without locking cloud, orchestrator, storage, or network products too early. A strict C4 deployment view is deferred until concrete deployment nodes, stores, and hosting products are chosen.</p>
 </div>
 <div class="sect2">
 <h3 id="_logical_isolation_profiles"><a class="anchor" href="#_logical_isolation_profiles"></a>7.1. Logical Isolation Profiles</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/diag-mermaid-md5-495e0fcf743f39e4f93283ee56a7eef2.svg" alt="Diagram" width="346" height="1589">
+<img src="./images/diag-mermaid-md5-ad79af58a0d823aa91a3cfc13fa06df4.svg" alt="Diagram" width="346" height="1613">
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -1384,7 +1383,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Isolation Profile</th>
-<th class="tableblock halign-left valign-top">Runtime Allocation</th>
+<th class="tableblock halign-left valign-top">Environment Placement</th>
 <th class="tableblock halign-left valign-top">Data Boundary</th>
 <th class="tableblock halign-left valign-top">Network Boundary</th>
 <th class="tableblock halign-left valign-top">Typical Use</th>
@@ -1393,7 +1392,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Shared</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Shared runtime allocation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shared environment placement</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Shared partition or equivalent multi-tenant storage boundary</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Shared network boundary</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cost-efficient default for tenants that do not require dedicated isolation.</p></td>
@@ -1407,7 +1406,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Silo</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Dedicated runtime allocation</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dedicated environment placement</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Dedicated store</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Dedicated network boundary</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Tenants with strict isolation, regulatory, or contractual requirements.</p></td>
@@ -1448,6 +1447,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>isolation is resolved from subscription and policy information</p>
 </li>
 <li>
+<p>environments are placed into shared or dedicated runtime units rather than one universal shared runtime estate</p>
+</li>
+<li>
 <p>runtime, data, and network boundaries may differ even when the tenant hierarchy does not</p>
 </li>
 <li>
@@ -1457,13 +1459,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>hybrid isolation is a first-class case rather than an exception</p>
 </li>
 <li>
-<p>an audit store and audit archive serve as the official record for governance evidence even though exact product choices remain open</p>
+<p>an audit record store keeps the official record, and an audit record archive preserves long-term copies, even though exact product choices remain open</p>
 </li>
 <li>
-<p>official audit evidence remains distinct from operational telemetry exported to observability tools</p>
+<p>audit records remain distinct from operational telemetry exported to observability tools</p>
 </li>
 <li>
-<p>owner-managed stores remain the system of record, while derived read models remain separate architectural concerns even though their concrete persistence technologies remain open</p>
+<p>owner-managed stores remain the official record, while derived read models remain separate architectural concerns even though their concrete persistence technologies remain open</p>
 </li>
 <li>
 <p>projected or convenience views may lag behind system-of-record owner state and do not become write authorities</p>
@@ -1474,7 +1476,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </div>
 <div class="paragraph">
-<p><a href="../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc">ADR 0010</a> defines the accepted audit storage and export direction. <a href="../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc">ADR 0011</a> defines the accepted owner-managed state propagation and projection pattern. The remaining concrete implementation-profile decision is tracked in <a href="../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc">ADR 0012</a> for runtime topology plus network isolation.</p>
+<p><a href="../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc">ADR 0010</a> defines the accepted audit storage and export direction. <a href="../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc">ADR 0011</a> defines the accepted owner-managed state propagation and projection pattern. <a href="../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc">ADR 0012</a> defines the accepted hosting direction for runtime topology and network isolation.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1489,7 +1491,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_browser_application_composition_model"><a class="anchor" href="#_browser_application_composition_model"></a>8.1. Browser Application Composition Model</h3>
 <div class="paragraph">
-<p>Inside the Platform Control Plane software-system boundary, the browser landscape is intentionally split by purpose. <code>www.example.com</code> hosts the marketing site, <code>app.example.com</code> hosts the tenant portal, <code>admin.example.com</code> hosts the administration portal, and <code>login.example.com</code> hosts the sign-in portal. The tenant and administration portals stay thin and compose business-heavy capabilities from remotes, while all browser containers use the shared Platform Governance API.</p>
+<p>Inside the Platform Control Plane software-system boundary, the browser landscape is intentionally split by purpose. <code>www.example.com</code> hosts the marketing app, <code>app.example.com</code> hosts the tenant app, <code>admin.example.com</code> hosts the administration app, and <code>login.example.com</code> hosts the sign-in app. The tenant and administration apps stay thin and compose business-heavy capabilities from browser feature modules that feature teams ship, while all browser containers use the shared Platform Management API.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1509,24 +1511,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Marketing Site</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Marketing App</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Owns public-facing marketing, product communication, and acquisition journeys at <code>www.example.com</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tenant Portal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tenant App</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Owns the tenant browser entrypoint at <code>app.example.com</code>, plus tenant navigation, layout, session handoff, and feature composition.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Administration Portal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Administration App</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Owns the administrative browser entrypoint at <code>admin.example.com</code>, plus admin navigation, layout, session handoff, and feature composition.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sign-In Portal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sign-In App</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Owns the shared sign-in and sign-out experience at <code>login.example.com</code>.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Business Remote</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Owns business-heavy browser capabilities and renders inside the tenant portal or administration portal through host-defined integration contracts.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Browser Feature Module</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Owns business-heavy browser capabilities that a feature team ships and that the tenant app or administration app composes through host-defined integration boundaries.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Shared Browser Foundations</p></td>
@@ -1535,7 +1537,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </tbody>
 </table>
 <div class="paragraph">
-<p>The browser containers above are runtime containers in the C4 model. The backend capabilities they rely on are modeled separately as internal building blocks/components of the Platform Governance API container rather than as peer runtime containers.</p>
+<p>The browser containers above are runtime containers in the C4 model. The backend capabilities they rely on are modeled separately as internal building blocks/components of the Platform Management API container rather than as peer runtime containers.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1554,29 +1556,29 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">Marketing, tenant, admin, and login experiences remain separate browser surfaces with distinct responsibilities.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Thin-shell rule</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The tenant and administration portals keep navigation, layout, session handoff, composition, and error isolation responsibilities, but they do not absorb domain-heavy business capabilities.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Thin-app rule</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The tenant and administration apps keep navigation, layout, session handoff, composition, and error isolation responsibilities, but they do not absorb domain-heavy business capabilities.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Composition</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Business capabilities are delivered through remotes that the tenant and administration portals compose at runtime.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Business capabilities are delivered through browser feature modules that the tenant and administration apps compose at runtime.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Integration</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Remotes integrate with backend public APIs and do not use direct frontend-to-frontend coupling as their primary runtime integration mechanism.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Browser feature modules integrate with backend public APIs and do not use direct frontend-to-frontend coupling as their primary runtime integration mechanism.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Autonomy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Teams may deploy remotes independently from their host shells as long as they stay inside the shared contracts and compatibility expectations.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Teams may deploy browser feature modules independently from their host apps as long as they stay inside the shared contracts and compatibility expectations.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Failure isolation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Each host shell must be able to isolate a failing or unavailable remote without taking down the whole browser application surface.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Each host app must be able to isolate a failing or unavailable browser feature module without taking down the whole browser application surface.</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p><a href="../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc">ADR 0013</a> defines the accepted browser-composition baseline for these surfaces, remotes, and shared browser foundations.</p>
+<p><a href="../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc">ADR 0013</a> defines the accepted browser-composition baseline for these surfaces, browser feature modules, and shared browser foundations.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1610,22 +1612,22 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_ownership_and_consistency_model"><a class="anchor" href="#_ownership_and_consistency_model"></a>8.6. Ownership and Consistency Model</h3>
 <div class="paragraph">
-<p>Each governed record type has one write owner that serves as the system of record, and direct owner reads are used when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain secondary copies and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.
+<p>Each governed record type has one write owner that keeps the official record, and direct owner reads are used when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain secondary copies and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.
 <a href="../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc">ADR 0011</a> defines the accepted propagation pattern for that model: owner-managed state is committed first, the same transaction captures a transactional outbox entry or equivalent durable change record, downstream consumers update their own projections asynchronously, and freshness-sensitive flows still read the owner directly.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_audit_model"><a class="anchor" href="#_audit_model"></a>8.7. Audit Model</h3>
 <div class="paragraph">
-<p>Auditability is a first-class concept rather than an afterthought. Authoritative audit evidence is the governance source of truth, remains distinct from observability exports, and is append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When audit evidence needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.
-<a href="../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc">ADR 0010</a> defines the accepted storage direction for that model: an official audit store for governance retrieval, an audit archive for long-term retention and recovery, and derived observability exports for operational use.</p>
+<p>Auditability is a first-class concept rather than an afterthought. Audit records are the official record for governance review, remain distinct from observability exports, and are append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When an audit record needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.
+<a href="../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc">ADR 0010</a> defines the accepted storage direction for that model: an audit record store for governance retrieval, an audit record archive for long-term retention and recovery, and derived observability exports for operational use.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_isolation_model_and_tier_separation"><a class="anchor" href="#_isolation_model_and_tier_separation"></a>8.8. Isolation Model and Tier Separation</h3>
 <div class="paragraph">
-<p>Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime allocation, data boundary, and network boundary resolve the actual technical isolation for each environment. In hybrid mode, those three boundaries may resolve independently, but subscription isolation remains the default baseline, environment-level logic may only tighten that baseline, and the combined effective policy is the final acceptance gate before placement succeeds.
-The next concrete implementation decision for runtime topology and network isolation is tracked in <a href="../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc">ADR 0012</a>.</p>
+<p>Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Environment placement, data boundary, and network boundary resolve the actual technical isolation for each environment. In hybrid mode, those three boundaries may resolve independently, but subscription isolation remains the default baseline, environment-level logic may only tighten that baseline, and the combined effective policy is the final acceptance gate before placement succeeds.
+<a href="../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc">ADR 0012</a> defines the accepted hosting direction for that model: environments are placed in shared or dedicated runtime units under one policy-governed hierarchy, and dedicated network outcomes must use stronger boundaries than namespace-only separation.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -2685,7 +2687,7 @@ The architecture also integrates with an observability stack, but operational te
 <p>Official audit records must preserve at minimum: event identifier, event timestamp, actor identity, actor type, action or event type, target scope, scope path, decision or outcome, source capability, correlation identifier, and retention context.</p>
 </li>
 <li>
-<p>The capabilities that produce governed audit evidence include Identity and Access, Policy, Scope Hierarchy, and Environment Isolation.</p>
+<p>The capabilities that produce governed audit evidence include Identity and Access, Policy, Platform Hierarchy, and Environment Isolation.</p>
 </li>
 <li>
 <p>Audit review, compliance export, and governance evidence retrieval must read from the official audit store.</p>
@@ -2900,7 +2902,7 @@ The architecture also integrates with an observability stack, but operational te
 <h4 id="_context_and_problem_statement_6"><a class="anchor" href="#_context_and_problem_statement_6"></a>9.7.3. Context and Problem Statement</h4>
 <div class="paragraph">
 <p>The Platform Control Plane describes clear capability modules, but it does not yet define where key records are authoritatively owned and how changes to them are coordinated across capabilities.
-This affects identity records, memberships, grants, roles, permissions, policies, subscriptions, runtime allocations, data boundaries, network boundaries, and audit records.</p>
+This affects identity records, memberships, grants, roles, permissions, policies, subscriptions, environment placements, data boundaries, network boundaries, and audit records.</p>
 </div>
 <div class="paragraph">
 <p>Without an explicit ownership and consistency model, teams could still implement materially different behavior for:</p>
@@ -3007,13 +3009,13 @@ This affects identity records, memberships, grants, roles, permissions, policies
 <p>Identity and Access is authoritative for platform-specific identity records, service accounts, groups, memberships, grants, roles, and permissions.</p>
 </li>
 <li>
-<p>Scope Hierarchy is authoritative for tenants, billing accounts, subscriptions, workspaces, workloads, and environments.</p>
+<p>Platform Hierarchy is authoritative for tenants, billing accounts, subscriptions, workspaces, workloads, and environments.</p>
 </li>
 <li>
 <p>Policy is authoritative for platform baseline policy plus tenant, workspace, workload, and environment policies, together with the source inputs required to compute the combined effective policy.</p>
 </li>
 <li>
-<p>Environment Isolation is authoritative for runtime allocations, data boundaries, network boundaries, and resolved placement state.</p>
+<p>Environment Isolation is authoritative for environment placements, data boundaries, network boundaries, and resolved placement state.</p>
 </li>
 <li>
 <p>Audit Evidence is authoritative for audit evidence and retention-governed audit records.</p>
@@ -3203,13 +3205,13 @@ This affects identity records, memberships, grants, roles, permissions, policies
 <p>A membership change is written only by Identity and Access and later becomes visible in downstream read models through asynchronous propagation.</p>
 </li>
 <li>
-<p>A tenant or environment rename is written only by Scope Hierarchy and is later reflected in authorization and audit projections without changing ownership.</p>
+<p>A tenant or environment rename is written only by Platform Hierarchy and is later reflected in authorization and audit projections without changing ownership.</p>
 </li>
 <li>
 <p>A policy update is committed by Policy and later changes authorization outcomes after downstream refresh or direct owner read.</p>
 </li>
 <li>
-<p>A runtime allocation change is committed by Environment Isolation while Scope Hierarchy remains authoritative for the environment it belongs to.</p>
+<p>An environment placement change is committed by Environment Isolation while Platform Hierarchy remains authoritative for the environment it belongs to.</p>
 </li>
 <li>
 <p>An authorization decision needs the freshest membership or grant data and therefore reads from Identity and Access instead of a potentially stale projection.</p>
@@ -3787,7 +3789,7 @@ The current architecture book defines the shared governance model, but without a
 <p>Interactive and automation clients both use a versioned HTTPS JSON REST API as the primary public platform interface.</p>
 </li>
 <li>
-<p>The browser containers act as clients of the same public Platform Governance API rather than relying on a hidden second control API.</p>
+<p>The browser containers act as clients of the same public Platform Management API rather than relying on a hidden second control API.</p>
 </li>
 <li>
 <p>Service-account-driven automation uses the same scope-aware API surface as interactive administration, subject to different credentials and policy outcomes.</p>
@@ -3914,7 +3916,7 @@ The current architecture book defines the shared governance model, but without a
 <div class="ulist">
 <ul>
 <li>
-<p>A human administrator performs hierarchy, policy, and grant-management workflows through browser surfaces that act as clients of the shared public Platform Governance API.</p>
+<p>A human administrator performs hierarchy, policy, and grant-management workflows through browser surfaces that act as clients of the shared public Platform Management API.</p>
 </li>
 <li>
 <p>Service-account-driven automation invokes governed environment actions through the same public REST API without requiring a second machine-only control protocol.</p>
@@ -4398,10 +4400,10 @@ This ADR resolves the concrete technology profile that satisfies those requireme
 <div class="ulist">
 <ul>
 <li>
-<p>The official audit record is committed first to an append-only relational audit store optimized for indexed retrieval and governance queries.</p>
+<p>The official audit record is committed first to an append-only audit record store optimized for indexed retrieval and governance queries.</p>
 </li>
 <li>
-<p>Immutable archival copies are written to object storage as the audit archive for long-term retention and recovery support.</p>
+<p>Immutable archival copies are written to object storage as the audit record archive for long-term retention and recovery support.</p>
 </li>
 <li>
 <p>Observability tools receive derived audit and operational exports, for example through OpenTelemetry-based pipelines or equivalent structured export mechanisms.</p>
@@ -4410,7 +4412,7 @@ This ADR resolves the concrete technology profile that satisfies those requireme
 <p>Corrections and enrichments remain modeled as linked follow-up records rather than in-place updates to the official audit record.</p>
 </li>
 <li>
-<p>Privileged and regulated actions are not treated as successfully committed until the official audit store has durably accepted the required evidence.</p>
+<p>Privileged and regulated actions are not treated as successfully committed until the audit record store has durably accepted the required evidence.</p>
 </li>
 </ul>
 </div>
@@ -4423,7 +4425,7 @@ This ADR resolves the concrete technology profile that satisfies those requireme
 <p>Official audit records must preserve stable event identifiers, timestamps, actor context, scope path, action type, decision or outcome, correlation identifiers, and retention metadata.</p>
 </li>
 <li>
-<p>Compliance review, evidence export, and retention enforcement read from the official audit store and audit archive, not from observability tooling.</p>
+<p>Compliance review, evidence export, and retention enforcement read from the audit record store and audit record archive, not from observability tooling.</p>
 </li>
 <li>
 <p>Observability exports should preserve correlation identifiers back to the official audit record.</p>
@@ -4432,7 +4434,7 @@ This ADR resolves the concrete technology profile that satisfies those requireme
 <p>Failure of the observability path must not invalidate an already committed official audit record.</p>
 </li>
 <li>
-<p>The audit archive supports long-term retention and recovery, but routine governance review continues to read from the official audit store.</p>
+<p>The audit record archive supports long-term retention and recovery, but routine governance review continues to read from the audit record store.</p>
 </li>
 </ul>
 </div>
@@ -4461,7 +4463,7 @@ This ADR resolves the concrete technology profile that satisfies those requireme
 <div class="ulist">
 <ul>
 <li>
-<p>The platform must operate both official audit storage and export paths.</p>
+<p>The platform must operate both audit-record storage and export paths.</p>
 </li>
 <li>
 <p>Retention and archive workflows require stronger operational discipline than a telemetry-only approach.</p>
@@ -4483,7 +4485,7 @@ This ADR resolves the concrete technology profile that satisfies those requireme
 <p>This ADR does not define the full audit schema for every event family.</p>
 </li>
 <li>
-<p>This ADR does not allow observability tooling to become the official audit store.</p>
+<p>This ADR does not allow observability tooling to become the audit record store.</p>
 </li>
 <li>
 <p>This ADR does not require the archive layer to be the primary query interface for routine audit review.</p>
@@ -4525,16 +4527,16 @@ This ADR resolves the concrete technology profile that satisfies those requireme
 <div class="ulist">
 <ul>
 <li>
-<p>The observability export path is unavailable while the official audit store remains available, and governed actions still complete with the official audit record preserved.</p>
+<p>The observability export path is unavailable while the audit record store remains available, and governed actions still complete with the official audit record preserved.</p>
 </li>
 <li>
 <p>A privileged action cannot durably commit the official audit record, and the platform does not report the action as successfully committed.</p>
 </li>
 <li>
-<p>Retention enforcement or evidence export runs from the official audit store and audit archive rather than inferred telemetry.</p>
+<p>Retention enforcement or evidence export runs from the audit record store and audit record archive rather than inferred telemetry.</p>
 </li>
 <li>
-<p>An operator correlates an observability signal back to the official audit record through a shared correlation identifier without treating the observability backend as the source of truth.</p>
+<p>An operator correlates an observability signal back to the official audit record through a shared correlation identifier without treating the observability backend as the official record.</p>
 </li>
 </ul>
 </div>
@@ -4896,7 +4898,7 @@ What this ADR now fixes is the concrete integration and projection pattern that 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_adopt_a_multi_surface_browser_architecture_with_thin_shells_remotes_and_shared_browser_foundations"><a class="anchor" href="#_adopt_a_multi_surface_browser_architecture_with_thin_shells_remotes_and_shared_browser_foundations"></a>9.13. Adopt a multi-surface browser architecture with thin shells, remotes, and shared browser foundations</h3>
+<h3 id="_select_runtime_topology_and_network_isolation_implementation_profile"><a class="anchor" href="#_select_runtime_topology_and_network_isolation_implementation_profile"></a>9.13. Select runtime topology and network isolation implementation profile</h3>
 <div class="sect3">
 <h4 id="_status_12"><a class="anchor" href="#_status_12"></a>9.13.1. Status</h4>
 <div class="ulist">
@@ -4908,7 +4910,7 @@ What this ADR now fixes is the concrete integration and projection pattern that 
 </div>
 </div>
 <div class="sect3">
-<h4 id="_choose_the_platform_browser_application_strategy_for_cross_team_frontend_scaling"><a class="anchor" href="#_choose_the_platform_browser_application_strategy_for_cross_team_frontend_scaling"></a>9.13.2. Choose the platform browser-application strategy for cross-team frontend scaling</h4>
+<h4 id="_choose_the_concrete_hosting_profile_for_shared_silo_and_hybrid_isolation"><a class="anchor" href="#_choose_the_concrete_hosting_profile_for_shared_silo_and_hybrid_isolation"></a>9.13.2. Choose the concrete hosting profile for shared, silo, and hybrid isolation</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -4923,409 +4925,8 @@ What this ADR now fixes is the concrete integration and projection pattern that 
 <div class="sect3">
 <h4 id="_context_and_problem_statement_12"><a class="anchor" href="#_context_and_problem_statement_12"></a>9.13.3. Context and Problem Statement</h4>
 <div class="paragraph">
-<p>The Platform Control Plane already assumes browser-based administration, but it does not yet define how the platform browser surfaces should scale across multiple teams without fragmenting the user experience or creating parallel frontend platforms.</p>
-</div>
-<div class="paragraph">
-<p>Without a concrete browser-application architecture, teams can still make materially different assumptions about:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>whether the platform uses one browser application or a small number of purpose-specific browser surfaces</p>
-</li>
-<li>
-<p>whether the app and administrative experiences are implemented as thin shells or as feature-heavy monoliths</p>
-</li>
-<li>
-<p>who owns sign-in handoff, layout, navigation, shared browser contracts, observability conventions, and bounded failure handling</p>
-</li>
-<li>
-<p>how feature teams contribute remotes and capability ownership without breaking the shared user experience</p>
-</li>
-<li>
-<p>how frontend composition works at runtime without coupling teams through direct frontend-to-frontend dependencies</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The platform therefore needs one accepted browser-application architecture that supports cross-team frontend delivery while keeping the user experience, shell responsibilities, and backend integration model coherent inside one Platform Control Plane software-system boundary.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_decision_drivers_12"><a class="anchor" href="#_decision_drivers_12"></a>9.13.4. Decision Drivers</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Clear platform browser surfaces with distinct purposes</p>
-</li>
-<li>
-<p>Scalable cross-team delivery without separate frontend platforms per team</p>
-</li>
-<li>
-<p>Clear ownership of shell concerns versus team-owned remote feature concerns</p>
-</li>
-<li>
-<p>Independent delivery of browser capabilities without requiring full shell redeploys for every change</p>
-</li>
-<li>
-<p>Compatibility with the public API model defined in <a href="./0008-select-platform-access-interface-and-automation-protocol-profile.md">ADR 0008</a></p>
-</li>
-<li>
-<p>Technology-agnostic architecture guidance that does not prematurely lock a framework</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_considered_options_12"><a class="anchor" href="#_considered_options_12"></a>9.13.5. Considered Options</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Purpose-specific browser apps with thin shells, remote-loaded business features, and shared browser foundations</p>
-</li>
-<li>
-<p>One shared shell app with team-owned browser slices composed at runtime</p>
-</li>
-<li>
-<p>Separate full-screen browser applications per team linked only by navigation conventions</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_decision_outcome_12"><a class="anchor" href="#_decision_outcome_12"></a>9.13.6. Decision Outcome</h4>
-<div class="paragraph">
-<p>Chosen option: "Purpose-specific browser apps with thin shells, remote-loaded business features, and shared browser foundations", because it separates marketing, tenant, administration, and login concerns while still allowing teams to deliver remotes independently without creating parallel frontend platforms.</p>
-</div>
-<div class="sect4">
-<h5 id="_normative_browser_application_profile"><a class="anchor" href="#_normative_browser_application_profile"></a>Normative Browser-Application Profile</h5>
-<div class="ulist">
-<ul>
-<li>
-<p><code>www.example.com</code> serves the marketing site.</p>
-</li>
-<li>
-<p><code>app.example.com</code> serves the tenant portal.</p>
-</li>
-<li>
-<p><code>admin.example.com</code> serves the administration portal.</p>
-</li>
-<li>
-<p><code>login.example.com</code> serves the sign-in portal.</p>
-</li>
-<li>
-<p>These browser applications are user-facing runtime containers inside the Platform Control Plane software system.</p>
-</li>
-<li>
-<p>The tenant portal and administration portal stay thin and compose business capabilities through remotes as the preferred default.</p>
-</li>
-<li>
-<p>Shared browser contracts and supporting browser-platform code span all browser surfaces so sign-in, navigation, visual language, and client-side integration stay coherent.</p>
-</li>
-<li>
-<p>Business features live in remotes and integrate through the shared Platform Governance API instead of direct frontend-to-frontend coupling.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_surface_responsibilities"><a class="anchor" href="#_surface_responsibilities"></a>Surface Responsibilities</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Marketing site owns anonymous product marketing, acquisition journeys, and public-facing content flows.</p>
-</li>
-<li>
-<p>Tenant portal owns tenant user entry, application chrome, tenant navigation, session handoff, and remote composition for tenant capabilities.</p>
-</li>
-<li>
-<p>Administration portal owns administrative entry, admin navigation, session handoff, and remote composition for platform administration capabilities.</p>
-</li>
-<li>
-<p>Sign-in portal owns login, logout, and authentication-oriented journeys shared by the other browser surfaces.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_thin_shell_responsibilities"><a class="anchor" href="#_thin_shell_responsibilities"></a>Thin-Shell Responsibilities</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Keep page chrome, navigation, session bootstrap and handoff, feature composition, and bounded runtime error isolation.</p>
-</li>
-<li>
-<p>Consume and enforce shared browser contracts for visual language, sign-in context, telemetry, and client-side integration.</p>
-</li>
-<li>
-<p>Stay thin by delegating business workflows and domain-heavy UI to remotes.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_remote_responsibilities"><a class="anchor" href="#_remote_responsibilities"></a>Remote Responsibilities</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Deliver business features for an assigned bounded domain area.</p>
-</li>
-<li>
-<p>Render only inside the integration boundaries assigned by the host shell.</p>
-</li>
-<li>
-<p>Use shared browser contracts and foundations rather than reimplementing sign-in, telemetry, or navigation behavior.</p>
-</li>
-<li>
-<p>Call approved backend public APIs rather than coupling directly to other remotes.</p>
-</li>
-<li>
-<p>Fail in a way that the host shell can isolate without collapsing the whole browser surface.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_shared_browser_foundations"><a class="anchor" href="#_shared_browser_foundations"></a>Shared Browser Foundations</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Shared browser foundations keep shared browser contracts and reusable browser foundations explicit across all browser surfaces.</p>
-</li>
-<li>
-<p>Design-system assets provide shared visual language and reusable UI foundations across all browser surfaces.</p>
-</li>
-<li>
-<p>API clients and SDKs/libraries provide shared client-side integration primitives for backend APIs and browser application concerns.</p>
-</li>
-<li>
-<p>Auth and session contracts define how browser surfaces bootstrap, hand off, and consume identity/session state.</p>
-</li>
-<li>
-<p>Telemetry conventions define the shared event, trace, and error-observability posture.</p>
-</li>
-<li>
-<p>Shared navigation primitives define how shells and remotes contribute navigational structure without creating incompatible patterns.</p>
-</li>
-<li>
-<p>Shared browser foundations may expose additional browser-platform code as needed, as long as ownership and compatibility remain explicit.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_preferred_defaults_and_constraints"><a class="anchor" href="#_preferred_defaults_and_constraints"></a>Preferred Defaults and Constraints</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Remotes are independently deliverable from the tenant portal and administration portal.</p>
-</li>
-<li>
-<p>Tenant portal and administration portal use runtime composition to load remotes.</p>
-</li>
-<li>
-<p>The specific runtime composition mechanism remains a follow-up implementation choice.</p>
-</li>
-<li>
-<p>Marketing and auth surfaces may stay more centrally owned, but they still follow the shared browser contracts and foundations.</p>
-</li>
-<li>
-<p>Shells do not absorb domain-heavy business logic that belongs in remotes.</p>
-</li>
-<li>
-<p>Remotes do not create direct frontend-to-frontend runtime coupling as their integration mechanism.</p>
-</li>
-<li>
-<p>This ADR stays pattern-level and does not choose a specific frontend framework, router, or bundler.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_positive_consequences_12"><a class="anchor" href="#_positive_consequences_12"></a>Positive Consequences</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>The platform gets clear browser surfaces for marketing, tenant, admin, and login concerns.</p>
-</li>
-<li>
-<p>Cross-team scaling improves because business features live in remotes instead of thick shells or separate frontend platforms.</p>
-</li>
-<li>
-<p>Shared browser foundations stay explicit, reusable, and versioned across all browser surfaces.</p>
-</li>
-<li>
-<p>The architecture stays compatible with <a href="./0008-select-platform-access-interface-and-automation-protocol-profile.md">ADR 0008</a>, where browser applications remain clients of the shared Platform Governance API.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_negative_consequences_12"><a class="anchor" href="#_negative_consequences_12"></a>Negative Consequences</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Shell governance, remote compatibility management, and shared-contract stewardship become explicit architecture concerns.</p>
-</li>
-<li>
-<p>Runtime composition failures must be handled deliberately to avoid broken app or administrative browser experiences.</p>
-</li>
-<li>
-<p>Team autonomy is bounded by shell contracts and shared browser conventions.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_non_goals_and_deferred_decisions_9"><a class="anchor" href="#_non_goals_and_deferred_decisions_9"></a>Non-Goals and Deferred Decisions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>This ADR does not choose a specific JavaScript framework, router, bundler, or testing stack.</p>
-</li>
-<li>
-<p>This ADR does not define a detailed shell-to-remote wire contract or packaging format.</p>
-</li>
-<li>
-<p>This ADR does not prohibit future exceptions, but exceptions require explicit architectural justification.</p>
-</li>
-<li>
-<p>This ADR does not replace <a href="./0008-select-platform-access-interface-and-automation-protocol-profile.md">ADR 0008</a>, which still owns the public browser UI plus backend API interaction model.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_consequences_9"><a class="anchor" href="#_consequences_9"></a>9.13.7. Consequences</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>The browser-based administration direction in <a href="./0008-select-platform-access-interface-and-automation-protocol-profile.md">ADR 0008</a> should reference this ADR as the accepted browser-composition and frontend-scaling guidance.</p>
-</li>
-<li>
-<p>The arc42 chapters should stop treating browser application structure as unspecified and should describe the marketing, tenant, admin, and login surfaces explicitly.</p>
-</li>
-<li>
-<p>The architecture model should represent the tenant portal, administration portal, sign-in portal, and marketing site explicitly as in-scope containers of the Platform Control Plane, while showing remotes and shared browser concepts at the right level of detail.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_validation_questions_2"><a class="anchor" href="#_validation_questions_2"></a>9.13.8. Validation Questions</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Can multiple teams deliver browser features through remotes without creating separate frontend platforms?</p>
-</li>
-<li>
-<p>Can tenant and administration remotes be deployed independently without forcing full portal redeploys?</p>
-</li>
-<li>
-<p>Do the tenant portal and administration portal stay thin while business features live in remotes?</p>
-</li>
-<li>
-<p>Can a remote fail or become unavailable without taking down the whole host shell?</p>
-</li>
-<li>
-<p>Do all browser surfaces share the agreed browser contracts for design system, client integration, auth/session, telemetry, and navigation?</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_pros_and_cons_of_the_options_12"><a class="anchor" href="#_pros_and_cons_of_the_options_12"></a>9.13.9. Pros and Cons of the Options</h4>
-<div class="sect4">
-<h5 id="_purpose_specific_browser_apps_with_thin_shells_remote_loaded_business_features_and_shared_browser_foundations"><a class="anchor" href="#_purpose_specific_browser_apps_with_thin_shells_remote_loaded_business_features_and_shared_browser_foundations"></a>Purpose-specific browser apps with thin shells, remote-loaded business features, and shared browser foundations</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Good, because it separates marketing, tenant, admin, and login concerns into clear browser surfaces.</p>
-</li>
-<li>
-<p>Good, because the tenant and administration portals can stay thin while business features live in remotes.</p>
-</li>
-<li>
-<p>Good, because shared browser foundations can be reused consistently across all browser applications.</p>
-</li>
-<li>
-<p>Bad, because multiple browser surfaces plus remote composition increase governance and compatibility complexity.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_one_shared_shell_app_with_team_owned_browser_slices_composed_at_runtime"><a class="anchor" href="#_one_shared_shell_app_with_team_owned_browser_slices_composed_at_runtime"></a>One shared shell app with team-owned browser slices composed at runtime</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Good, because it reduces the number of visible browser surfaces to reason about.</p>
-</li>
-<li>
-<p>Good, because runtime composition still enables independent team delivery.</p>
-</li>
-<li>
-<p>Bad, because marketing, tenant, admin, and login concerns become too compressed into one browser boundary.</p>
-</li>
-<li>
-<p>Bad, because distinct user journeys and operational concerns are harder to separate cleanly.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_separate_full_screen_browser_applications_per_team_linked_through_navigation_conventions"><a class="anchor" href="#_separate_full_screen_browser_applications_per_team_linked_through_navigation_conventions"></a>Separate full-screen browser applications per team linked through navigation conventions</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Good, because each team gets maximal local autonomy.</p>
-</li>
-<li>
-<p>Bad, because the user experience fragments into multiple frontend platforms.</p>
-</li>
-<li>
-<p>Bad, because shared browser contracts for sign-in, telemetry, navigation, and visual language are likely to drift apart.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_proposed_decisions_to_resolve_next"><a class="anchor" href="#_proposed_decisions_to_resolve_next"></a>9.14. Proposed Decisions To Resolve Next</h3>
-
-</div>
-<div class="sect2">
-<h3 id="_select_runtime_topology_and_network_isolation_implementation_profile"><a class="anchor" href="#_select_runtime_topology_and_network_isolation_implementation_profile"></a>9.15. Select runtime topology and network isolation implementation profile</h3>
-<div class="sect3">
-<h4 id="_status_13"><a class="anchor" href="#_status_13"></a>9.15.1. Status</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Status: proposed</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_choose_the_concrete_hosting_profile_for_shared_silo_and_hybrid_isolation"><a class="anchor" href="#_choose_the_concrete_hosting_profile_for_shared_silo_and_hybrid_isolation"></a>9.15.2. Choose the concrete hosting profile for shared, silo, and hybrid isolation</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Deciders: Architecture Team</p>
-</li>
-<li>
-<p>Date: 2026-04-03</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_context_and_problem_statement_13"><a class="anchor" href="#_context_and_problem_statement_13"></a>9.15.3. Context and Problem Statement</h4>
-<div class="paragraph">
 <p>The accepted isolation architecture defines shared, silo, and hybrid profiles, independent runtime, data, and network boundary resolution, anti-weakening rules, and policy-gated placement.
-What remains open is the concrete runtime topology and network-isolation implementation profile that turns those logical rules into an operational hosting model.</p>
+This ADR now fixes the concrete runtime topology and network-isolation profile that turns those logical rules into an operational hosting model.</p>
 </div>
 <div class="paragraph">
 <p>Without a concrete decision, teams can still make materially different assumptions about:</p>
@@ -5350,11 +4951,11 @@ What remains open is the concrete runtime topology and network-isolation impleme
 </ul>
 </div>
 <div class="paragraph">
-<p>The platform therefore needs one proposed implementation profile for runtime topology and network isolation.</p>
+<p>The platform therefore needs one accepted implementation profile for runtime topology and network isolation.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_decision_drivers_13"><a class="anchor" href="#_decision_drivers_13"></a>9.15.4. Decision Drivers</h4>
+<h4 id="_decision_drivers_12"><a class="anchor" href="#_decision_drivers_12"></a>9.13.4. Decision Drivers</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -5379,7 +4980,7 @@ What remains open is the concrete runtime topology and network-isolation impleme
 </div>
 </div>
 <div class="sect3">
-<h4 id="_considered_options_13"><a class="anchor" href="#_considered_options_13"></a>9.15.5. Considered Options</h4>
+<h4 id="_considered_options_12"><a class="anchor" href="#_considered_options_12"></a>9.13.5. Considered Options</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -5395,22 +4996,25 @@ What remains open is the concrete runtime topology and network-isolation impleme
 </div>
 </div>
 <div class="sect3">
-<h4 id="_proposed_decision_direction"><a class="anchor" href="#_proposed_decision_direction"></a>9.15.6. Proposed Decision Direction</h4>
+<h4 id="_decision_outcome_12"><a class="anchor" href="#_decision_outcome_12"></a>9.13.6. Decision Outcome</h4>
 <div class="paragraph">
-<p>Leading option: "Cell-based runtime topology with shared cells, dedicated cells, and dedicated network segments selected by isolation outcome", because it can support shared, silo, and hybrid placement without forcing either one universal shared estate or universal per-tenant duplication.</p>
+<p>Chosen option: "Cell-based runtime topology with shared cells, dedicated cells, and dedicated network segments selected by isolation outcome", because it can support shared, silo, and hybrid placement without forcing either one universal shared estate or universal per-tenant duplication.</p>
 </div>
 <div class="sect4">
-<h5 id="_proposed_hosting_profile"><a class="anchor" href="#_proposed_hosting_profile"></a>Proposed Hosting Profile</h5>
+<h5 id="_normative_hosting_profile"><a class="anchor" href="#_normative_hosting_profile"></a>Normative Hosting Profile</h5>
 <div class="ulist">
 <ul>
 <li>
 <p>The platform runs workloads in a cell-based topology rather than one monolithic shared runtime estate.</p>
 </li>
 <li>
-<p>Shared-profile environments use shared runtime cells, shared data services where allowed, and shared network boundaries.</p>
+<p>A runtime unit is the isolated runtime target used to place shared or dedicated environments without changing the business hierarchy.</p>
 </li>
 <li>
-<p>Silo-profile environments use dedicated runtime cells, dedicated data services, and dedicated network segments or accounts.</p>
+<p>Shared-profile environments use shared runtime units, shared data services where allowed, and shared network boundaries.</p>
+</li>
+<li>
+<p>Silo-profile environments use dedicated runtime units, dedicated data services, and dedicated network segments or accounts.</p>
 </li>
 <li>
 <p>Hybrid-profile environments may resolve each environment to shared or dedicated runtime, data, and network boundaries independently, but only within the accepted policy and anti-weakening rules.</p>
@@ -5422,11 +5026,11 @@ What remains open is the concrete runtime topology and network-isolation impleme
 </div>
 </div>
 <div class="sect4">
-<h5 id="_public_behavior_expected_from_this_direction"><a class="anchor" href="#_public_behavior_expected_from_this_direction"></a>Public Behavior Expected From This Direction</h5>
+<h5 id="_public_behavior_locked_by_this_decision_9"><a class="anchor" href="#_public_behavior_locked_by_this_decision_9"></a>Public Behavior Locked by This Decision</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Placement outputs must identify the runtime cell, data boundary class, and network boundary class selected for each governed environment.</p>
+<p>Placement outputs must identify the runtime unit, data boundary class, and network boundary class selected for each governed environment.</p>
 </li>
 <li>
 <p>Mixed hybrid outcomes remain valid when they are policy-compliant and do not weaken stricter subscription defaults.</p>
@@ -5435,32 +5039,13 @@ What remains open is the concrete runtime topology and network-isolation impleme
 <p>The same tenant, workspace, workload, and environment hierarchy remains intact regardless of whether the final technical placement is shared or dedicated.</p>
 </li>
 <li>
-<p>Placement changes and denials remain authoritative audit events.</p>
+<p>Placement changes and denials remain audit records.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_questions_to_resolve_before_acceptance"><a class="anchor" href="#_questions_to_resolve_before_acceptance"></a>Questions To Resolve Before Acceptance</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Which workload orchestrator and compute substrate best fit the cell model</p>
-</li>
-<li>
-<p>How many regions or regional cells are required in the first implementation</p>
-</li>
-<li>
-<p>Which data-service patterns support shared partitions versus dedicated stores</p>
-</li>
-<li>
-<p>How ingress, egress, and private connectivity should be modeled for dedicated network boundaries</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_positive_consequences_13"><a class="anchor" href="#_positive_consequences_13"></a>Positive Consequences</h5>
+<h5 id="_positive_consequences_12"><a class="anchor" href="#_positive_consequences_12"></a>Positive Consequences</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -5479,7 +5064,7 @@ What remains open is the concrete runtime topology and network-isolation impleme
 </div>
 </div>
 <div class="sect4">
-<h5 id="_negative_consequences_13"><a class="anchor" href="#_negative_consequences_13"></a>Negative Consequences</h5>
+<h5 id="_negative_consequences_12"><a class="anchor" href="#_negative_consequences_12"></a>Negative Consequences</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -5495,7 +5080,7 @@ What remains open is the concrete runtime topology and network-isolation impleme
 </div>
 </div>
 <div class="sect4">
-<h5 id="_non_goals_and_deferred_decisions_10"><a class="anchor" href="#_non_goals_and_deferred_decisions_10"></a>Non-Goals and Deferred Decisions</h5>
+<h5 id="_non_goals_and_deferred_decisions_9"><a class="anchor" href="#_non_goals_and_deferred_decisions_9"></a>Non-Goals and Deferred Decisions</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -5510,28 +5095,40 @@ What remains open is the concrete runtime topology and network-isolation impleme
 <li>
 <p>This ADR does not define the full region or disaster-recovery topology.</p>
 </li>
+<li>
+<p>This ADR does not choose which workload orchestrator and compute substrate best fit the cell model.</p>
+</li>
+<li>
+<p>This ADR does not choose how many regions or regional cells are required in the first implementation.</p>
+</li>
+<li>
+<p>This ADR does not choose which data-service patterns support shared partitions versus dedicated stores.</p>
+</li>
+<li>
+<p>This ADR does not define ingress, egress, or private-connectivity design for dedicated network boundaries.</p>
+</li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_consequences_10"><a class="anchor" href="#_consequences_10"></a>9.15.7. Consequences</h4>
+<h4 id="_consequences_9"><a class="anchor" href="#_consequences_9"></a>9.13.7. Consequences</h4>
 <div class="ulist">
 <ul>
 <li>
-<p>Section 7 should point to this ADR as the concrete infrastructure follow-on to the accepted logical isolation model.</p>
+<p>Section 7 should point to this ADR as the accepted hosting direction for the logical isolation model.</p>
 </li>
 <li>
 <p>Future platform-engineering work should assume a cell-based hosting pattern instead of either one universal shared estate or universal per-tenant duplication.</p>
 </li>
 <li>
-<p>Any later proposal to use namespace-only isolation for dedicated network outcomes should explicitly challenge the accepted isolation semantics and this proposed direction.</p>
+<p>Any later proposal to use namespace-only isolation for dedicated network outcomes should explicitly challenge the accepted isolation semantics and this accepted direction.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_validation_questions_3"><a class="anchor" href="#_validation_questions_3"></a>9.15.8. Validation Questions</h4>
+<h4 id="_validation_questions_2"><a class="anchor" href="#_validation_questions_2"></a>9.13.8. Validation Questions</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -5550,7 +5147,7 @@ What remains open is the concrete runtime topology and network-isolation impleme
 </div>
 </div>
 <div class="sect3">
-<h4 id="_pros_and_cons_of_the_options_13"><a class="anchor" href="#_pros_and_cons_of_the_options_13"></a>9.15.9. Pros and Cons of the Options</h4>
+<h4 id="_pros_and_cons_of_the_options_12"><a class="anchor" href="#_pros_and_cons_of_the_options_12"></a>9.13.9. Pros and Cons of the Options</h4>
 <div class="sect4">
 <h5 id="_cell_based_runtime_topology_with_shared_cells_dedicated_cells_and_dedicated_network_segments_selected_by_isolation_outcome"><a class="anchor" href="#_cell_based_runtime_topology_with_shared_cells_dedicated_cells_and_dedicated_network_segments_selected_by_isolation_outcome"></a>Cell-based runtime topology with shared cells, dedicated cells, and dedicated network segments selected by isolation outcome</h5>
 <div class="ulist">
@@ -5598,6 +5195,406 @@ What remains open is the concrete runtime topology and network-isolation impleme
 </li>
 <li>
 <p>Bad, because the architecture would lose much of the benefit of having separate shared, hybrid, and silo profiles.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_adopt_a_multi_surface_browser_architecture_with_thin_apps_browser_feature_modules_and_shared_browser_foundations"><a class="anchor" href="#_adopt_a_multi_surface_browser_architecture_with_thin_apps_browser_feature_modules_and_shared_browser_foundations"></a>9.14. Adopt a multi-surface browser architecture with thin apps, browser feature modules, and shared browser foundations</h3>
+<div class="sect3">
+<h4 id="_status_13"><a class="anchor" href="#_status_13"></a>9.14.1. Status</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Status: accepted</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_choose_the_platform_browser_application_strategy_for_cross_team_frontend_scaling"><a class="anchor" href="#_choose_the_platform_browser_application_strategy_for_cross_team_frontend_scaling"></a>9.14.2. Choose the platform browser-application strategy for cross-team frontend scaling</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Deciders: Architecture Team</p>
+</li>
+<li>
+<p>Date: 2026-04-03</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_context_and_problem_statement_13"><a class="anchor" href="#_context_and_problem_statement_13"></a>9.14.3. Context and Problem Statement</h4>
+<div class="paragraph">
+<p>The Platform Control Plane already assumes browser-based administration, but it does not yet define how the platform browser surfaces should scale across multiple teams without fragmenting the user experience or creating parallel frontend platforms.</p>
+</div>
+<div class="paragraph">
+<p>Without a concrete browser-application architecture, teams can still make materially different assumptions about:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>whether the platform uses one browser application or a small number of purpose-specific browser surfaces</p>
+</li>
+<li>
+<p>whether the app and administrative experiences are implemented as thin shells or as feature-heavy monoliths</p>
+</li>
+<li>
+<p>who owns sign-in handoff, layout, navigation, shared browser contracts, observability conventions, and bounded failure handling</p>
+</li>
+<li>
+<p>how feature teams contribute browser feature modules and capability ownership without breaking the shared user experience</p>
+</li>
+<li>
+<p>how frontend composition works at runtime without coupling teams through direct frontend-to-frontend dependencies</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The platform therefore needs one accepted browser-application architecture that supports cross-team frontend delivery while keeping the user experience, shell responsibilities, and backend integration model coherent inside one Platform Control Plane software-system boundary.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_drivers_13"><a class="anchor" href="#_decision_drivers_13"></a>9.14.4. Decision Drivers</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Clear platform browser surfaces with distinct purposes</p>
+</li>
+<li>
+<p>Scalable cross-team delivery without separate frontend platforms per team</p>
+</li>
+<li>
+<p>Clear ownership of app concerns versus team-owned browser-feature-module concerns</p>
+</li>
+<li>
+<p>Independent delivery of browser capabilities without requiring full app redeploys for every change</p>
+</li>
+<li>
+<p>Compatibility with the public API model defined in <a href="./0008-select-platform-access-interface-and-automation-protocol-profile.md">ADR 0008</a></p>
+</li>
+<li>
+<p>Technology-agnostic architecture guidance that does not prematurely lock a framework</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_considered_options_13"><a class="anchor" href="#_considered_options_13"></a>9.14.5. Considered Options</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Purpose-specific browser apps with thin apps, browser-feature-module-loaded business features, and shared browser foundations</p>
+</li>
+<li>
+<p>One shared shell app with team-owned browser slices composed at runtime</p>
+</li>
+<li>
+<p>Separate full-screen browser applications per team linked only by navigation conventions</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_decision_outcome_13"><a class="anchor" href="#_decision_outcome_13"></a>9.14.6. Decision Outcome</h4>
+<div class="paragraph">
+<p>Chosen option: "Purpose-specific browser apps with thin apps, browser-feature-module-loaded business features, and shared browser foundations", because it separates marketing, tenant, administration, and login concerns while still allowing teams to deliver browser feature modules independently without creating parallel frontend platforms.</p>
+</div>
+<div class="sect4">
+<h5 id="_normative_browser_application_profile"><a class="anchor" href="#_normative_browser_application_profile"></a>Normative Browser-Application Profile</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>www.example.com</code> serves the marketing app.</p>
+</li>
+<li>
+<p><code>app.example.com</code> serves the tenant app.</p>
+</li>
+<li>
+<p><code>admin.example.com</code> serves the administration app.</p>
+</li>
+<li>
+<p><code>login.example.com</code> serves the sign-in app.</p>
+</li>
+<li>
+<p>These browser applications are user-facing runtime containers inside the Platform Control Plane software system.</p>
+</li>
+<li>
+<p>The tenant app and administration app stay thin and compose business capabilities through browser feature modules as the preferred default.</p>
+</li>
+<li>
+<p>Shared browser contracts and supporting browser-platform code span all browser surfaces so sign-in, navigation, visual language, and client-side integration stay coherent.</p>
+</li>
+<li>
+<p>Business features live in browser feature modules and integrate through the shared Platform Management API instead of direct frontend-to-frontend coupling.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_surface_responsibilities"><a class="anchor" href="#_surface_responsibilities"></a>Surface Responsibilities</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Marketing app owns anonymous product marketing, acquisition journeys, and public-facing content flows.</p>
+</li>
+<li>
+<p>Tenant app owns tenant user entry, application chrome, tenant navigation, session handoff, and browser-feature-module composition for tenant capabilities.</p>
+</li>
+<li>
+<p>Administration app owns administrative entry, admin navigation, session handoff, and browser-feature-module composition for platform administration capabilities.</p>
+</li>
+<li>
+<p>Sign-in app owns login, logout, and authentication-oriented journeys shared by the other browser surfaces.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_thin_app_responsibilities"><a class="anchor" href="#_thin_app_responsibilities"></a>Thin-App Responsibilities</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Keep page chrome, navigation, session bootstrap and handoff, browser-feature-module composition, and bounded runtime error isolation.</p>
+</li>
+<li>
+<p>Consume and enforce shared browser contracts for visual language, sign-in context, telemetry, and client-side integration.</p>
+</li>
+<li>
+<p>Stay thin by delegating business workflows and domain-heavy UI to browser feature modules.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_browser_feature_module_responsibilities"><a class="anchor" href="#_browser_feature_module_responsibilities"></a>Browser Feature Module Responsibilities</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Deliver business features for an assigned bounded domain area.</p>
+</li>
+<li>
+<p>Act as the browser unit a feature team ships for that area.</p>
+</li>
+<li>
+<p>Render only inside the integration boundaries assigned by the host app.</p>
+</li>
+<li>
+<p>Use shared browser contracts and foundations rather than reimplementing sign-in, telemetry, or navigation behavior.</p>
+</li>
+<li>
+<p>Call approved backend public APIs rather than coupling directly to other browser feature modules.</p>
+</li>
+<li>
+<p>Fail in a way that the host app can isolate without collapsing the whole browser surface.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_shared_browser_foundations"><a class="anchor" href="#_shared_browser_foundations"></a>Shared Browser Foundations</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Shared browser foundations keep shared browser contracts and reusable browser foundations explicit across all browser surfaces.</p>
+</li>
+<li>
+<p>Design-system assets provide shared visual language and reusable UI foundations across all browser surfaces.</p>
+</li>
+<li>
+<p>API clients and SDKs/libraries provide shared client-side integration primitives for backend APIs and browser application concerns.</p>
+</li>
+<li>
+<p>Auth and session contracts define how browser surfaces bootstrap, hand off, and consume identity/session state.</p>
+</li>
+<li>
+<p>Telemetry conventions define the shared event, trace, and error-observability posture.</p>
+</li>
+<li>
+<p>Shared navigation primitives define how apps and browser feature modules contribute navigational structure without creating incompatible patterns.</p>
+</li>
+<li>
+<p>Shared browser foundations may expose additional browser-platform code as needed, as long as ownership and compatibility remain explicit.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_preferred_defaults_and_constraints"><a class="anchor" href="#_preferred_defaults_and_constraints"></a>Preferred Defaults and Constraints</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Browser feature modules are independently deliverable from the tenant app and administration app.</p>
+</li>
+<li>
+<p>Tenant app and administration app use runtime composition to load browser feature modules.</p>
+</li>
+<li>
+<p>The specific runtime composition mechanism remains a follow-up implementation choice.</p>
+</li>
+<li>
+<p>Marketing and auth surfaces may stay more centrally owned, but they still follow the shared browser contracts and foundations.</p>
+</li>
+<li>
+<p>Apps do not absorb domain-heavy business logic that belongs in browser feature modules.</p>
+</li>
+<li>
+<p>Browser feature modules do not create direct frontend-to-frontend runtime coupling as their integration mechanism.</p>
+</li>
+<li>
+<p>This ADR stays pattern-level and does not choose a specific frontend framework, router, or bundler.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_positive_consequences_13"><a class="anchor" href="#_positive_consequences_13"></a>Positive Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The platform gets clear browser surfaces for marketing, tenant, admin, and login concerns.</p>
+</li>
+<li>
+<p>Cross-team scaling improves because business features live in browser feature modules instead of thick apps or separate frontend platforms.</p>
+</li>
+<li>
+<p>Shared browser foundations stay explicit, reusable, and versioned across all browser surfaces.</p>
+</li>
+<li>
+<p>The architecture stays compatible with <a href="./0008-select-platform-access-interface-and-automation-protocol-profile.md">ADR 0008</a>, where browser applications remain clients of the shared Platform Management API.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_negative_consequences_13"><a class="anchor" href="#_negative_consequences_13"></a>Negative Consequences</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>App governance, browser-feature-module compatibility management, and shared-contract stewardship become explicit architecture concerns.</p>
+</li>
+<li>
+<p>Runtime composition failures must be handled deliberately to avoid broken tenant or administrative browser experiences.</p>
+</li>
+<li>
+<p>Team autonomy is bounded by app contracts and shared browser conventions.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_non_goals_and_deferred_decisions_10"><a class="anchor" href="#_non_goals_and_deferred_decisions_10"></a>Non-Goals and Deferred Decisions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>This ADR does not choose a specific JavaScript framework, router, bundler, or testing stack.</p>
+</li>
+<li>
+<p>This ADR does not define a detailed app-to-browser-feature-module wire contract or packaging format.</p>
+</li>
+<li>
+<p>This ADR does not prohibit future exceptions, but exceptions require explicit architectural justification.</p>
+</li>
+<li>
+<p>This ADR does not replace <a href="./0008-select-platform-access-interface-and-automation-protocol-profile.md">ADR 0008</a>, which still owns the public browser UI plus backend API interaction model.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_consequences_10"><a class="anchor" href="#_consequences_10"></a>9.14.7. Consequences</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The browser-based administration direction in <a href="./0008-select-platform-access-interface-and-automation-protocol-profile.md">ADR 0008</a> should reference this ADR as the accepted browser-composition and frontend-scaling guidance.</p>
+</li>
+<li>
+<p>The arc42 chapters should stop treating browser application structure as unspecified and should describe the marketing, tenant, admin, and login surfaces explicitly.</p>
+</li>
+<li>
+<p>The architecture model should represent the tenant app, administration app, sign-in app, and marketing app explicitly as in-scope containers of the Platform Control Plane, while showing browser feature modules and shared browser concepts at the right level of detail.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_validation_questions_3"><a class="anchor" href="#_validation_questions_3"></a>9.14.8. Validation Questions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Can multiple teams deliver browser features through browser feature modules without creating separate frontend platforms?</p>
+</li>
+<li>
+<p>Can tenant and administration browser feature modules be deployed independently without forcing full app redeploys?</p>
+</li>
+<li>
+<p>Do the tenant app and administration app stay thin while business features live in browser feature modules?</p>
+</li>
+<li>
+<p>Can a browser feature module fail or become unavailable without taking down the whole host app?</p>
+</li>
+<li>
+<p>Do all browser surfaces share the agreed browser contracts for design system, client integration, auth/session, telemetry, and navigation?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_pros_and_cons_of_the_options_13"><a class="anchor" href="#_pros_and_cons_of_the_options_13"></a>9.14.9. Pros and Cons of the Options</h4>
+<div class="sect4">
+<h5 id="_purpose_specific_browser_apps_with_thin_apps_browser_feature_module_loaded_business_features_and_shared_browser_foundations"><a class="anchor" href="#_purpose_specific_browser_apps_with_thin_apps_browser_feature_module_loaded_business_features_and_shared_browser_foundations"></a>Purpose-specific browser apps with thin apps, browser-feature-module-loaded business features, and shared browser foundations</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because it separates marketing, tenant, admin, and login concerns into clear browser surfaces.</p>
+</li>
+<li>
+<p>Good, because the tenant and administration apps can stay thin while business features live in browser feature modules.</p>
+</li>
+<li>
+<p>Good, because shared browser foundations can be reused consistently across all browser applications.</p>
+</li>
+<li>
+<p>Bad, because multiple browser surfaces plus browser-feature-module composition increase governance and compatibility complexity.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_one_shared_shell_app_with_team_owned_browser_slices_composed_at_runtime"><a class="anchor" href="#_one_shared_shell_app_with_team_owned_browser_slices_composed_at_runtime"></a>One shared shell app with team-owned browser slices composed at runtime</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because it reduces the number of visible browser surfaces to reason about.</p>
+</li>
+<li>
+<p>Good, because runtime composition still enables independent team delivery.</p>
+</li>
+<li>
+<p>Bad, because marketing, tenant, admin, and login concerns become too compressed into one browser boundary.</p>
+</li>
+<li>
+<p>Bad, because distinct user journeys and operational concerns are harder to separate cleanly.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_separate_full_screen_browser_applications_per_team_linked_through_navigation_conventions"><a class="anchor" href="#_separate_full_screen_browser_applications_per_team_linked_through_navigation_conventions"></a>Separate full-screen browser applications per team linked through navigation conventions</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Good, because each team gets maximal local autonomy.</p>
+</li>
+<li>
+<p>Bad, because the user experience fragments into multiple frontend platforms.</p>
+</li>
+<li>
+<p>Bad, because shared browser contracts for sign-in, telemetry, navigation, and visual language are likely to drift apart.</p>
 </li>
 </ul>
 </div>
@@ -5727,7 +5724,7 @@ What remains open is the concrete runtime topology and network-isolation impleme
 <td class="tableblock halign-left valign-top"><p class="tableblock">QS-09</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Auditability and Traceability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The observability stack is unavailable while a governed action succeeds and the official audit record can still be durably written.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The platform preserves the official audit record and does not depend on observability exports as the source of truth for governance evidence.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform preserves the official audit record and does not depend on observability exports as the official record for governance review.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">QS-10</p></td>
@@ -5775,19 +5772,19 @@ What remains open is the concrete runtime topology and network-isolation impleme
 <td class="tableblock halign-left valign-top"><p class="tableblock">QS-17</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Evolvability</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A new feature team needs to deliver a browser capability for one bounded area of the platform.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The team delivers a remote within the tenant or administration portal&#8217;s agreed integration boundary and ships independently without creating a separate frontend platform.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The team delivers a browser feature module within the tenant or administration app&#8217;s agreed integration boundary and ships independently without creating a separate frontend platform.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">QS-18</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Operability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A referenced remote fails to load or is temporarily unavailable during runtime composition.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The host shell isolates the failing remote, keeps navigation and unaffected remotes usable, and renders a bounded error state instead of collapsing the whole browser application surface.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A referenced browser feature module fails to load or is temporarily unavailable during runtime composition.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host app isolates the failing browser feature module, keeps navigation and unaffected browser feature modules usable, and renders a bounded error state instead of collapsing the whole browser application surface.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">QS-19</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Operability</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Two feature teams ship remotes at different cadences across the tenant and administration portals.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Shared browser contracts and portal responsibilities preserve consistent authentication context, layout, navigation, and interaction behavior while allowing independent remote release cadence.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Two feature teams ship browser feature modules at different cadences across the tenant and administration apps.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shared browser contracts and app responsibilities preserve consistent authentication context, layout, navigation, and interaction behavior while allowing independent browser-feature-module release cadence.</p></td>
 </tr>
 </tbody>
 </table>
@@ -5839,7 +5836,7 @@ What remains open is the concrete runtime topology and network-isolation impleme
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">R-03</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Audit coverage</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If privileged or regulated activity is not captured consistently, the platform can lose governance evidence even when access checks exist.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If privileged or regulated activity is not captured consistently, the platform can lose audit records needed for governance review even when access checks exist.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Treat audit coverage as mandatory for memberships, grants, policy changes, production access, secret access, deployments, and billing or administration changes.</p></td>
 </tr>
 <tr>
@@ -5853,8 +5850,8 @@ What remains open is the concrete runtime topology and network-isolation impleme
 <td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">R-05</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Concrete infrastructure ambiguity</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The architecture now fixes the audit storage direction and the owner-managed state propagation pattern, but it still leaves broker product choice, projection-store choice, runtime platform, and network implementation open, which can cause teams to make divergent assumptions.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Use ADR 0010 and ADR 0011 as fixed baselines, then capture the remaining product and hosting choices in future ADRs and align sections 6 and 7 accordingly.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The architecture now fixes the audit storage direction, the owner-managed state propagation pattern, and the cell-based hosting direction, but it still leaves broker product choice, projection-store choice, runtime platform, data-service choice, and detailed network implementation open, which can cause teams to make divergent assumptions.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use ADR 0010, ADR 0011, and ADR 0012 as fixed baselines, then capture the remaining product and detailed deployment choices in future ADRs and align sections 6 and 7 accordingly.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
@@ -5867,8 +5864,8 @@ What remains open is the concrete runtime topology and network-isolation impleme
 <td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">R-07</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Browser application composition</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">If the tenant portal, administration portal, remotes, shared browser foundations, or portal contracts are governed weakly, teams can still reintroduce fragmented frontend platforms or break browser experiences at runtime.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Treat ADR 0013 as the fixed browser baseline, keep portal responsibilities and ownership handoffs explicit, enforce portal-to-remote contracts, and treat compatibility plus bounded failure behavior as mandatory architecture concerns.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the tenant app, administration app, browser feature modules, shared browser foundations, or app contracts are governed weakly, teams can still reintroduce fragmented frontend platforms or break browser experiences at runtime.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Treat ADR 0013 as the fixed browser baseline, keep app responsibilities and ownership handoffs explicit, enforce app-to-browser-feature-module contracts, and treat compatibility plus bounded failure behavior as mandatory architecture concerns.</p></td>
 </tr>
 </tbody>
 </table>
@@ -5906,7 +5903,7 @@ What remains open is the concrete runtime topology and network-isolation impleme
 <div class="sect2">
 <h3 id="_recommended_next_actions"><a class="anchor" href="#_recommended_next_actions"></a>11.3. Recommended Next Actions</h3>
 <div class="paragraph">
-<p>The following action backlog turns the open architectural gaps into concrete next steps that can be resolved one by one.</p>
+<p>The following action backlog turns the remaining architecture work into concrete next steps.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -5926,12 +5923,6 @@ What remains open is the concrete runtime topology and network-isolation impleme
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-01</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resolve the runtime topology and network isolation implementation profile.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc">ADR 0012</a>, Sections 6 and 7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The accepted isolation model gains one concrete hosting and network-boundary direction for shared, silo, and hybrid placement.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A-02</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Add one concrete end-to-end governed runtime scenario that exercises authorization, policy, audit, and isolation together.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Sections 6 and 10</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The runtime and quality chapters gain one implementation-oriented example that can be used for design review and later test planning.</p></td>
@@ -6058,6 +6049,10 @@ What remains open is the concrete runtime topology and network-isolation impleme
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Operational scope where policy, audit, and isolation decisions become concrete.</em></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Platform Hierarchy</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Shared tenant, workspace, workload, and environment structure used to interpret access, policy, audit context, and defaults across the platform.</em></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Policy</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>The rules and guardrails that can restrict or shape actions, access outcomes, and environment placement.</em></p></td>
 </tr>
@@ -6090,32 +6085,40 @@ What remains open is the concrete runtime topology and network-isolation impleme
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Policy defined at the environment scope.</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Audit Evidence</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Audit Records</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Official record of privileged or regulated activity together with actor, scope, decision, and outcome context.</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Official Audit Store</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Append-only audit store that serves as the system of record for audit evidence and supports governance retrieval and evidence review.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Audit Record Store</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Append-only audit store that keeps the official record for audit records and supports governance retrieval and review.</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Audit Archive</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Immutable object-storage copy of audit evidence used for long-term retention and recovery.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Audit Record Archive</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Immutable object-storage copy of audit records used for long-term retention and recovery.</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Shared Browser Foundations</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Shared browser contracts, design-system assets, session and sign-in foundations, telemetry conventions, navigation primitives, and client integration code reused across the platform browser surfaces.</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Remote</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Independently delivered browser capability that renders inside the tenant portal or administration portal through host-defined integration boundaries.</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Browser Feature Module</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Browser unit a feature team ships independently and a tenant app or administration app composes through host-defined integration boundaries.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Platform Management API</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Versioned public API used by browser applications and automation clients to perform governed platform actions.</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Projection</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Secondary read model built from owner-managed state or replayable change notifications to support cross-capability queries without taking over write ownership.</em></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Runtime Allocation</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Environment Placement</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Resolution of where an environment actually runs.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Runtime Unit</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Isolated runtime unit used to host shared or dedicated environments without changing the underlying business hierarchy.</em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>Transactional Outbox</em></p></td>
@@ -6149,7 +6152,7 @@ What remains open is the concrete runtime topology and network-isolation impleme
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-04-04 15:33:23 UTC
+Last updated 2026-04-04 16:21:46 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
