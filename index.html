@@ -475,6 +475,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_authorization_decision_flow">6.1. Authorization Decision Flow</a></li>
 <li><a href="#_inherited_rules_and_effective_policy_evaluation">6.2. Inherited Rules and Effective Policy Evaluation</a></li>
 <li><a href="#_environment_isolation_resolution">6.3. Environment Isolation Resolution</a></li>
+<li><a href="#_canonical_governed_deployment_scenario">6.4. Canonical Governed Deployment Scenario</a></li>
 </ul>
 </li>
 <li><a href="#section-deployment-view">7. Deployment View</a>
@@ -1252,7 +1253,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="section-runtime-view"><a class="anchor" href="#section-runtime-view"></a>6. Runtime View</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section shows three representative flows that are architecturally relevant for the Platform Control Plane: authorization, inherited rules and guardrails, and environment isolation.</p>
+<p>This section shows four representative flows that are architecturally relevant for the Platform Control Plane: authorization, inherited rules and guardrails, environment isolation, and one integrated governed deployment scenario.</p>
 </div>
 <div class="paragraph">
 <p>Across these flows, owner-managed state follows the accepted propagation pattern from <a href="../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc">ADR 0011</a>: owner updates happen inside the owning capability boundary, the same change captures a transactional outbox entry or equivalent durable change record, and downstream projections plus cross-capability read models are updated asynchronously and can lag behind owner state.</p>
@@ -1354,6 +1355,39 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="paragraph">
 <p>Runtime and placement state are committed by the owning capability first, recorded with a durable change record, and then propagated to downstream consumers or projections through asynchronous reconciliation as needed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_canonical_governed_deployment_scenario"><a class="anchor" href="#_canonical_governed_deployment_scenario"></a>6.4. Canonical Governed Deployment Scenario</h3>
+<div class="imageblock">
+<div class="content">
+<img src="./images/diag-mermaid-md5-5925a8c24314e54ff0b54a71ac5f8d5b.svg" alt="Diagram" width="2664" height="837">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>A service account presents a short-lived bearer token and requests <code>environment.deploy</code> for a production environment inside an existing workload of a hybrid tenant.</p>
+</li>
+<li>
+<p>Identity and Access resolves the actor, reads the freshest scope and grant context from Platform Hierarchy, and confirms that the service account holds the required scoped <code>environment.deploy</code> permission for the target environment.</p>
+</li>
+<li>
+<p>Policy evaluates the deployment against the combined effective policy and validates the referenced pre-approved deployment request, the requested region, and the trusted network or execution context.</p>
+</li>
+<li>
+<p>Because the request satisfies the governing rules, Environment Isolation resolves the production environment to the required dedicated runtime unit and the corresponding dedicated boundaries for that environment under the tenant&#8217;s hybrid isolation profile.</p>
+</li>
+<li>
+<p>Audit Records preserve the actor identity, scope path, requested permission, approval reference, policy outcome, and final environment placement outcome so the deployment can be reviewed later.</p>
+</li>
+<li>
+<p>The owner-first commit and durable downstream propagation still follow <a href="../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc">ADR 0011</a>, so owner-managed state is committed before dependent projections are refreshed.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If the same deployment request lacks a valid approval reference, targets a region that policy does not allow, or would weaken a stricter default boundary, the platform denies the request. That denial is audited with the actor, scope, requested action, and denial reason, and no environment placement change is committed.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -5786,6 +5820,18 @@ This ADR now fixes the concrete runtime topology and network-isolation profile t
 <td class="tableblock halign-left valign-top"><p class="tableblock">Two feature teams ship browser feature modules at different cadences across the tenant and administration apps.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Shared browser contracts and app responsibilities preserve consistent authentication context, layout, navigation, and interaction behavior while allowing independent browser-feature-module release cadence.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Security and Least Privilege</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A service account executes a pre-approved production deployment for an environment under an existing workload in a hybrid tenant and holds the required scoped <code>environment.deploy</code> permission.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform validates the service account identity, confirms the scoped permission, accepts the deployment because the approval reference, approved region, and trusted network or execution-context conditions are satisfied, resolves the production environment to the required dedicated runtime unit and boundaries, and records the full audit context and outcome.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QS-21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Policy Enforceability</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A service account requests the same production deployment, but the approval reference is missing, the region is not allowed, or the resulting placement would weaken a stricter default.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The platform returns a clear denial even if the underlying permission is present, audits the actor, scope, requested action, and denial reason, and does not commit any environment placement mutation.</p></td>
+</tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
@@ -5796,7 +5842,7 @@ This ADR now fixes the concrete runtime topology and network-isolation profile t
 <h2 id="section-technical-risks"><a class="anchor" href="#section-technical-risks"></a>11. Risks and Technical Debts</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section captures the main architecture risks in the Platform Control Plane model and the technical debt that remains weakly formalized.</p>
+<p>This section captures the main architecture risks in the Platform Control Plane model and the technical debt that is not yet tracked in concrete records.</p>
 </div>
 <div class="sect2">
 <h3 id="_risks"><a class="anchor" href="#_risks"></a>11.1. Risks</h3>
@@ -5923,9 +5969,9 @@ This ADR now fixes the concrete runtime topology and network-isolation profile t
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A-01</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Add one concrete end-to-end governed runtime scenario that exercises authorization, policy, audit, and isolation together.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Sections 6 and 10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The runtime and quality chapters gain one implementation-oriented example that can be used for design review and later test planning.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Define the concrete token and claims boundary for users and service accounts at the platform edge.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR 0008, ADR 0009, and Sections 3 and 8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The trust and public-access artifacts gain one explicit token, claim, and service-account flow contract that implementers can apply consistently across browser and automation paths.</p></td>
 </tr>
 </tbody>
 </table>
@@ -6152,7 +6198,7 @@ This ADR now fixes the concrete runtime topology and network-isolation profile t
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2026-04-04 16:21:46 UTC
+Last updated 2026-04-04 16:36:15 UTC
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.3/highlight.min.js"></script>
