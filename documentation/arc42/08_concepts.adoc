@@ -60,7 +60,7 @@ The browser containers above are runtime containers in the C4 model. The backend
 === Actor and Scope Model
 
 The architecture treats users and service accounts as actors and groups as a scaling mechanism for access management. Membership determines who belongs to which scope context, while the scope hierarchy remains fixed as platform, tenant, workspace, workload, and environment. Groups are intentionally flat in the first implementation and do not contain other groups.
-Concrete public interface and credential decisions for those actors are tracked separately in link:../adrs/0008-select-platform-access-interface-and-automation-protocol-profile.adoc[ADR 0008] and link:../adrs/0009-select-identity-federation-and-service-account-credential-model.adoc[ADR 0009].
+link:../adrs/0008-select-platform-access-interface-and-automation-protocol-profile.adoc[ADR 0008] defines the accepted public interaction model for those actors: browser-based administration through the in-scope browser surfaces and a shared versioned HTTPS JSON REST API for both browser clients and automation. link:../adrs/0009-select-identity-federation-and-service-account-credential-model.adoc[ADR 0009] still carries the open trust and credential decision.
 
 === Grant, Role, and Permission Model
 
