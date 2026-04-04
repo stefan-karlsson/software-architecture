@@ -4,7 +4,7 @@
 [[section-runtime-view]]
 == Runtime View
 
-This section shows three representative flows that are architecturally relevant for the Platform Control Plane: authorization, inherited rules and guardrails, and environment isolation.
+This section shows four representative flows that are architecturally relevant for the Platform Control Plane: authorization, inherited rules and guardrails, environment isolation, and one integrated governed deployment scenario.
 
 Across these flows, owner-managed state follows the accepted propagation pattern from link:../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc[ADR 0011]: owner updates happen inside the owning capability boundary, the same change captures a transactional outbox entry or equivalent durable change record, and downstream projections plus cross-capability read models are updated asynchronously and can lag behind owner state.
 
@@ -94,3 +94,38 @@ flowchart TD
 . Produce the effective isolation outcome for the environment without changing the business hierarchy.
 
 Runtime and placement state are committed by the owning capability first, recorded with a durable change record, and then propagated to downstream consumers or projections through asynchronous reconciliation as needed.
+
+=== Canonical Governed Deployment Scenario
+
+[mermaid, format=svg]
+....
+sequenceDiagram
+  actor Automation as Service Account
+  participant IAM as Identity and Access
+  participant Hierarchy as Platform Hierarchy
+  participant Policy as Policy
+  participant Isolation as Environment Isolation
+  participant Audit as Audit Records
+
+  Automation->>IAM: 1. Present short-lived bearer token for production deployment
+  IAM->>Hierarchy: 2. Resolve environment scope, workload, workspace, and tenant context
+  Hierarchy-->>IAM: 3. Return scope chain plus scoped grants
+  IAM->>IAM: 4. Confirm `environment.deploy` at the target production environment
+  IAM->>Policy: 5. Submit actor, scope, approval reference, region, and execution-context inputs
+  Policy->>Policy: 6. Validate pre-approved deployment request, approved region, and trusted execution context
+  Policy->>Isolation: 7. Allow production placement evaluation under hybrid isolation rules
+  Isolation->>Isolation: 8. Resolve dedicated runtime unit, data boundary, and network boundary
+  Isolation->>Audit: 9. Record placement outcome and resulting boundary decision
+  Policy->>Audit: 10. Record policy outcome and approval reference
+  IAM->>Audit: 11. Record successful deployment authorization context
+  IAM-->>Automation: 12. Return approved deployment execution outcome
+....
+
+. A service account presents a short-lived bearer token and requests `environment.deploy` for a production environment inside an existing workload of a hybrid tenant.
+. Identity and Access resolves the actor, reads the freshest scope and grant context from Platform Hierarchy, and confirms that the service account holds the required scoped `environment.deploy` permission for the target environment.
+. Policy evaluates the deployment against the combined effective policy and validates the referenced pre-approved deployment request, the requested region, and the trusted network or execution context.
+. Because the request satisfies the governing rules, Environment Isolation resolves the production environment to the required dedicated runtime unit and the corresponding dedicated boundaries for that environment under the tenant's hybrid isolation profile.
+. Audit Records preserve the actor identity, scope path, requested permission, approval reference, policy outcome, and final environment placement outcome so the deployment can be reviewed later.
+. The owner-first commit and durable downstream propagation still follow link:../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc[ADR 0011], so owner-managed state is committed before dependent projections are refreshed.
+
+If the same deployment request lacks a valid approval reference, targets a region that policy does not allow, or would weaken a stricter default boundary, the platform denies the request. That denial is audited with the actor, scope, requested action, and denial reason, and no environment placement change is committed.

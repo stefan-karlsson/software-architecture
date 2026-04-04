@@ -1,7 +1,7 @@
 [[section-technical-risks]]
 == Risks and Technical Debts
 
-This section captures the main architecture risks in the Platform Control Plane model and the technical debt that remains weakly formalized.
+This section captures the main architecture risks in the Platform Control Plane model and the technical debt that is not yet tracked in concrete records.
 
 === Risks
 
@@ -75,7 +75,7 @@ The following action backlog turns the remaining architecture work into concrete
 |Action ID |Action |Primary Artifact |Expected Result
 
 |A-01
-|Add one concrete end-to-end governed runtime scenario that exercises authorization, policy, audit, and isolation together.
-|Sections 6 and 10
-|The runtime and quality chapters gain one implementation-oriented example that can be used for design review and later test planning.
+|Define the concrete token and claims boundary for users and service accounts at the platform edge.
+|ADR 0008, ADR 0009, and Sections 3 and 8
+|The trust and public-access artifacts gain one explicit token, claim, and service-account flow contract that implementers can apply consistently across browser and automation paths.
 |===

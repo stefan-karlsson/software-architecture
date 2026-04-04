@@ -130,4 +130,14 @@ Section 1 highlights the top five quality goals. This section keeps the broader 
 |Operability
 |Two feature teams ship browser feature modules at different cadences across the tenant and administration apps.
 |Shared browser contracts and app responsibilities preserve consistent authentication context, layout, navigation, and interaction behavior while allowing independent browser-feature-module release cadence.
+
+|QS-20
+|Security and Least Privilege
+|A service account executes a pre-approved production deployment for an environment under an existing workload in a hybrid tenant and holds the required scoped `environment.deploy` permission.
+|The platform validates the service account identity, confirms the scoped permission, accepts the deployment because the approval reference, approved region, and trusted network or execution-context conditions are satisfied, resolves the production environment to the required dedicated runtime unit and boundaries, and records the full audit context and outcome.
+
+|QS-21
+|Policy Enforceability
+|A service account requests the same production deployment, but the approval reference is missing, the region is not allowed, or the resulting placement would weaken a stricter default.
+|The platform returns a clear denial even if the underlying permission is present, audits the actor, scope, requested action, and denial reason, and does not commit any environment placement mutation.
 |===
