@@ -28,7 +28,7 @@ image::platform-browser-shell-architecture.dio.svg[Platform browser application 
 |Business Remote
 |Owns business-heavy browser capabilities and renders inside the tenant portal or administration portal through host-defined integration contracts.
 
-|Platform Frontend Package
+|Shared Browser Foundations
 |Provides shared browser contracts, API clients, SDKs/libraries, design-system assets, telemetry conventions, navigation primitives, and related browser-platform code across all browser surfaces.
 |===
 
@@ -56,6 +56,8 @@ The browser containers above are runtime containers in the C4 model. The backend
 |Failure isolation
 |Each host shell must be able to isolate a failing or unavailable remote without taking down the whole browser application surface.
 |===
+
+link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc[ADR 0013] defines the accepted browser-composition baseline for these surfaces, remotes, and shared browser foundations.
 
 === Actor and Scope Model
 

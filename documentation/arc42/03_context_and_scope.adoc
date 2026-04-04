@@ -44,7 +44,7 @@ The technical context maps the same communication partners to technical interfac
 |User
 |In-scope browser containers, with sign-in handoff
 |Initiate scope administration, access changes, policy changes, and governed operations.
-|User journeys enter through the in-scope browser containers at `www.example.com`, `app.example.com`, `admin.example.com`, and `login.example.com`, as described in link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.adoc[ADR 0013].
+|User journeys enter through the in-scope browser containers at `www.example.com`, `app.example.com`, `admin.example.com`, and `login.example.com`, as defined by link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc[ADR 0013].
 
 |Automation Client
 |Versioned HTTPS JSON REST API
@@ -62,6 +62,6 @@ The technical context maps the same communication partners to technical interfac
 |The architecture proves telemetry export, but not a concrete telemetry protocol or product choice.
 |===
 
-Within the system boundary, the marketing site, tenant portal, administration portal, and sign-in portal are separate runtime containers with distinct user-facing responsibilities. Shared browser contracts keep sign-in, navigation, and interaction expectations coherent across those containers, as described in link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.adoc[ADR 0013].
+Within the system boundary, the marketing site, tenant portal, administration portal, and sign-in portal are separate runtime containers with distinct user-facing responsibilities. Shared browser foundations keep sign-in, navigation, and interaction expectations coherent across those containers, as defined in link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc[ADR 0013].
 
-link:../adrs/0008-select-platform-access-interface-and-automation-protocol-profile.adoc[ADR 0008] defines the accepted public access profile: browser-based administration through the in-scope browser surfaces and a versioned HTTPS JSON REST API used by both browser clients and automation. link:../adrs/0009-select-identity-federation-and-service-account-credential-model.adoc[ADR 0009] defines the accepted trust and credential direction: external OIDC-compatible federation for users plus short-lived OAuth-style bearer tokens for service accounts. link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.adoc[ADR 0013] still carries the open browser-application composition decision.
+link:../adrs/0008-select-platform-access-interface-and-automation-protocol-profile.adoc[ADR 0008] defines the accepted public access profile: browser-based administration through the in-scope browser surfaces and a versioned HTTPS JSON REST API used by both browser clients and automation. link:../adrs/0009-select-identity-federation-and-service-account-credential-model.adoc[ADR 0009] defines the accepted trust and credential direction: external OIDC-compatible federation for users plus short-lived OAuth-style bearer tokens for service accounts. link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc[ADR 0013] defines the accepted browser-composition baseline for those surfaces.

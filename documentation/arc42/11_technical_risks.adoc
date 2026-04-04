@@ -43,13 +43,13 @@ This section captures the main architecture risks in the Platform Control Plane 
 |R-06
 |Identity token detail completion
 |The platform now fixes the public interface and trust direction, but exact token shape, claim names, machine credential-flow variants, and browser-composition details remain open, which can still create uncertainty at important integration boundaries.
-|Use ADR 0008 and ADR 0009 as the fixed public-access and trust baselines, then resolve deferred token-detail questions and ADR 0013 browser-composition responsibilities without changing those baselines.
+|Use ADR 0008, ADR 0009, and ADR 0013 as the fixed public-access, trust, and browser-architecture baselines, then resolve the remaining token-detail questions without changing those baselines.
 
 |7
 |R-07
 |Browser application composition
-|If the tenant portal, administration portal, remotes, platform frontend package, or portal contracts are governed weakly, teams can reintroduce fragmented frontend platforms or break browser experiences at runtime.
-|Keep portal responsibilities and ownership handoffs explicit, enforce portal-to-remote contracts, and treat compatibility plus bounded failure behavior as mandatory architecture concerns.
+|If the tenant portal, administration portal, remotes, shared browser foundations, or portal contracts are governed weakly, teams can still reintroduce fragmented frontend platforms or break browser experiences at runtime.
+|Treat ADR 0013 as the fixed browser baseline, keep portal responsibilities and ownership handoffs explicit, enforce portal-to-remote contracts, and treat compatibility plus bounded failure behavior as mandatory architecture concerns.
 |===
 
 === Technical Debts
@@ -75,16 +75,11 @@ The following action backlog turns the open architectural gaps into concrete nex
 |Action ID |Action |Primary Artifact |Expected Result
 
 |A-01
-|Resolve the platform browser-application architecture around marketing, tenant, admin, and login surfaces.
-|link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.adoc[ADR 0013], Sections 3 through 8
-|The platform gains one scalable browser-application model for cross-team frontend delivery.
-
-|A-02
 |Resolve the runtime topology and network isolation implementation profile.
 |link:../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[ADR 0012], Sections 6 and 7
 |The accepted isolation model gains one concrete hosting and network-boundary direction for shared, silo, and hybrid placement.
 
-|A-03
+|A-02
 |Add one concrete end-to-end governed runtime scenario that exercises authorization, policy, audit, and isolation together.
 |Sections 6 and 10
 |The runtime and quality chapters gain one implementation-oriented example that can be used for design review and later test planning.

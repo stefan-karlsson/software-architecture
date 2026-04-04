@@ -46,7 +46,7 @@ Chosen option: "Browser-based administrative UI plus versioned HTTPS JSON REST A
 ### Normative Interface Profile
 
 * Human administration uses in-scope browser containers of the Platform Control Plane.
-* Those browser containers follow [ADR 0013](./0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.md) for browser-surface responsibilities, thin shells, shared browser contracts, and remote-based capability delivery.
+* Those browser containers follow [ADR 0013](./0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.md) for accepted browser-surface responsibilities, thin shells, shared browser foundations, and remote-based capability delivery.
 * Interactive and automation clients both use a versioned HTTPS JSON REST API as the primary public platform interface.
 * The browser containers act as clients of the same public Platform Governance API rather than relying on a hidden second control API.
 * Service-account-driven automation uses the same scope-aware API surface as interactive administration, subject to different credentials and policy outcomes.
@@ -76,7 +76,7 @@ Chosen option: "Browser-based administrative UI plus versioned HTTPS JSON REST A
 ### Non-Goals and Deferred Decisions
 
 * This ADR does not choose the identity federation or service-account credential model.
-* This ADR does not define the internal browser-application composition model beyond depending on [ADR 0013](./0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.md).
+* This ADR does not define the internal browser-application composition model beyond depending on [ADR 0013](./0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.md).
 * This ADR does not define detailed resource schemas, pagination formats, or error payload structures.
 * This ADR does not require a CLI in the first implementation.
 * This ADR does not choose whether the first implementation should publish a supported CLI alongside the browser UI and public API.
@@ -88,7 +88,7 @@ Chosen option: "Browser-based administrative UI plus versioned HTTPS JSON REST A
 ## Consequences
 
 * Section 3 should stop treating the external interface as open and instead point to this accepted interface profile.
-* Browser UI implementation and cross-team browser scaling should follow [ADR 0013](./0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.md) instead of being reinvented inside individual feature teams or browser surfaces.
+* Browser UI implementation and cross-team browser scaling should follow [ADR 0013](./0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.md) instead of being reinvented inside individual feature teams or browser surfaces.
 * Future API design work should align resources and operations to the accepted hierarchy, authorization, policy, and audit model.
 * Any future proposal for GraphQL or gRPC as an additional public interface should justify why the REST profile is insufficient.
 

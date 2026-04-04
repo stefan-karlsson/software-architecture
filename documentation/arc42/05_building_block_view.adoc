@@ -62,7 +62,7 @@ Important Relationships::
 |===
 
 Browser application note::
-The platform browser landscape is defined separately in <<section-concepts,Browser Application Composition Model>> and in link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.adoc[ADR 0013]. The tenant portal and administration portal remain thin browser hosts, the marketing site remains separate, the sign-in experience is centralized, and business-heavy browser capabilities are delivered through remotes inside the same Platform Control Plane software-system boundary.
+The platform browser landscape is defined separately in <<section-concepts,Browser Application Composition Model>> and in link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc[ADR 0013]. The tenant portal and administration portal remain thin browser hosts, the marketing site remains separate, the sign-in experience is centralized, and business-heavy browser capabilities are delivered through remotes inside the same Platform Control Plane software-system boundary.
 
 === Platform Hierarchy
 

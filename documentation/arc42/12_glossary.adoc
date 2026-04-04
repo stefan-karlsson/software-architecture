@@ -113,6 +113,12 @@
 |Audit Archive
 |Immutable object-storage copy of audit evidence used for long-term retention and recovery.
 
+|Shared Browser Foundations
+|Shared browser contracts, design-system assets, session and sign-in foundations, telemetry conventions, navigation primitives, and client integration code reused across the platform browser surfaces.
+
+|Remote
+|Independently delivered browser capability that renders inside the tenant portal or administration portal through host-defined integration boundaries.
+
 |Projection
 |Secondary read model built from owner-managed state or replayable change notifications to support cross-capability queries without taking over write ownership.
 

@@ -27,8 +27,8 @@ include::../adrs/0010-select-authoritative-audit-store-and-evidence-export-techn
 
 include::../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc[leveloffset=+2]
 
+include::../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-browser-foundations.adoc[leveloffset=+2]
+
 === Proposed Decisions To Resolve Next
 
 include::../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[leveloffset=+2]
-
-include::../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.adoc[leveloffset=+2]

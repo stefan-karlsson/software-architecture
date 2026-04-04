@@ -29,7 +29,7 @@ This section summarizes the small number of strategic decisions that shape the P
 
 |Browser applications
 |Use a dedicated marketing site, tenant portal, administration portal, and sign-in portal; keep the tenant and administration portals thin and load business features from remotes.
-|Separates distinct browser journeys while still scaling frontend work across teams through remotes, shared browser contracts, and clear portal responsibilities.
+|Separates distinct browser journeys while still scaling frontend work across teams through remotes, shared browser foundations, and clear portal responsibilities.
 
 |Commercial model
 |Separate subscription plan from isolation profile.
