@@ -1,7 +1,7 @@
 [[section-quality-scenarios]]
 == Quality Requirements
 
-This section records the more detailed quality model and scenarios behind the platform foundation architecture. The scenarios below are derived from the defined hierarchy, authorization, policy, audit, and isolation model.
+This section records the more detailed quality model and scenarios behind the Platform Control Plane architecture. The scenarios below are derived from the defined hierarchy, authorization, policy, audit, and isolation model.
 
 === Quality Requirements Overview
 
@@ -24,7 +24,7 @@ Section 1 highlights the top five quality goals. This section keeps the broader 
 |Shared, silo, and hybrid hosting must use the same business hierarchy while allowing different technical isolation outcomes.
 
 |Evolvability
-|New governed capabilities should extend the existing hierarchy and authorization model instead of creating a parallel model.
+|New governed capabilities should extend the existing hierarchy, authorization model, and shared browser-surface model instead of creating parallel models or frontend platforms.
 
 |Operability
 |Operators and auditors should be able to understand effective access, policy, and isolation outcomes from the recorded context and telemetry.
@@ -53,7 +53,7 @@ Section 1 highlights the top five quality goals. This section keeps the broader 
 
 |QS-04
 |Security and Least Privilege
-|A user has a tenant-scoped grant that expands to `project.view` and requests that permission for an environment inside a descendant project / service.
+|A user has a tenant-scoped grant that expands to `workload.view` and requests that permission for an environment inside a descendant workload.
 |The platform recognizes the ancestor-scope grant as matching, allows the request only if policy also allows it, and records the scope chain in the decision context.
 
 |QS-05
@@ -64,7 +64,7 @@ Section 1 highlights the top five quality goals. This section keeps the broader 
 |QS-06
 |Security and Least Privilege
 |A child scope attempts to define a local policy that weakens a mandatory parent control such as required audit logging.
-|The platform rejects the weakening change or preserves the stronger inherited control in the effective policy.
+|The platform rejects the weakening change or preserves the stronger inherited control in the combined effective policy.
 
 |QS-07
 |Auditability and Traceability
@@ -74,16 +74,16 @@ Section 1 highlights the top five quality goals. This section keeps the broader 
 |QS-08
 |Auditability and Traceability
 |Policy requires regulated audit retention for 365 days.
-|The platform preserves audit records in a way that supports the required retention period and exposes the retention rule as part of effective policy.
+|The platform preserves audit records in a way that supports the required retention period and exposes the retention rule as part of the combined effective policy.
 
 |QS-09
 |Auditability and Traceability
-|The observability stack is unavailable while a governed action succeeds and canonical audit evidence can still be durably accepted.
-|The platform preserves canonical audit evidence and does not depend on observability exports as the source of truth for governance evidence.
+|The observability stack is unavailable while a governed action succeeds and authoritative audit evidence can still be durably accepted.
+|The platform preserves authoritative audit evidence and does not depend on observability exports as the source of truth for governance evidence.
 
 |QS-10
 |Auditability and Traceability
-|A privileged mutation cannot durably commit canonical audit evidence.
+|A privileged mutation cannot durably commit authoritative audit evidence.
 |The platform does not report the privileged mutation as successfully committed and preserves the failure context for later review.
 
 |QS-11
@@ -114,5 +114,20 @@ Section 1 highlights the top five quality goals. This section keeps the broader 
 |QS-16
 |Operability
 |An operator or auditor needs to understand why a privileged action was allowed or denied.
-|The platform exposes enough decision and audit context to reconstruct the principal, scoped grants, permissions, effective policy, and resulting decision.
+|The platform exposes enough decision and audit context to reconstruct the requesting actor, scoped grants, permissions, combined effective policy, and resulting decision.
+
+|QS-17
+|Evolvability
+|A new feature team needs to deliver a browser capability for one bounded area of the platform.
+|The team delivers a remote within the tenant or administration portal's agreed integration boundary and ships independently without creating a separate frontend platform.
+
+|QS-18
+|Operability
+|A referenced remote fails to load or is temporarily unavailable during runtime composition.
+|The host shell isolates the failing remote, keeps navigation and unaffected remotes usable, and renders a bounded error state instead of collapsing the whole browser application surface.
+
+|QS-19
+|Operability
+|Two feature teams ship remotes at different cadences across the tenant and administration portals.
+|Shared browser contracts and portal responsibilities preserve consistent authentication context, layout, navigation, and interaction behavior while allowing independent remote release cadence.
 |===

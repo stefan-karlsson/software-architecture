@@ -55,8 +55,8 @@ Leading option: "Cell-based runtime topology with shared cells, dedicated cells,
 
 * Placement outputs must identify the runtime cell, data boundary class, and network boundary class selected for each governed environment.
 * Mixed hybrid outcomes remain valid when they are policy-compliant and do not weaken stricter subscription defaults.
-* The same tenant, workspace, project / service, and environment hierarchy remains intact regardless of whether the final technical placement is shared or dedicated.
-* Placement changes and denials remain canonical audit events.
+* The same tenant, workspace, workload, and environment hierarchy remains intact regardless of whether the final technical placement is shared or dedicated.
+* Placement changes and denials remain authoritative audit events.
 
 ### Questions To Resolve Before Acceptance
 

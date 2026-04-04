@@ -18,7 +18,7 @@ Without a shared hierarchy, different teams would likely invent incompatible mod
 
 * Consistent scope model across the platform
 * Fine-grained authorization with reusable roles
-* Explicit policy inheritance from platform to environment
+* Explicit inherited policy rules from platform to environment
 * Auditable privileged and regulated activity at every scope
 * Ability to evolve the platform without introducing parallel hierarchies
 
@@ -33,8 +33,8 @@ Chosen option: "Adopt one hierarchical scope model with downward inheritance", b
 
 ### Positive Consequences
 
-* The platform has one canonical hierarchy: Platform, Tenant, Workspace, Project / Service, Environment.
-* Grants can be scoped consistently to tenant, workspace, project / service, or environment.
+* The platform has one shared hierarchy: Platform, Tenant, Workspace, Workload, Environment.
+* Grants can be scoped consistently to tenant, workspace, workload, or environment.
 * Policy, audit context, and defaults can inherit downward in a predictable way.
 * Shared, silo, and hybrid tenants can use the same business hierarchy.
 

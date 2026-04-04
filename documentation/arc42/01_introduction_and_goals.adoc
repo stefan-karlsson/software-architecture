@@ -1,19 +1,19 @@
 [[section-introduction-and-goals]]
 == Introduction and Goals
 
-This section summarizes the architectural drivers for the Product Platform Foundation. It focuses on the hierarchical platform model, the governance and authorization capabilities that must be shared across all tenants, and the quality goals that drive the resulting design.
+This section summarizes the architectural drivers for the Platform Control Plane inside the broader Product Platform. It focuses on the hierarchical platform model, the governance and authorization capabilities that must be shared across all tenants, and the quality goals that drive the resulting design.
 
 === Requirements Overview
 
 ==== Problem and Goal
 
-The Product Platform Foundation provides the shared architecture for identity and access, policy inheritance, auditability, hierarchical scope management, and tenant isolation. It treats `Platform -> Tenant -> Workspace -> Project / Service -> Environment` as the canonical business hierarchy.
+The Product Platform is expected to consist of a Platform Control Plane and a Workload Plane. The Platform Control Plane provides the shared governance architecture, including identity and access, inherited rules and guardrails, auditability, hierarchical scope management, and tenant isolation. It treats `Platform -> Tenant -> Workspace -> Workload -> Environment` as the shared business hierarchy that governs workloads in the Workload Plane.
 
 ==== Business Goals
 
-The platform foundation should help the organization:
+The platform control plane should help the organization:
 
-* manage human and machine principals consistently across all scopes
+* manage users and service accounts consistently across all scopes
 * apply one hierarchical governance model to shared, silo, and hybrid tenants
 * separate authorization, policy, and audit concerns without losing traceability
 * support subscription plans without coupling pricing directly to hosting isolation
@@ -27,13 +27,13 @@ The platform foundation should help the organization:
 |Cluster |Description
 
 |Identity and access foundation
-|Provide principals, memberships, grants, roles, permissions, and scoped access decisions for tenant, workspace, project / service, and environment boundaries.
+|Provide users, service accounts, groups, memberships, grants, roles, permissions, and scoped access decisions for tenant, workspace, workload, and environment boundaries.
 
 |Hierarchical scope governance
-|Manage the canonical hierarchy of tenant, workspace, project / service, and environment, including inherited defaults, audit context, and scope-aware access.
+|Manage the shared hierarchy of tenant, workspace, workload, and environment, including inherited defaults, audit context, and scope-aware access.
 
 |Policy and audit baseline
-|Maintain a platform policy baseline plus tenant, workspace, project, and environment policies, and audit privileged or regulated activity across all scopes.
+|Maintain a platform policy baseline plus tenant, workspace, workload, and environment policies, and audit privileged or regulated activity across all scopes.
 
 |Isolation and placement
 |Support shared, silo, and hybrid isolation without changing the business hierarchy by resolving runtime, data, and network boundaries from subscription and isolation information.
@@ -43,10 +43,10 @@ The platform foundation should help the organization:
 
 The architecture is primarily expected to support the following tasks:
 
-. authenticate a user or service account and resolve principal identity
-. resolve memberships and scoped grants for tenant, workspace, project / service, and environment boundaries
+. authenticate a user or service account and resolve actor identity
+. resolve memberships and scoped grants for tenant, workspace, workload, and environment boundaries
 . expand roles into fine-grained permissions for the requested action
-. evaluate effective policy after permission lookup and before access is allowed
+. evaluate the combined effective policy after permission lookup and before access is allowed
 . record privileged changes, secret access, production access, deployments, and billing or administration changes in the correct audit context
 . resolve runtime, data, and network isolation from the subscription's subscription plan and isolation profile
 
@@ -68,7 +68,7 @@ The repository does not contain linked external requirements or backlog exports.
 
 |REQ-EVID-001
 |`documentation/workspace.dsl`
-|Current repo evidence for the platform foundation context and capability-module decomposition.
+|Current repo evidence for the Platform Control Plane context and capability-module decomposition.
 
 |REQ-EVID-002
 |This arc42 book
@@ -116,7 +116,7 @@ Operability remains important, but it is treated as a detailed quality requireme
 |Needs clear rules for platform baseline policy, scope hierarchy, audit coverage, and isolation behavior across all tenants.
 
 |Security and Compliance Stakeholder
-|Needs assurance that least privilege, policy inheritance, audit logging, retention, and regulated access controls are built into the platform model.
+|Needs assurance that least privilege, inherited rules and guardrails, audit logging, retention, and regulated access controls are built into the platform model.
 
 |Product Engineer
 |Needs a shared authorization, policy, and hierarchy model that can be reused consistently when new services and environments are introduced.

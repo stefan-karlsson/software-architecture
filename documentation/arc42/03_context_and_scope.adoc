@@ -8,11 +8,11 @@
 include::../diagrams/SystemContext.puml[]
 ....
 
-The system boundary in this repository is the Product Platform Foundation. It provides the shared governance architecture for principals, scopes, policy inheritance, auditability, and isolation control.
+The system boundary in this repository is the Platform Control Plane. It provides the shared governance architecture for the broader Product Platform, while the future Workload Plane will host the tenant-facing runtime workloads governed by these decisions.
 
 [options="header",cols="1,2,2"]
 |===
-|Communication Partner |Inputs to the Platform Foundation |Outputs from the Platform Foundation
+|Communication Partner |Inputs to the Platform Control Plane |Outputs from the Platform Control Plane
 
 |User
 |Human-initiated access, administration actions, membership changes, grant requests, policy changes, and scoped operational actions.
@@ -20,40 +20,40 @@ The system boundary in this repository is the Product Platform Foundation. It pr
 
 |Automation Client
 |Machine-initiated access through service accounts, including deployment and operational automation.
-|Service-account authorization decisions, scoped access to projects / services and environments, and audited machine activity.
+|Service-account authorization decisions, scoped access to workloads and environments, and audited machine activity.
 
 |Identity Provider
 |Identity claims and authentication results for users and service accounts.
-|Authentication and identity-validation requests from the platform foundation.
+|Authentication and identity-validation requests from the Platform Control Plane.
 
 |Observability Stack
 |No direct business command input is modeled.
-|Audit and operational telemetry emitted by the platform foundation.
+|Audit and operational telemetry emitted by the Platform Control Plane.
 |===
 
 <<<
 
 === Technical Context
 
-The technical context maps the same communication partners to technical interfaces and channels. Concrete API and infrastructure protocols are intentionally left open because they are not yet fixed by the architecture definition.
+The technical context maps the same communication partners to technical interfaces and channels. Inside the Platform Control Plane boundary, the user-facing runtime containers separate public marketing, tenant work, platform administration, and sign-in into distinct browser surfaces. Those browser containers use one shared public Platform Governance API, while external automation clients use the same API directly.
 
 [options="header",cols="1,2,2,2"]
 |===
 |Partner |Interface / Channel |Purpose |Notes
 
 |User
-|Platform Foundation access interface
+|In-scope browser containers, with sign-in handoff
 |Initiate scope administration, access changes, policy changes, and governed operations.
-|The exact user-facing protocol and UI structure are intentionally unspecified in the repository.
+|User journeys enter through the in-scope browser containers at `www.example.com`, `app.example.com`, `admin.example.com`, and `login.example.com`, as described in link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.adoc[ADR 0013].
 
 |Automation Client
-|Service-account-driven platform interface
-|Initiate machine-to-platform calls for governed project / service and environment actions.
-|The architecture requires service-account access, but not a specific API protocol or client technology.
+|Versioned HTTPS JSON REST API
+|Initiate machine-to-platform calls for governed workload and environment actions.
+|Automation uses the same approved public API model defined in ADR 0008 without going through the browser containers.
 
 |Identity Provider
 |Authentication and identity-claims integration
-|Validate principal identity and return claims used during authorization and policy evaluation.
+|Validate actor identity and return claims used during authorization and policy evaluation.
 |The identity exchange is required, but protocol details are intentionally unspecified.
 
 |Observability Stack
@@ -62,4 +62,6 @@ The technical context maps the same communication partners to technical interfac
 |The architecture proves telemetry export, but not a concrete telemetry protocol or product choice.
 |===
 
-The next concrete interface and trust decisions are tracked in ADR 0008 for the public access protocol profile and ADR 0009 for identity federation plus service-account credentials.
+Within the system boundary, the marketing site, tenant portal, administration portal, and sign-in portal are separate runtime containers with distinct user-facing responsibilities. Shared browser contracts keep sign-in, navigation, and interaction expectations coherent across those containers, as described in link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.adoc[ADR 0013].
+
+The next concrete interface and trust decisions are tracked in link:../adrs/0008-select-platform-access-interface-and-automation-protocol-profile.adoc[ADR 0008] for the public access protocol profile, link:../adrs/0009-select-identity-federation-and-service-account-credential-model.adoc[ADR 0009] for identity federation plus service-account credentials, and link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.adoc[ADR 0013] for browser-application composition.

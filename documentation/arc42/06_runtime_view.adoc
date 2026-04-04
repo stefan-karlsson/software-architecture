@@ -4,64 +4,64 @@
 [[section-runtime-view]]
 == Runtime View
 
-This section shows three representative flows that are architecturally relevant for the platform foundation: authorization, policy inheritance, and isolation resolution.
+This section shows three representative flows that are architecturally relevant for the Platform Control Plane: authorization, inherited rules and guardrails, and environment isolation.
 
-Across these flows, canonical state remains owner-first: authoritative updates happen inside the owning capability boundary, while downstream projections and cross-capability read models may be updated asynchronously and can lag behind owner state.
+Across these flows, authoritative state remains owner-first: authoritative updates happen inside the owning capability boundary, while downstream projections and cross-capability read models may be updated asynchronously and can lag behind owner state.
 
 === Authorization Decision Flow
 
 [mermaid, format=svg]
 ....
 sequenceDiagram
-  actor Principal
+  actor Requester
   participant IAM as Identity and Access
-  participant Scope as Scope Management
-  participant Policy as Policy Management
-  participant Audit as Audit and Governance
+  participant Scope as Scope Hierarchy
+  participant Policy as Policy
+  participant Audit as Audit Evidence
 
-  Principal->>IAM: 1. Resolve principal
+  Requester->>IAM: 1. Resolve actor identity
   IAM->>Scope: 2. Resolve direct memberships, flat group memberships, and scoped grants
   Scope-->>IAM: Scope chain plus direct and group-derived grant context
   IAM->>IAM: 3. Expand roles and union permissions
   IAM->>IAM: 4. Default deny if required permission is absent
-  IAM->>Policy: 5. Evaluate effective policy only when permission is present
+  IAM->>Policy: 5. Evaluate combined effective policy only when permission is present
   Policy-->>IAM: 6. Allow or deny decision
   IAM->>Audit: 7. Audit missing-permission denials, policy denials, and successful allows
-  IAM-->>Principal: 8. Return allow or deny
+  IAM-->>Requester: 8. Return allow or deny
 ....
 
-. Resolve the acting principal as either a user or a service account.
-. Resolve direct memberships, flat group memberships, and scoped grants for tenant, workspace, project / service, and environment.
+. Resolve the requesting actor as either a user or a service account.
+. Resolve direct memberships, flat group memberships, and scoped grants for tenant, workspace, workload, and environment.
 . Expand the granted role set into fine-grained permissions and union direct and group-derived permissions.
 . Deny by default when the required permission is absent at the requested scope or any ancestor scope.
-. Evaluate effective policy only after permission lookup succeeds.
+. Evaluate the combined effective policy only after permission lookup succeeds.
 . Return an allow or deny decision and audit missing-permission denials, policy denials, and successful allows.
 
 When a decision requires the freshest membership, grant, or policy data, the responsible flow reads from the owning capability rather than relying on a projected read model.
 
-=== Policy Inheritance and Effective Policy Evaluation
+=== Inherited Rules and Effective Policy Evaluation
 
 [mermaid, format=svg]
 ....
 flowchart TD
   PlatformBaseline["Platform Policy Baseline"] --> TenantPolicy["Tenant Policy"]
   TenantPolicy --> WorkspacePolicy["Workspace Policy"]
-  WorkspacePolicy --> ProjectPolicy["Project Policy"]
-  ProjectPolicy --> EnvironmentPolicy["Environment Policy"]
-  EnvironmentPolicy --> EffectivePolicy["Effective Policy for Requested Action"]
+  WorkspacePolicy --> WorkloadPolicy["Workload Policy"]
+  WorkloadPolicy --> EnvironmentPolicy["Environment Policy"]
+  EnvironmentPolicy --> EffectivePolicy["Combined Effective Policy for Requested Action"]
   Mandatory["Mandatory parent controls cannot be weakened"] --> EffectivePolicy
   Tightening["Child scopes may tighten controls"] --> EffectivePolicy
 ....
 
 . Start with the platform policy baseline.
-. Apply tenant, workspace, project, and environment policy in hierarchy order.
+. Apply tenant, workspace, workload, and environment policy in hierarchy order.
 . Preserve mandatory parent controls throughout evaluation.
 . Allow lower scopes to tighten controls, such as requiring approval or restricting production access to a narrower group.
-. Use the resulting effective policy during authorization and execution decisions.
+. Use the resulting combined effective policy during authorization and execution decisions.
 
-Derived policy-aware read models may assist downstream consumers, but authoritative policy state remains with Policy Management and downstream projections may lag.
+Derived policy-aware read models may assist downstream consumers, but authoritative policy state remains with Policy and downstream projections may lag.
 
-=== Isolation and Binding Resolution
+=== Environment Isolation Resolution
 
 [mermaid, format=svg]
 ....
@@ -69,17 +69,17 @@ flowchart TD
   Subscription["Subscription"] --> Plan["Subscription Plan"]
   Subscription --> IsolationProfile["Isolation Profile"]
   Environment["Environment"] --> IsolationProfile
-  IsolationProfile --> RuntimeBinding["Runtime Binding"]
+  IsolationProfile --> RuntimeAllocation["Runtime Allocation"]
   IsolationProfile --> DataBoundary["Data Boundary"]
   IsolationProfile --> NetworkBoundary["Network Boundary"]
   Environment --> Tightening["Environment-Level Tightening"]
-  Tightening --> RuntimeBinding
+  Tightening --> RuntimeAllocation
   Tightening --> DataBoundary
   Tightening --> NetworkBoundary
-  Policy["Effective Policy"] --> RuntimeBinding
+  Policy["Combined Effective Policy"] --> RuntimeAllocation
   Policy --> DataBoundary
   Policy --> NetworkBoundary
-  RuntimeBinding --> Placement["Resolved Placement"]
+  RuntimeAllocation --> Placement["Resolved Placement"]
   DataBoundary --> Placement
   NetworkBoundary --> Placement
   Placement --> AcceptDeny["Placement Accepted or Denied"]
@@ -89,7 +89,7 @@ flowchart TD
 . Read the subscription's subscription plan and isolation profile as the default isolation baseline.
 . Apply any environment-level tightening that strengthens the default without weakening it.
 . Evaluate policy constraints that can affect placement, region, network, retention, or access posture.
-. Resolve runtime binding, data boundary, and network boundary independently under one policy envelope.
+. Resolve runtime allocation, data boundary, and network boundary independently under one policy envelope.
 . Accept placement only when every resolved boundary complies with policy and does not weaken a stricter default.
 . Produce the effective isolation outcome for the environment without changing the business hierarchy.
 

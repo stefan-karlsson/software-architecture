@@ -5,26 +5,38 @@
 |===
 |Term |Definition
 
-|Platform Foundation
-|The shared architecture for identity, authorization, policy inheritance, auditability, and isolation across the platform hierarchy.
+|Product Platform
+|The umbrella business and platform construct that includes the control-side governance capabilities and the tenant-facing workload runtime.
 
-|Principal
-|An actor that can request access, represented as a user or service account.
+|Platform Control Plane
+|The governance and administration system for the Product Platform. It owns identity and access, authorization, inherited rules and guardrails, auditability, and isolation control across the platform hierarchy.
+
+|Workload Plane
+|The tenant-facing runtime side of the Product Platform where governed workloads execute under the policies, access rules, and isolation decisions established by the Platform Control Plane.
+
+|Actor
+|A person or machine identity that makes a request to the platform. In this architecture, actors are users and service accounts.
+
+|Identity
+|The platform-managed representation of a user or service account used during authorization, policy evaluation, and audit correlation.
 
 |User
-|Human principal.
+|Human actor who signs in directly to the platform.
+
+|End User
+|A person using the workload or product itself for its business purpose, rather than administering the platform.
 
 |Service Account
-|Machine principal used for automation or service-to-platform access.
+|Machine actor used for automation or service-to-platform access.
 
 |Group
-|Collection of principals used to manage access at scale.
+|Collection of users and service accounts used to manage access at scale.
 
 |Membership
 |Association that answers who belongs to which scope or organizational context.
 
 |Grant
-|Scoped assignment of a role to a principal or group.
+|Scoped assignment of a role to an actor or group.
 
 |Role
 |Reusable bundle of permissions.
@@ -33,7 +45,7 @@
 |Smallest action unit, such as `environment.deploy` or `audit.view`.
 
 |Scope
-|A hierarchical boundary at which access, policy, and audit context apply. In this architecture the supported scopes are tenant, workspace, project / service, and environment.
+|A hierarchical boundary at which access, policy, and audit context apply. In this architecture the supported scopes are tenant, workspace, workload, and environment.
 
 |Tenant
 |Top customer or organizational scope inside the platform hierarchy.
@@ -53,14 +65,23 @@
 |Workspace
 |Organizing scope inside a tenant.
 
-|Project / Service
-|Unified scope level used to represent a governed delivery or service boundary inside a workspace.
+|Workload
+|Unified scope level used to represent a governed delivery boundary inside a workspace, regardless of whether the implementation becomes a service, application, or job.
 
 |Environment
 |Operational scope where policy, audit, and isolation decisions become concrete.
 
+|Policy
+|The rules and guardrails that can restrict or shape actions, access outcomes, and environment placement.
+
+|Inherited Policy
+|Policy rules from broader scopes that still apply at lower scopes unless a narrower scope tightens them.
+
+|Effective Policy
+|The final combined rule set after platform, tenant, workspace, workload, and environment policy rules have been applied together.
+
 |Platform Policy Baseline
-|Top-level policy baseline inherited by lower scopes.
+|Top-level policy rules and guardrails inherited by lower scopes.
 
 |Tenant Policy
 |Policy defined at the tenant scope.
@@ -68,16 +89,16 @@
 |Workspace Policy
 |Policy defined at the workspace scope.
 
-|Project Policy
-|Policy defined at the project / service scope.
+|Workload Policy
+|Policy defined at the workload scope.
 
 |Environment Policy
 |Policy defined at the environment scope.
 
-|Audit Log
-|Record of privileged or regulated activity together with actor, scope, decision, and outcome context.
+|Audit Evidence
+|Canonical record of privileged or regulated activity together with actor, scope, decision, and outcome context.
 
-|Runtime Binding
+|Runtime Allocation
 |Resolution of where an environment actually runs.
 
 |Data Boundary

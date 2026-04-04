@@ -4,7 +4,7 @@
 [[section-deployment-view]]
 == Deployment View
 
-The architecture defines logical isolation profiles rather than a fixed concrete infrastructure topology. This section therefore describes how environments are placed and isolated in shared, silo, and hybrid modes, while leaving concrete hosting technology intentionally open.
+The architecture defines logical isolation profiles rather than a fixed concrete infrastructure topology. This section therefore describes how environments are placed and isolated in shared, silo, and hybrid modes, while leaving concrete hosting technology intentionally open. A strict C4 deployment view is deferred until concrete deployment nodes, stores, and hosting topology are chosen.
 
 === Logical Isolation Profiles
 
@@ -12,21 +12,21 @@ The architecture defines logical isolation profiles rather than a fixed concrete
 ....
 flowchart LR
   subgraph Shared["Shared"]
-    SR["Runtime Binding: Shared Runtime Allocation"]
+    SR["Runtime Allocation: Shared Runtime Allocation"]
     SD["Data Boundary: Shared Partition"]
     SN["Network Boundary: Shared Network Boundary"]
     SR --> SD --> SN
   end
 
   subgraph Hybrid["Hybrid"]
-    HR["Runtime Binding: Shared or Dedicated by Environment"]
+    HR["Runtime Allocation: Shared or Dedicated by Environment"]
     HD["Data Boundary: Shared or Dedicated by Environment"]
     HN["Network Boundary: Shared or Dedicated by Environment"]
     HR --> HD --> HN
   end
 
   subgraph Silo["Silo"]
-    XR["Runtime Binding: Dedicated Runtime Allocation"]
+    XR["Runtime Allocation: Dedicated Runtime Allocation"]
     XD["Data Boundary: Dedicated Store"]
     XN["Network Boundary: Dedicated Network Boundary"]
     XR --> XD --> XN
@@ -35,7 +35,7 @@ flowchart LR
 
 [options="header",cols="1,2,2,2,2"]
 |===
-|Isolation Profile |Runtime Binding |Data Boundary |Network Boundary |Typical Use
+|Isolation Profile |Runtime Allocation |Data Boundary |Network Boundary |Typical Use
 
 |Shared
 |Shared runtime allocation
@@ -72,10 +72,10 @@ What is fixed is the logical model:
 * runtime, data, and network boundaries may differ even when the tenant hierarchy does not
 * subscription isolation defines the default baseline, and environment-level logic may tighten that baseline without weakening it
 * hybrid isolation is a first-class case rather than an exception
-* a canonical audit store is a required logical architectural concern even though its concrete storage technology remains open
-* canonical audit evidence remains distinct from operational telemetry exported to observability tools
+* an authoritative audit store is a required logical architectural concern even though its concrete storage technology remains open
+* authoritative audit evidence remains distinct from operational telemetry exported to observability tools
 * authoritative owner-managed stores and derived read models are distinct architectural concerns even though their concrete persistence technologies remain open
-* projected or convenience views may lag behind canonical owner state and do not become write authorities
+* projected or convenience views may lag behind authoritative owner state and do not become write authorities
 * mixed hybrid boundary outcomes are valid only when every resolved boundary remains policy-compliant and non-weakening
 
-The next concrete implementation-profile decisions are tracked in ADR 0010 for canonical audit storage and export, ADR 0011 for owner-state integration and projections, and ADR 0012 for runtime topology plus network isolation.
+The next concrete implementation-profile decisions are tracked in ADR 0010 for authoritative audit storage and export, ADR 0011 for owner-state integration and projections, and ADR 0012 for runtime topology plus network isolation.

@@ -1,37 +1,40 @@
 [[section-building-block-view]]
 == Building Block View
 
-=== Whitebox Overall System: Product Platform Foundation
+=== Whitebox Overall System: Platform Control Plane
 
 [plantuml, format=svg, width=70%]
 ....
 include::../diagrams/Capabilities.puml[]
 ....
 
-The Product Platform Foundation is decomposed into five capability-oriented building blocks. They separate identity and access, policy, hierarchy management, audit, and isolation logic without changing the business hierarchy seen by tenants and internal teams.
+The Platform Control Plane is decomposed into user-facing runtime containers plus a shared Platform Governance API container. Inside that API container, the backend is organized into five capability-oriented logical building blocks. Browser-facing marketing, tenant, admin, and sign-in experiences sit around those backend building blocks, but the control plane itself remains centered on identity and access, policy, scope hierarchy, audit evidence, and environment isolation without changing the business hierarchy seen by tenants and internal teams.
 
 Motivation::
-The decomposition keeps business hierarchy, authorization, policy inheritance, auditability, and isolation resolution explicit instead of mixing them into one undifferentiated service or inventing different models for shared and silo tenants.
+The decomposition keeps runtime boundaries and logical building blocks distinct. Browser applications and the Platform Governance API are the C4 runtime containers, while the backend governance responsibilities remain explicit as internal building blocks instead of being misrepresented as separately deployable services.
+
+Modeling note::
+The five backend areas below are logical building blocks modeled as internal components of the Platform Governance API container in the C4 workspace. They are not presented here as proven separately deployable containers.
 
 Contained Building Blocks::
 [options="header",cols="1,3"]
 |===
 |Building Block |Responsibility
 
-|Identity and Access Capability
-|Authoritatively owns platform-specific principal records, service accounts, groups, memberships, grants, roles, and permissions, and resolves the authorization context for a requested action.
+|Identity and Access
+|Authoritatively owns platform-specific identity records, service accounts, groups, memberships, grants, roles, and permissions, and resolves the authorization context for a requested action.
 
-|Policy Management Capability
-|Authoritatively owns platform baseline policy plus scoped tenant, workspace, project, and environment policies, and computes effective policy.
+|Policy
+|Authoritatively owns platform baseline rules and scoped tenant, workspace, workload, and environment policy rules, and computes the combined effective policy.
 
-|Tenant Hierarchy and Scope Management Capability
-|Authoritatively owns tenants, billing accounts, subscriptions, workspaces, projects / services, and environments as the canonical scope hierarchy.
+|Scope Hierarchy
+|Authoritatively owns tenants, billing accounts, subscriptions, workspaces, workloads, and environments as the shared scope hierarchy.
 
-|Audit and Governance Capability
-|Owns canonical audit evidence, preserves scope and decision context, enforces governance-oriented audit behavior, and exports operational telemetry as a secondary concern.
+|Audit Evidence
+|Owns authoritative audit evidence, preserves scope and decision context, enforces governance-oriented audit behavior, and exports operational telemetry as a secondary concern.
 
-|Isolation and Placement Capability
-|Authoritatively owns resolved runtime bindings, data boundaries, network boundaries, and placement state for each environment.
+|Environment Isolation
+|Authoritatively owns resolved runtime allocations, data boundaries, network boundaries, and placement state for each environment.
 |===
 
 Important Relationships::
@@ -39,24 +42,27 @@ Important Relationships::
 |===
 |Relationship |Description
 
-|Identity and Access -> Tenant Hierarchy and Scope Management
+|Identity and Access -> Scope Hierarchy
 |Memberships and grants are meaningful only when they can be resolved against the hierarchy and scope chain. Cross-capability reads may use projections, but authoritative writes remain with the owning capability.
 
-|Identity and Access -> Policy Management
-|Effective policy is evaluated after permissions are resolved and before access is allowed.
+|Identity and Access -> Policy
+|The combined effective policy is evaluated after permissions are resolved and before access is allowed.
 
-|Policy Management -> Audit and Governance
-|Policy decisions and policy changes must be preserved as canonical audit evidence at the correct scope.
+|Policy -> Audit Evidence
+|Policy decisions and policy changes must be preserved as authoritative audit evidence at the correct scope.
 
-|Isolation and Placement -> Tenant Hierarchy and Scope Management
-|Isolation resolution depends on subscription, project / service, and environment context owned by the hierarchy capability, while resolved placement state remains owned by Isolation and Placement.
+|Environment Isolation -> Scope Hierarchy
+|Isolation resolution depends on subscription, workload, and environment context owned by the hierarchy capability, while resolved placement state remains owned by Environment Isolation.
 
-|Isolation and Placement -> Policy Management
-|Placement and boundary choices must respect inherited policy constraints such as approved regions or network restrictions.
+|Environment Isolation -> Policy
+|Placement and boundary choices must respect inherited rules and guardrails such as approved regions or network restrictions.
 
-|All capability modules -> Audit and Governance
-|Privileged and regulated events must preserve actor, scope, and decision context in canonical audit evidence, while telemetry export remains a secondary downstream concern.
+|All capability modules -> Audit Evidence
+|Privileged and regulated events must preserve actor, scope, and decision context in authoritative audit evidence, while telemetry export remains a secondary downstream concern.
 |===
+
+Browser application note::
+The platform browser landscape is defined separately in <<section-concepts,Browser Application Composition Model>> and in link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.adoc[ADR 0013]. The tenant portal and administration portal remain thin browser hosts, the marketing site remains separate, the sign-in experience is centralized, and business-heavy browser capabilities are delivered through remotes inside the same Platform Control Plane software-system boundary.
 
 === Platform Hierarchy
 
@@ -80,19 +86,19 @@ flowchart TD
   Subscription --> SubscriptionPlan["Subscription Plan"]
   Subscription --> IsolationProfile["Isolation Profile"]
   Tenant --> TenantPolicy["Tenant Policy"]
-  Tenant --> TenantAuditLog["Tenant Audit Log"]
+  Tenant --> TenantAuditEvidence["Tenant Audit Evidence"]
   Tenant --> Workspace["Workspace"]
   Workspace --> WorkspacePolicy["Workspace Policy"]
-  Workspace --> WorkspaceAuditLog["Workspace Audit Log"]
-  Workspace --> ProjectService["Project / Service"]
-  ProjectService --> ProjectPolicy["Project Policy"]
-  ProjectService --> ProjectAuditLog["Project Audit Log"]
-  ProjectService --> Environment["Environment"]
+  Workspace --> WorkspaceAuditEvidence["Workspace Audit Evidence"]
+  Workspace --> Workload["Workload"]
+  Workload --> WorkloadPolicy["Workload Policy"]
+  Workload --> WorkloadAuditEvidence["Workload Audit Evidence"]
+  Workload --> Environment["Environment"]
   Environment --> EnvironmentPolicy["Environment Policy"]
-  Environment --> EnvironmentAuditLog["Environment Audit Log"]
-  Environment --> RuntimeBinding["Runtime Binding"]
-  RuntimeBinding --> SharedRuntime["Shared Runtime Allocation"]
-  RuntimeBinding --> DedicatedRuntime["Dedicated Runtime Allocation"]
+  Environment --> EnvironmentAuditEvidence["Environment Audit Evidence"]
+  Environment --> RuntimeAllocation["Runtime Allocation"]
+  RuntimeAllocation --> SharedRuntime["Shared Runtime Allocation"]
+  RuntimeAllocation --> DedicatedRuntime["Dedicated Runtime Allocation"]
   Environment --> DataBoundary["Data Boundary"]
   DataBoundary --> SharedPartition["Shared Partition"]
   DataBoundary --> DedicatedStore["Dedicated Store"]
@@ -114,33 +120,33 @@ flowchart TD
 |Workspace
 |Groups related work within a tenant and provides a narrower boundary for membership, policy, and audit context.
 
-|Project / Service
-|Represents the governed delivery or service boundary inside a workspace and remains a single unified scope level in this architecture.
+|Workload
+|Represents the governed delivery boundary inside a workspace, regardless of whether the implementation becomes a service, application, or job.
 
 |Environment
-|Represents the deployment-facing operational boundary where effective policy, audit, and isolation become most concrete.
+|Represents the deployment-facing operational boundary where combined effective policy, audit, and isolation become most concrete.
 |===
 
-=== Principal and Access Model
+=== Actor and Access Model
 
 [options="header",cols="1,3"]
 |===
 |Element |Purpose
 
 |User
-|Human principal that performs governed actions in the hierarchy.
+|Human user that performs governed actions in the hierarchy.
 
 |Service Account
-|Machine principal used for automation and service-to-platform access.
+|Machine identity used for automation and service-to-platform access.
 
 |Group
-|Collection of principals used to manage access at scale.
+|Collection of users and service accounts used to manage access at scale.
 
 |Membership
 |Association that answers who belongs to which scope or organizational context.
 
 |Grant
-|Assignment of a role at a specific scope. Grants are always scoped to tenant, workspace, project / service, or environment.
+|Assignment of a role at a specific scope. Grants are always scoped to tenant, workspace, workload, or environment.
 
 |Role
 |Reusable permission bundle that expresses a meaningful access profile.
@@ -149,7 +155,7 @@ flowchart TD
 |Smallest action unit, such as `environment.deploy`, `audit.view`, or `policy.manage`.
 |===
 
-=== Isolation and Placement Model
+=== Environment Isolation Model
 
 [options="header",cols="1,3"]
 |===
@@ -161,7 +167,7 @@ flowchart TD
 |Isolation Profile
 |Technical isolation intent, such as Shared, Silo, or Hybrid.
 
-|Runtime Binding
+|Runtime Allocation
 |Resolves where an environment runs, for example shared runtime allocation or dedicated runtime allocation.
 
 |Data Boundary

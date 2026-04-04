@@ -1,7 +1,7 @@
 [[section-design-decisions]]
 == Architecture Decisions
 
-The platform foundation currently depends on the following accepted architecture decisions.
+The Platform Control Plane currently depends on the following accepted architecture decisions.
 
 === Accepted Decisions
 
@@ -25,8 +25,10 @@ include::../adrs/0008-select-platform-access-interface-and-automation-protocol-p
 
 include::../adrs/0009-select-identity-federation-and-service-account-credential-model.adoc[leveloffset=+2]
 
-include::../adrs/0010-select-canonical-audit-store-and-evidence-export-technology-profile.adoc[leveloffset=+2]
+include::../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[leveloffset=+2]
 
 include::../adrs/0011-select-authoritative-state-integration-and-projection-technology-profile.adoc[leveloffset=+2]
 
 include::../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[leveloffset=+2]
+
+include::../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.adoc[leveloffset=+2]

@@ -1,18 +1,18 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
-This section summarizes the small number of strategic decisions that shape the platform foundation architecture. The detailed structure appears in <<section-building-block-view,Section 5>>, the behavior in <<section-runtime-view,Section 6>>, and the cross-cutting rules in <<section-concepts,Section 8>>.
+This section summarizes the small number of strategic decisions that shape the Platform Control Plane architecture. The detailed structure appears in <<section-building-block-view,Section 5>>, the behavior in <<section-runtime-view,Section 6>>, and the cross-cutting rules in <<section-concepts,Section 8>>.
 
 [options="header",cols="1,2,2"]
 |===
 |Decision Area |Strategy |Why It Matters
 
 |Hierarchy
-|Use one canonical hierarchy: platform, tenant, workspace, project / service, environment.
+|Use one shared hierarchy: platform, tenant, workspace, workload, environment.
 |Keeps governance, access, inheritance, and audit consistent across the platform instead of fragmenting the model.
 
 |Authorization
-|Resolve access through principal, membership, grant, role, permission, and scope.
+|Resolve access through actor, membership, grant, role, permission, and scope.
 |Separates identity, scope membership, and reusable permission bundles while supporting fine-grained access control.
 
 |Policy
@@ -23,9 +23,13 @@ This section summarizes the small number of strategic decisions that shape the p
 |Keep the same business hierarchy for all tenants and express hosting differences through isolation profile plus runtime, data, and network boundaries.
 |Supports shared, silo, and hybrid operation without inventing separate business models for different hosting choices.
 
-|Audit and governance
+|Audit evidence
 |Make audit context a first-class concern across memberships, grants, policy changes, production access, secrets, deployments, and billing or administration changes.
 |Supports compliance, traceability, and operational review across the entire hierarchy.
+
+|Browser applications
+|Use a dedicated marketing site, tenant portal, administration portal, and sign-in portal; keep the tenant and administration portals thin and load business features from remotes.
+|Separates distinct browser journeys while still scaling frontend work across teams through remotes, shared browser contracts, and clear portal responsibilities.
 
 |Commercial model
 |Separate subscription plan from isolation profile.

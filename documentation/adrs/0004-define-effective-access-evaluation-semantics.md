@@ -11,7 +11,7 @@
 
 ## Context and Problem Statement
 
-The platform foundation defines the authorization chain as `Principal -> Membership -> Grant -> Role -> Permission -> Scope`.
+The Platform Control Plane defines the authorization chain as `Actor -> Membership -> Grant -> Role -> Permission -> Scope`.
 That model establishes the core building blocks, but it is not sufficient on its own to guarantee consistent implementation.
 
 Without an explicit decision, teams could still implement materially different behavior for:
@@ -50,43 +50,44 @@ Chosen option: "Resolve access through additive grants only, with policy handlin
 * Effective permissions are the union of all matching direct and group-derived grants.
 * The authorization layer does not support explicit deny grants.
 * Policy evaluation happens only after permission resolution and can still deny an otherwise authorized action.
+* The combined effective policy is the final rule set after inherited and local policy rules have been applied together.
 
 ### Normative Scope-Matching Rules
 
 * A tenant-scoped grant applies to that tenant and all descendant workspaces, projects / services, and environments.
 * A workspace-scoped grant applies to that workspace and all descendant projects / services and environments.
-* A project / service-scoped grant applies to that project / service and all descendant environments.
+* A workload-scoped grant applies to that workload and all descendant environments.
 * An environment-scoped grant applies only to that environment.
 * Access propagation is interpreted through the hierarchy during evaluation. Grants are not copied to child scopes.
 
 ### Normative Group Rules
 
-* Groups aggregate principals for access management.
+* Groups aggregate users and service accounts for access management.
 * Users and service accounts may be members of groups.
 * Groups do not contain other groups in the first implementation.
 * Group-derived grants are evaluated the same way as direct grants once group membership has been resolved.
 
 ### Effective-Access Evaluation Algorithm
 
-1. Resolve the acting principal.
-2. Resolve direct memberships for the principal at the relevant scopes.
-3. Resolve flat group memberships for the principal.
+1. Resolve the requesting actor.
+2. Resolve direct memberships for the actor at the relevant scopes.
+3. Resolve flat group memberships for the actor.
 4. Collect direct grants and group-derived grants whose scopes match the requested scope or one of its ancestor scopes.
 5. Expand the roles from those grants into permissions.
 6. Union the resulting permissions into one effective permission set.
 7. If the required permission is absent, deny the action and audit the denied result.
-8. If the required permission is present, evaluate effective policy for the requested action and scope.
+8. If the required permission is present, evaluate the combined effective policy for the requested action and scope.
 9. If policy denies the action, deny it and audit the policy-driven denial with policy context.
 10. If policy allows the action, allow it and audit the successful decision.
 
 ### Public Behavior Locked by This Decision
 
-* Authorization input must include the acting principal, the requested permission, and the requested scope.
+* Authorization input must include the requesting actor, the requested permission, and the requested scope.
 * Authorization output must include allow or deny plus enough decision context for audit and later review.
-* Valid grant scopes remain limited to tenant, workspace, project / service, and environment.
+* Valid grant scopes remain limited to tenant, workspace, workload, and environment.
 * Authorization answers whether a valid matching grant provides the required permission at the requested scope.
-* Policy answers whether the action is still allowed under inherited rules after permission resolution.
-* Every authorization decision must preserve principal, resolved scope, matching grants or absence of grants, resolved permission, policy outcome when evaluated, and final allow or deny result.
+* Policy answers whether the action is still allowed under the applicable rules and guardrails after permission resolution.
+* Every authorization decision must preserve requesting actor, resolved scope, matching grants or absence of grants, resolved permission, policy outcome when evaluated, and final allow or deny result.
 
 ### Positive Consequences
 
@@ -120,7 +121,7 @@ Chosen option: "Resolve access through additive grants only, with policy handlin
 
 ## Validation Scenarios
 
-* A user with a direct workspace grant for `project.view` is allowed to request that permission for a project inside that workspace before policy evaluation.
+* A user with a direct workspace grant for `workload.view` is allowed to request that permission for a workload inside that workspace before policy evaluation.
 * A user with no matching grant at the requested scope or any ancestor is denied by default and the denial is audited.
 * A user who receives the required permission only through a group-derived grant is allowed if policy also allows the action.
 * A user with both direct and group-derived grants receives the union of those permissions with no special precedence rule.

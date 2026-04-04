@@ -7,7 +7,7 @@
 
 This repository is a documentation-as-code for capturing our Product Platform architecture with https://arc42.org/[arc42], https://c4model.com/[C4 model], and https://doctoolchain.org/[docToolchain].
 
-The current book documents a platform foundation architecture for hierarchical scopes, identity and access, policy inheritance, auditability, and shared or dedicated isolation behavior.
+The current documentation set describes the Platform Control Plane architecture for hierarchical scopes, identity and access, inherited rules and guardrails, auditability, and shared or dedicated isolation behavior.
 
 It is preconfigured to support:
 

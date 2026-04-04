@@ -1,26 +1,26 @@
 [[section-architecture-constraints]]
 == Architecture Constraints
 
-The following constraints are fixed by the chosen platform foundation model and by the documentation/tooling approach used in this repository.
+The following constraints are fixed by the chosen Platform Control Plane model and by the documentation/tooling approach used in this repository.
 
 [options="header",cols="1,2,3"]
 |===
 |Category |Constraint |Consequence for the Architecture
 
 |Core domain structure
-|The canonical hierarchy is `Platform -> Tenant -> Workspace -> Project / Service -> Environment`.
+|The shared hierarchy is `Platform -> Tenant -> Workspace -> Workload -> Environment`.
 |All access, policy, audit, inheritance, defaults, and isolation reasoning must follow this hierarchy rather than introducing a second parallel business structure.
 
 |Authorization model
-|Access must follow `Principal -> Membership -> Grant -> Role -> Permission -> Scope`.
-|Roles remain reusable bundles, permissions remain the smallest action unit, and grants must always be scoped to tenant, workspace, project / service, or environment.
+|Access must follow `Actor -> Membership -> Grant -> Role -> Permission -> Scope`.
+|Roles remain reusable bundles, permissions remain the smallest action unit, and grants must always be scoped to tenant, workspace, workload, or environment.
 
-|Principal model
-|The supported principals are user, service account, and group.
+|Actor and group model
+|The supported access actors are user and service account, while groups remain a separate access-management concept.
 |Human and machine access must be represented consistently, while group membership provides aggregation without replacing scoped grants.
 
 |Policy model
-|Policy is distinct from authorization and inherits downward from platform baseline to tenant, workspace, project, and environment policies.
+|Policy is distinct from authorization and applies inherited rules downward from platform baseline to tenant, workspace, workload, and environment policies.
 |Permission lookup happens before policy evaluation, and lower scopes may tighten controls but must not weaken mandatory parent rules.
 
 |Isolation model

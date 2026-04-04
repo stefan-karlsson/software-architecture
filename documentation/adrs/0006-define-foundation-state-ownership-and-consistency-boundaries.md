@@ -11,8 +11,8 @@
 
 ## Context and Problem Statement
 
-The platform foundation describes clear capability modules, but it does not yet define where key records are authoritatively owned and how changes to them are coordinated across capabilities.
-This affects principals, memberships, grants, roles, permissions, policies, subscriptions, runtime bindings, data boundaries, network boundaries, and audit records.
+The Platform Control Plane describes clear capability modules, but it does not yet define where key records are authoritatively owned and how changes to them are coordinated across capabilities.
+This affects identity records, memberships, grants, roles, permissions, policies, subscriptions, runtime allocations, data boundaries, network boundaries, and audit records.
 
 Without an explicit ownership and consistency model, teams could still implement materially different behavior for:
 
@@ -54,11 +54,11 @@ Chosen option: "Use a hybrid model with authoritative domain stores plus derived
 ### Normative Ownership Map
 
 * The Identity Provider is authoritative for external identity claims used for authentication.
-* Identity and Access is authoritative for platform-specific principal records, service accounts, groups, memberships, grants, roles, and permissions.
-* Tenant Hierarchy and Scope Management is authoritative for tenants, billing accounts, subscriptions, workspaces, projects / services, and environments.
-* Policy Management is authoritative for platform baseline policy plus tenant, workspace, project / service, and environment policies, together with the source inputs required to compute effective policy.
-* Isolation and Placement is authoritative for runtime bindings, data boundaries, network boundaries, and resolved placement state.
-* Audit and Governance is authoritative for canonical audit evidence and retention-governed audit records.
+* Identity and Access is authoritative for platform-specific identity records, service accounts, groups, memberships, grants, roles, and permissions.
+* Scope Hierarchy is authoritative for tenants, billing accounts, subscriptions, workspaces, workloads, and environments.
+* Policy is authoritative for platform baseline policy plus tenant, workspace, workload, and environment policies, together with the source inputs required to compute the combined effective policy.
+* Environment Isolation is authoritative for runtime allocations, data boundaries, network boundaries, and resolved placement state.
+* Audit Evidence is authoritative for audit evidence and retention-governed audit records.
 
 ### Normative Read and Write Rules
 
@@ -72,7 +72,7 @@ Chosen option: "Use a hybrid model with authoritative domain stores plus derived
 
 * Each owner may use local transactions only within its own authoritative boundary.
 * Cross-capability changes are coordinated through durable asynchronous integration rather than distributed transactions.
-* An owning capability commits canonical state first and then emits durable change notifications or equivalent durable integration events for dependent capabilities.
+* An owning capability commits authoritative state first and then emits durable change notifications or equivalent durable integration events for dependent capabilities.
 * Downstream capabilities update their own derived state asynchronously based on the owner-originated change signal.
 * Eventual consistency across capabilities is acceptable by default when authoritative ownership remains clear.
 
@@ -81,7 +81,7 @@ Chosen option: "Use a hybrid model with authoritative domain stores plus derived
 * Derived read models must be rebuildable from authoritative state or durable owner-originated change streams.
 * Failed downstream updates must be retried or reconciled without reassigning ownership to a consumer or projection.
 * Recovery logic must preserve the authoritative owner of each record type even when projections are stale or temporarily unavailable.
-* Audit evidence remains authoritative in Audit and Governance even if operational projections or observability exports lag behind.
+* Audit evidence remains authoritative in Audit Evidence even if operational projections or observability exports lag behind.
 
 ### Public Behavior Locked by This Decision
 
@@ -126,13 +126,13 @@ Chosen option: "Use a hybrid model with authoritative domain stores plus derived
 ## Validation Scenarios
 
 * A membership change is written only by Identity and Access and later becomes visible in downstream read models through asynchronous propagation.
-* A tenant or environment rename is written only by Tenant Hierarchy and Scope Management and is later reflected in authorization and audit projections without changing ownership.
-* A policy update is committed by Policy Management and later changes authorization outcomes after downstream refresh or direct owner read.
-* A runtime binding change is committed by Isolation and Placement while Tenant Hierarchy and Scope Management remains authoritative for the environment it belongs to.
+* A tenant or environment rename is written only by Scope Hierarchy and is later reflected in authorization and audit projections without changing ownership.
+* A policy update is committed by Policy and later changes authorization outcomes after downstream refresh or direct owner read.
+* A runtime allocation change is committed by Environment Isolation while Scope Hierarchy remains authoritative for the environment it belongs to.
 * An authorization decision needs the freshest membership or grant data and therefore reads from Identity and Access instead of a potentially stale projection.
 * A derived read model falls behind or is rebuilt, and authoritative writes remain available because ownership did not move to the projection.
 * A cross-capability integration fails after the owner commits state, and retry plus reconciliation restore downstream consistency without distributed rollback.
-* Canonical audit evidence remains authoritative in Audit and Governance even if observability exports or convenience projections are delayed.
+* Canonical audit evidence remains authoritative in Audit Evidence even if observability exports or convenience projections are delayed.
 
 ## Pros and Cons of the Options
 

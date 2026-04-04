@@ -11,7 +11,7 @@
 
 ## Context and Problem Statement
 
-The platform foundation supports shared, silo, and hybrid isolation through isolation profile plus runtime, data, and network boundaries.
+The Platform Control Plane supports shared, silo, and hybrid isolation through isolation profile plus runtime, data, and network boundaries.
 Hybrid is intentionally first-class, but the architecture still needs explicit rules for how placement is resolved when subscription defaults, inherited policy, and environment-specific tightening all apply.
 
 Without an explicit decision, teams could still implement materially different behavior for:
@@ -47,15 +47,15 @@ Chosen option: "Resolve runtime, data, and network boundaries independently unde
 
 * The subscription isolation profile defines the default isolation intent for the tenant.
 * Environment-specific resolution may tighten that default for a specific environment.
-* Effective policy is then evaluated and may further constrain or reject the candidate boundaries.
-* Final placement is accepted only if all resolved boundaries comply with effective policy and do not weaken the subscription default.
+* The combined effective policy is then evaluated and may further constrain or reject the candidate boundaries.
+* Final placement is accepted only if all resolved boundaries comply with the combined effective policy and do not weaken the subscription default.
 
 ### Normative Boundary-Resolution Model
 
 * Runtime binding, data boundary, and network boundary are resolved separately.
 * In hybrid mode, those three boundaries may diverge from one another in the final result.
 * Boundary divergence is valid only when each resolved boundary remains compliant with inherited policy and with the anti-weakening rule.
-* Independent resolution does not change the business hierarchy or the meaning of tenant, workspace, project / service, and environment scopes.
+* Independent resolution does not change the business hierarchy or the meaning of tenant, workspace, workload, and environment scopes.
 
 ### Normative Tightening Rule
 
@@ -68,20 +68,20 @@ Chosen option: "Resolve runtime, data, and network boundaries independently unde
 
 * Policy constraints relevant to placement are evaluated before final placement is accepted.
 * Relevant policy may constrain approved regions, trusted-network requirements, mandatory dedicated boundaries, retention-related constraints, or other mandatory parent controls that affect hosting or access posture.
-* If any resolved boundary violates effective policy, placement must be denied or re-resolved before acceptance.
+* If any resolved boundary violates the combined effective policy, placement must be denied or re-resolved before acceptance.
 * Policy validation applies to each resolved boundary and to the final combined placement outcome.
 
 ### Normative Audit and Operability Rules
 
-* Final boundary decisions must be recorded as canonical audit evidence.
-* Boundary changes must be recorded as canonical audit evidence.
-* Policy-driven placement denials must be recorded as canonical audit evidence.
-* Operational views may consume exported telemetry, but the authoritative record of hybrid resolution remains in Audit and Governance.
+* Final boundary decisions must be recorded as authoritative audit evidence.
+* Boundary changes must be recorded as authoritative audit evidence.
+* Policy-driven placement denials must be recorded as authoritative audit evidence.
+* Operational views may consume exported telemetry, but the authoritative record of hybrid resolution remains in Audit Evidence.
 * Audit context for hybrid resolution must preserve environment identity, subscription context, resolved runtime binding, resolved data boundary, resolved network boundary, applicable policy constraints, and final outcome.
 
 ### Public Behavior Locked by This Decision
 
-* Isolation input must include the environment identity and scope path, parent subscription context, subscription plan, isolation profile, and the inherited effective policy relevant to placement.
+* Isolation input must include the environment identity and scope path, parent subscription context, subscription plan, isolation profile, and the combined effective policy relevant to placement.
 * Isolation output must include the resolved runtime binding, resolved data boundary, resolved network boundary, placement accepted or denied, and decision context suitable for audit and operations.
 * Subscription plan remains separate from isolation profile.
 * Hierarchy records remain separate from resolved isolation records.

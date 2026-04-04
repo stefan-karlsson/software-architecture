@@ -11,7 +11,7 @@
 
 ## Context and Problem Statement
 
-The accepted architecture says that the Identity Provider is authoritative for external identity claims and that Identity and Access is authoritative for platform-specific principal metadata, service accounts, groups, memberships, grants, roles, and permissions.
+The accepted architecture says that the Identity Provider is authoritative for external identity claims and that Identity and Access is authoritative for platform-specific identity records, service accounts, groups, memberships, grants, roles, and permissions.
 What remains open is the concrete trust and credential model that turns user and automation identity into claims the platform can authenticate and authorize consistently.
 
 Without a concrete decision, teams can still make materially different assumptions about:
@@ -19,7 +19,7 @@ Without a concrete decision, teams can still make materially different assumptio
 * whether human federation uses OIDC, SAML, or local platform accounts
 * whether service-account automation uses short-lived tokens, static API keys, client secrets, or workload identity
 * which token shape the platform expects at its public boundary
-* how identity claims are mapped into platform principals before authorization and policy evaluation
+* how identity claims are mapped into platform identities before authorization and policy evaluation
 * how key rotation, token expiry, and issuer trust are enforced
 
 The platform therefore needs one proposed trust and credential direction that aligns with the accepted ownership and authorization model.
@@ -27,7 +27,7 @@ The platform therefore needs one proposed trust and credential direction that al
 ## Decision Drivers
 
 * Strong security posture for user and machine access
-* Compatibility with the accepted principal, grant, and policy model
+* Compatibility with the accepted actor, grant, and policy model
 * Avoidance of long-lived shared secrets where possible
 * Predictable claims handoff into authorization and audit
 * Operationally realistic rotation and revocation behavior
@@ -46,22 +46,22 @@ Leading option: "OIDC federation for users plus OAuth 2.0 style short-lived toke
 ### Proposed Trust Profile
 
 * Human users authenticate through an external OpenID Connect-compatible identity provider.
-* The platform accepts signed short-lived bearer tokens that carry issuer, subject, audience, expiry, and stable principal identity claims.
-* Service accounts remain platform-managed principals, but automation authenticates with short-lived OAuth 2.0 compatible tokens rather than static API keys.
+* The platform accepts signed short-lived bearer tokens that carry issuer, subject, audience, expiry, and stable identity claims for the user or service account.
+* Service accounts remain platform-managed identities, but automation authenticates with short-lived OAuth 2.0 compatible tokens rather than static API keys.
 * Workload identity or private-key-based client authentication is preferred over shared client secrets where the runtime environment supports it.
-* Identity and Access maps external token claims to platform principals and then evaluates memberships, grants, roles, permissions, and policy.
+* Identity and Access maps external token claims to platform identities and then evaluates memberships, grants, roles, permissions, and policy.
 
 ### Public Behavior Expected From This Direction
 
 * The platform must validate issuer trust, signature, audience, expiry, and token freshness before authorization begins.
-* Claims used for authorization and audit must be stable enough to correlate a request to one platform principal.
+* Claims used for authorization and audit must be stable enough to correlate a request to one platform identity.
 * Group, tenant, or organization claims from the external identity provider may inform mapping, but platform grants remain internal source-of-truth records.
 * Long-lived static API keys should not be the primary automation credential model in the first implementation.
 
 ### Questions To Resolve Before Acceptance
 
 * Whether the first implementation should require JWT access tokens specifically or allow opaque tokens with introspection
-* Which claim names become the canonical subject, display, and tenant-correlation inputs at the platform boundary
+* Which claim names become the primary subject, display, and tenant-correlation inputs at the platform boundary
 * Whether service accounts use one uniform machine credential flow or a small approved set depending on execution environment
 * How revocation, emergency disablement, and key rotation should surface operationally
 

@@ -45,7 +45,7 @@ Leading option: "Transactional outbox plus durable message broker and consumer-o
 
 ### Proposed Integration Profile
 
-* Each authoritative capability commits canonical state within its own local transaction boundary.
+* Each authoritative capability commits its own authoritative state within its local transaction boundary.
 * The same owner transaction records a durable outbox entry or equivalent change record for downstream propagation.
 * A durable broker or stream distributes owner-originated change notifications to dependent capabilities.
 * Consuming capabilities build and maintain their own projections, caches, or read models from those change notifications.

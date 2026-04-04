@@ -1,7 +1,7 @@
 [[section-technical-risks]]
 == Risks and Technical Debts
 
-This section captures the main architecture risks in the platform foundation model and the technical debt that remains weakly formalized.
+This section captures the main architecture risks in the Platform Control Plane model and the technical debt that remains weakly formalized.
 
 === Risks
 
@@ -12,7 +12,7 @@ This section captures the main architecture risks in the platform foundation mod
 |1
 |R-01
 |Inheritance semantics
-|If policy inheritance is implemented inconsistently, child scopes may accidentally bypass mandatory parent controls.
+|If inherited rules and guardrails are implemented inconsistently, child scopes may accidentally bypass mandatory parent controls.
 |Make inheritance direction and mandatory-control behavior explicit in implementation and tests, and review policy examples against the architecture rules.
 
 |2
@@ -38,18 +38,24 @@ This section captures the main architecture risks in the platform foundation mod
 |Concrete infrastructure ambiguity
 |The architecture intentionally leaves runtime platform, storage technology, and network implementation open, which can cause teams to make divergent assumptions.
 |Capture concrete infrastructure decisions in future ADRs once those choices are made and align sections 6 and 7 accordingly.
+
+|6
+|R-06
+|Browser application composition
+|If the tenant portal, administration portal, remotes, platform frontend package, or portal contracts are governed weakly, teams can reintroduce fragmented frontend platforms or break browser experiences at runtime.
+|Keep portal responsibilities and ownership handoffs explicit, enforce portal-to-remote contracts, and treat compatibility plus bounded failure behavior as mandatory architecture concerns.
 |===
 
 === Technical Debts
 
-The repository does not yet contain a real Technical Debt Record for the platform foundation. The main debt is the lack of concrete tracked debt entries for issues discovered during implementation.
+The repository does not yet contain a real Technical Debt Record for the Platform Control Plane. The main debt is the lack of concrete tracked debt entries for issues discovered during implementation.
 
 [options="header",cols="1,2,3,2"]
 |===
 |Debt ID |Debt |Impact |Next Step
 
 |TD-01
-|A formal technical-debt register has not yet been populated with real TDR entries for the platform foundation.
+|A formal technical-debt register has not yet been populated with real TDR entries for the Platform Control Plane.
 |Debt can remain implicit, which makes prioritization and ownership difficult once the architecture starts being implemented.
 |Create concrete TDRs when real implementation debt is identified and link them from this chapter.
 |===
@@ -63,31 +69,36 @@ The following action backlog turns the open architectural gaps into concrete nex
 |Action ID |Action |Primary Artifact |Expected Result
 
 |A-01
-|Resolve the platform access interface and automation protocol profile.
-|ADR 0008, Section 3
-|The platform gains one concrete public interaction model for browser-based administration and service-account-driven automation.
+|Resolve the platform browser-application architecture around marketing, tenant, admin, and login surfaces.
+|link:../adrs/0013-adopt-multi-surface-browser-architecture-with-thin-shells-remotes-and-shared-contracts.adoc[ADR 0013], Sections 3 through 8
+|The platform gains one scalable browser-application model for cross-team frontend delivery.
 
 |A-02
-|Resolve the identity federation and service-account credential model.
-|ADR 0009, Sections 3 and 8
-|The platform gains one concrete trust and token model for users and machine principals.
+|Resolve the platform access interface and automation protocol profile.
+|link:../adrs/0008-select-platform-access-interface-and-automation-protocol-profile.adoc[ADR 0008], Section 3
+|The platform gains one concrete public interaction model for browser-based administration and service-account-driven automation.
 
 |A-03
-|Resolve the canonical audit store and evidence export technology profile.
-|ADR 0010, Sections 7, 8, and 10
-|The accepted audit model gains one concrete storage, archive, and export direction that can later be accepted or revised.
+|Resolve the identity federation and service-account credential model.
+|link:../adrs/0009-select-identity-federation-and-service-account-credential-model.adoc[ADR 0009], Sections 3 and 8
+|The platform gains one concrete trust and token model for users and service accounts.
 
 |A-04
-|Resolve the authoritative state integration and projection technology profile.
-|ADR 0011, Sections 6, 7, and 8
-|The accepted ownership model gains one concrete propagation, replay, and projection direction for implementation planning.
+|Resolve the authoritative audit store and evidence export technology profile.
+|link:../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[ADR 0010], Sections 7, 8, and 10
+|The accepted audit model gains one concrete storage, archive, and export direction that can later be accepted or revised.
 
 |A-05
-|Resolve the runtime topology and network isolation implementation profile.
-|ADR 0012, Sections 6 and 7
-|The accepted isolation model gains one concrete hosting and network-boundary direction for shared, silo, and hybrid placement.
+|Resolve the authoritative state integration and projection technology profile.
+|link:../adrs/0011-select-authoritative-state-integration-and-projection-technology-profile.adoc[ADR 0011], Sections 6, 7, and 8
+|The accepted ownership model gains one concrete propagation, replay, and projection direction for implementation planning.
 
 |A-06
+|Resolve the runtime topology and network isolation implementation profile.
+|link:../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[ADR 0012], Sections 6 and 7
+|The accepted isolation model gains one concrete hosting and network-boundary direction for shared, silo, and hybrid placement.
+
+|A-07
 |Add one concrete end-to-end governed runtime scenario that exercises authorization, policy, audit, and isolation together.
 |Sections 6 and 10
 |The runtime and quality chapters gain one implementation-oriented example that can be used for design review and later test planning.

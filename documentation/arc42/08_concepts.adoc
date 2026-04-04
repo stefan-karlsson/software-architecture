@@ -3,34 +3,90 @@
 
 This section defines the core concepts that are reused across the hierarchy, authorization model, runtime behavior, and quality requirements.
 
-=== Principal and Scope Model
+=== Browser Application Composition Model
 
-The architecture treats users and service accounts as principals and groups as a scaling mechanism for access management. Membership determines who belongs to which scope context, while the scope hierarchy remains fixed as platform, tenant, workspace, project / service, and environment. Groups are intentionally flat in the first implementation and do not contain other groups.
-Concrete public interface and credential decisions for those principals are tracked separately in ADR 0008 and ADR 0009.
+Inside the Platform Control Plane software-system boundary, the browser landscape is intentionally split by purpose. `www.example.com` hosts the marketing site, `app.example.com` hosts the tenant portal, `admin.example.com` hosts the administration portal, and `login.example.com` hosts the sign-in portal. The tenant and administration portals stay thin and compose business-heavy capabilities from remotes, while all browser containers use the shared Platform Governance API.
+
+image::platform-browser-shell-architecture.dio.svg[Platform browser application landscape, width=100%]
+
+[options="header",cols="1,3"]
+|===
+|Element |Responsibility
+
+|Marketing Site
+|Owns public-facing marketing, product communication, and acquisition journeys at `www.example.com`.
+
+|Tenant Portal
+|Owns the tenant browser entrypoint at `app.example.com`, plus tenant navigation, layout, session handoff, and feature composition.
+
+|Administration Portal
+|Owns the administrative browser entrypoint at `admin.example.com`, plus admin navigation, layout, session handoff, and feature composition.
+
+|Sign-In Portal
+|Owns the shared sign-in and sign-out experience at `login.example.com`.
+
+|Business Remote
+|Owns business-heavy browser capabilities and renders inside the tenant portal or administration portal through host-defined integration contracts.
+
+|Platform Frontend Package
+|Provides shared browser contracts, API clients, SDKs/libraries, design-system assets, telemetry conventions, navigation primitives, and related browser-platform code across all browser surfaces.
+|===
+
+The browser containers above are runtime containers in the C4 model. The backend capabilities they rely on are modeled separately as internal building blocks/components of the Platform Governance API container rather than as peer runtime containers.
+
+[options="header",cols="1,3"]
+|===
+|Constraint |Expectation
+
+|Surface split
+|Marketing, tenant, admin, and login experiences remain separate browser surfaces with distinct responsibilities.
+
+|Thin-shell rule
+|The tenant and administration portals keep navigation, layout, session handoff, composition, and error isolation responsibilities, but they do not absorb domain-heavy business capabilities.
+
+|Composition
+|Business capabilities are delivered through remotes that the tenant and administration portals compose at runtime.
+
+|Integration
+|Remotes integrate with backend public APIs and do not use direct frontend-to-frontend coupling as their primary runtime integration mechanism.
+
+|Autonomy
+|Teams may deploy remotes independently from their host shells as long as they stay inside the shared contracts and compatibility expectations.
+
+|Failure isolation
+|Each host shell must be able to isolate a failing or unavailable remote without taking down the whole browser application surface.
+|===
+
+=== Actor and Scope Model
+
+The architecture treats users and service accounts as actors and groups as a scaling mechanism for access management. Membership determines who belongs to which scope context, while the scope hierarchy remains fixed as platform, tenant, workspace, workload, and environment. Groups are intentionally flat in the first implementation and do not contain other groups.
+Concrete public interface and credential decisions for those actors are tracked separately in link:../adrs/0008-select-platform-access-interface-and-automation-protocol-profile.adoc[ADR 0008] and link:../adrs/0009-select-identity-federation-and-service-account-credential-model.adoc[ADR 0009].
 
 === Grant, Role, and Permission Model
 
-Access is granted through scoped grants. A grant assigns a role at a specific scope, and roles expand into permissions such as `workspace.view`, `project.update`, `environment.deploy`, `environment.secret.read`, `policy.manage`, or `audit.view`. Permissions remain the smallest action unit and grants remain the scoped assignment mechanism. Effective access is additive: direct grants and group-derived grants combine by union, and broader-scope grants apply downward by scope interpretation to descendant scopes instead of being copied to child records.
+Access is granted through scoped grants. A grant assigns a role at a specific scope, and roles expand into permissions such as `workspace.view`, `workload.update`, `environment.deploy`, `environment.secret.read`, `policy.manage`, or `audit.view`. Permissions remain the smallest action unit and grants remain the scoped assignment mechanism. Effective access is additive: direct grants and group-derived grants combine by union, and broader-scope grants apply downward by scope interpretation to descendant scopes instead of being copied to child records.
 
 === Policy Versus Authorization
 
-Policy is not the same concern as authorization. Authorization answers whether the acting principal has the required permission at the requested scope and denies by default when no matching grant expands to that permission. Policy answers whether the action is still allowed under inherited rules such as MFA requirements, production approval requirements, trusted-network restrictions, retention requirements, or approved-region restrictions. Policy is evaluated only after permission resolution succeeds.
+Policy is not the same concern as authorization. In this architecture, policy means the rules and guardrails that can still restrict an action or placement even when the caller has the required permission. Authorization answers "do you have permission?" Policy answers "is it still allowed under the applicable rules?"
+
+Inherited policy means rules from broader scopes that still apply at lower scopes. Effective policy means the final combined rule set after platform, tenant, workspace, workload, and environment rules have all been applied together. Policy is evaluated only after permission resolution succeeds and may still deny an otherwise permitted action.
 
 === Inheritance Model
 
-The hierarchy inherits policy, access scope interpretation, audit context, and defaults downward from platform to tenant, workspace, project / service, and environment. Lower scopes may tighten controls, but they must not weaken mandatory parent rules.
+The hierarchy applies inherited policy rules, access scope interpretation, audit context, and defaults downward from platform to tenant, workspace, workload, and environment. Lower scopes may tighten controls, but they must not weaken mandatory parent rules.
 
 === Ownership and Consistency Model
 
 Each governed record type has one authoritative write owner, and owner reads are authoritative when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain non-authoritative and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.
-The next concrete implementation decision for owner-state propagation and projection technology is tracked in ADR 0011.
+The next concrete implementation decision for owner-state propagation and projection technology is tracked in link:../adrs/0011-select-authoritative-state-integration-and-projection-technology-profile.adoc[ADR 0011].
 
 === Audit Model
 
-Auditability is a first-class concept rather than an afterthought. Canonical audit evidence is the governance source of truth, remains distinct from observability exports, and is append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When audit evidence needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.
-The next concrete implementation decision for canonical audit storage and evidence export is tracked in ADR 0010.
+Auditability is a first-class concept rather than an afterthought. Authoritative audit evidence is the governance source of truth, remains distinct from observability exports, and is append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When audit evidence needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.
+The next concrete implementation decision for authoritative audit storage and evidence export is tracked in link:../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[ADR 0010].
 
 === Isolation Model and Tier Separation
 
-Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime binding, data boundary, and network boundary resolve the actual technical isolation for each environment. In hybrid mode, those three boundaries may resolve independently, but subscription isolation remains the default baseline, environment-level logic may only tighten that baseline, and effective policy is the final acceptance gate before placement succeeds.
-The next concrete implementation decision for runtime topology and network isolation is tracked in ADR 0012.
+Shared, silo, and hybrid are technical isolation profiles, not alternative business hierarchies. The subscription plan expresses what was purchased, while the isolation profile expresses how the tenant is hosted. Runtime allocation, data boundary, and network boundary resolve the actual technical isolation for each environment. In hybrid mode, those three boundaries may resolve independently, but subscription isolation remains the default baseline, environment-level logic may only tighten that baseline, and the combined effective policy is the final acceptance gate before placement succeeds.
+The next concrete implementation decision for runtime topology and network isolation is tracked in link:../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[ADR 0012].
