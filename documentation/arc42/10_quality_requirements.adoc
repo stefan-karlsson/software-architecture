@@ -78,12 +78,12 @@ Section 1 highlights the top five quality goals. This section keeps the broader 
 
 |QS-09
 |Auditability and Traceability
-|The observability stack is unavailable while a governed action succeeds and authoritative audit evidence can still be durably accepted.
-|The platform preserves authoritative audit evidence and does not depend on observability exports as the source of truth for governance evidence.
+|The observability stack is unavailable while a governed action succeeds and the official audit record can still be durably written.
+|The platform preserves the official audit record and does not depend on observability exports as the source of truth for governance evidence.
 
 |QS-10
 |Auditability and Traceability
-|A privileged mutation cannot durably commit authoritative audit evidence.
+|A privileged mutation cannot durably write the official audit record.
 |The platform does not report the privileged mutation as successfully committed and preserves the failure context for later review.
 
 |QS-11

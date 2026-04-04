@@ -37,5 +37,5 @@ The following constraints are fixed by the chosen Platform Control Plane model a
 
 |Documentation and generation
 |The repository standardizes on AsciiDoc, arc42, docToolchain, Structurizr DSL, and generated ADR includes.
-|The maintained source must stay in AsciiDoc, C4 diagrams must come from `documentation/workspace.dsl`, and ADR updates must flow through `exportMarkdown` before HTML generation.
+|arc42 chapters must stay maintained in AsciiDoc, C4 diagrams must come from `documentation/workspace.dsl`, and ADRs must be authored in Markdown then generated into AsciiDoc includes through `exportMarkdown` before HTML generation.
 |===

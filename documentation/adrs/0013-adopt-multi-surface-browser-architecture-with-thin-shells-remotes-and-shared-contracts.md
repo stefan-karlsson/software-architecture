@@ -29,7 +29,7 @@ The platform therefore needs one proposed browser-application architecture that 
 * Scalable cross-team delivery without separate frontend platforms per team
 * Clear ownership of shell concerns versus team-owned remote feature concerns
 * Independent delivery of browser capabilities without requiring full shell redeploys for every change
-* Compatibility with the public API model defined in ADR 0008
+* Compatibility with the public API model defined in [ADR 0008](./0008-select-platform-access-interface-and-automation-protocol-profile.md)
 * Technology-agnostic architecture guidance that does not prematurely lock a framework
 
 ## Considered Options
@@ -99,7 +99,7 @@ Leading option: "Purpose-specific browser apps with thin shells, remote-loaded b
 * The platform gets clear browser surfaces for marketing, tenant, admin, and login concerns.
 * Cross-team scaling improves because business features live in remotes instead of thick shells or separate frontend platforms.
 * The shared platform frontend package stays explicit, reusable, and versioned across all browser surfaces.
-* The architecture stays compatible with ADR 0008, where browser applications remain clients of the shared Platform Governance API.
+* The architecture stays compatible with [ADR 0008](./0008-select-platform-access-interface-and-automation-protocol-profile.md), where browser applications remain clients of the shared Platform Governance API.
 
 ### Negative Consequences
 
@@ -112,11 +112,11 @@ Leading option: "Purpose-specific browser apps with thin shells, remote-loaded b
 * This ADR does not choose a specific JavaScript framework, router, bundler, or testing stack.
 * This ADR does not define a detailed shell-to-remote wire contract or packaging format.
 * This ADR does not prohibit future exceptions, but exceptions require explicit architectural justification.
-* This ADR does not replace ADR 0008, which still owns the public browser UI plus backend API interaction model.
+* This ADR does not replace [ADR 0008](./0008-select-platform-access-interface-and-automation-protocol-profile.md), which still owns the public browser UI plus backend API interaction model.
 
 ## Consequences
 
-* The browser-based administration direction in ADR 0008 should reference this ADR for multi-surface browser architecture and frontend scaling guidance.
+* The browser-based administration direction in [ADR 0008](./0008-select-platform-access-interface-and-automation-protocol-profile.md) should reference this ADR for multi-surface browser architecture and frontend scaling guidance.
 * The arc42 chapters should stop treating browser application structure as unspecified and should describe the marketing, tenant, admin, and login surfaces explicitly.
 * The architecture model should represent the tenant portal, administration portal, sign-in portal, and marketing site explicitly as in-scope containers of the Platform Control Plane, while showing remotes and shared browser concepts at the right level of detail.
 

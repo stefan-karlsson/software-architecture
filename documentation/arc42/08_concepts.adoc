@@ -78,13 +78,13 @@ The hierarchy applies inherited policy rules, access scope interpretation, audit
 
 === Ownership and Consistency Model
 
-Each governed record type has one authoritative write owner, and owner reads are authoritative when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain non-authoritative and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.
+Each governed record type has one write owner that serves as the system of record, and owner reads are used when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain secondary copies and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.
 The next concrete implementation decision for owner-state propagation and projection technology is tracked in link:../adrs/0011-select-authoritative-state-integration-and-projection-technology-profile.adoc[ADR 0011].
 
 === Audit Model
 
 Auditability is a first-class concept rather than an afterthought. Authoritative audit evidence is the governance source of truth, remains distinct from observability exports, and is append-only after commit. Membership changes, grants and revocations, policy changes, production access, secret access, deployments, and billing or administration changes must preserve actor, scope, and decision context so they can be reviewed later. When audit evidence needs correction or enrichment, the platform records a linked follow-up record instead of mutating the original record in place.
-The next concrete implementation decision for authoritative audit storage and evidence export is tracked in link:../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[ADR 0010].
+link:../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[ADR 0010] defines the accepted storage direction for that model: an official audit store for governance retrieval, an audit archive for long-term retention and recovery, and derived observability exports for operational use.
 
 === Isolation Model and Tier Separation
 

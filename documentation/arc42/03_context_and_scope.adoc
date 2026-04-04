@@ -49,7 +49,7 @@ The technical context maps the same communication partners to technical interfac
 |Automation Client
 |Versioned HTTPS JSON REST API
 |Initiate machine-to-platform calls for governed workload and environment actions.
-|Automation uses the same approved public API model defined in ADR 0008 without going through the browser containers.
+|Automation uses the same approved public API model defined in link:../adrs/0008-select-platform-access-interface-and-automation-protocol-profile.adoc[ADR 0008] without going through the browser containers.
 
 |Identity Provider
 |Authentication and identity-claims integration

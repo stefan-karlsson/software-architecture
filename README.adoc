@@ -15,7 +15,7 @@ It is preconfigured to support:
 * Structurizr DSL to generate C4 diagrams
 * Kroki-backed Mermaid diagrams embedded in AsciiDoc chapters
 * docToolchain build automation for HTML/PDF/site outputs
-* ADR workflow with `adr-tools` and Markdown-to-AsciiDoc migration
+* ADR workflow with Markdown-authored ADRs and generated AsciiDoc includes
 
 == Quick Start
 
@@ -91,6 +91,8 @@ Pinned/target versions in this starter (validated on March 29, 2026):
 |===
 
 == ADR Setup
+
+Markdown ADRs are the maintained ADR source in this repository. The AsciiDoc files under `documentation/adrs` are generated book includes.
 
 If you use https://github.com/npryce/adr-tools[adr-tools], keep this repository's chapter-compatible Markdown ADR format:
 

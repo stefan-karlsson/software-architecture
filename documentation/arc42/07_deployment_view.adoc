@@ -72,10 +72,10 @@ What is fixed is the logical model:
 * runtime, data, and network boundaries may differ even when the tenant hierarchy does not
 * subscription isolation defines the default baseline, and environment-level logic may tighten that baseline without weakening it
 * hybrid isolation is a first-class case rather than an exception
-* an authoritative audit store is a required logical architectural concern even though its concrete storage technology remains open
-* authoritative audit evidence remains distinct from operational telemetry exported to observability tools
-* authoritative owner-managed stores and derived read models are distinct architectural concerns even though their concrete persistence technologies remain open
-* projected or convenience views may lag behind authoritative owner state and do not become write authorities
+* an audit store and audit archive serve as the official record for governance evidence even though exact product choices remain open
+* official audit evidence remains distinct from operational telemetry exported to observability tools
+* owner-managed stores remain the system of record, while derived read models remain separate architectural concerns even though their concrete persistence technologies remain open
+* projected or convenience views may lag behind system-of-record owner state and do not become write authorities
 * mixed hybrid boundary outcomes are valid only when every resolved boundary remains policy-compliant and non-weakening
 
-The next concrete implementation-profile decisions are tracked in ADR 0010 for authoritative audit storage and export, ADR 0011 for owner-state integration and projections, and ADR 0012 for runtime topology plus network isolation.
+link:../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[ADR 0010] defines the accepted audit storage and export direction. The remaining concrete implementation-profile decisions are tracked in link:../adrs/0011-select-authoritative-state-integration-and-projection-technology-profile.adoc[ADR 0011] for owner-state integration and projections and link:../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[ADR 0012] for runtime topology plus network isolation.

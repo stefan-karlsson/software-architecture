@@ -96,7 +96,13 @@
 |Policy defined at the environment scope.
 
 |Audit Evidence
-|Canonical record of privileged or regulated activity together with actor, scope, decision, and outcome context.
+|Official record of privileged or regulated activity together with actor, scope, decision, and outcome context.
+
+|Official Audit Store
+|Append-only audit store that serves as the system of record for audit evidence and supports governance retrieval and evidence review.
+
+|Audit Archive
+|Immutable object-storage copy of audit evidence used for long-term retention and recovery.
 
 |Runtime Allocation
 |Resolution of where an environment actually runs.

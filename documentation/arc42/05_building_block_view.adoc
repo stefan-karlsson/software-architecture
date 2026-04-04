@@ -31,7 +31,7 @@ Contained Building Blocks::
 |Authoritatively owns tenants, billing accounts, subscriptions, workspaces, workloads, and environments as the shared scope hierarchy.
 
 |Audit Evidence
-|Owns authoritative audit evidence, preserves scope and decision context, enforces governance-oriented audit behavior, and exports operational telemetry as a secondary concern.
+|Owns official audit evidence, preserves scope and decision context, enforces governance-oriented audit behavior, and exports operational telemetry as a secondary concern.
 
 |Environment Isolation
 |Authoritatively owns resolved runtime allocations, data boundaries, network boundaries, and placement state for each environment.
@@ -43,13 +43,13 @@ Important Relationships::
 |Relationship |Description
 
 |Identity and Access -> Scope Hierarchy
-|Memberships and grants are meaningful only when they can be resolved against the hierarchy and scope chain. Cross-capability reads may use projections, but authoritative writes remain with the owning capability.
+|Memberships and grants are meaningful only when they can be resolved against the hierarchy and scope chain. Cross-capability reads may use projections, but writes to the system of record remain with the owning capability.
 
 |Identity and Access -> Policy
 |The combined effective policy is evaluated after permissions are resolved and before access is allowed.
 
 |Policy -> Audit Evidence
-|Policy decisions and policy changes must be preserved as authoritative audit evidence at the correct scope.
+|Policy decisions and policy changes must be preserved as official audit evidence at the correct scope.
 
 |Environment Isolation -> Scope Hierarchy
 |Isolation resolution depends on subscription, workload, and environment context owned by the hierarchy capability, while resolved placement state remains owned by Environment Isolation.
@@ -58,7 +58,7 @@ Important Relationships::
 |Placement and boundary choices must respect inherited rules and guardrails such as approved regions or network restrictions.
 
 |All capability modules -> Audit Evidence
-|Privileged and regulated events must preserve actor, scope, and decision context in authoritative audit evidence, while telemetry export remains a secondary downstream concern.
+|Privileged and regulated events must preserve actor, scope, and decision context in official audit evidence, while telemetry export remains a secondary downstream concern.
 |===
 
 Browser application note::
