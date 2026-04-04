@@ -2,7 +2,7 @@
 
 ## Status
 
-* Status: proposed
+* Status: accepted
 
 ## Choose the trust model for users, service accounts, and platform tokens
 
@@ -12,7 +12,7 @@
 ## Context and Problem Statement
 
 The accepted architecture says that the Identity Provider is authoritative for external identity claims and that Identity and Access is authoritative for platform-specific identity records, service accounts, groups, memberships, grants, roles, and permissions.
-What remains open is the concrete trust and credential model that turns user and automation identity into claims the platform can authenticate and authorize consistently.
+Without a concrete trust and credential model, the platform still lacks one clear way to turn user and automation identity into claims it can authenticate and authorize consistently.
 
 Without a concrete decision, teams can still make materially different assumptions about:
 
@@ -22,7 +22,7 @@ Without a concrete decision, teams can still make materially different assumptio
 * how identity claims are mapped into platform identities before authorization and policy evaluation
 * how key rotation, token expiry, and issuer trust are enforced
 
-The platform therefore needs one proposed trust and credential direction that aligns with the accepted ownership and authorization model.
+The platform therefore needs one accepted trust and credential direction that aligns with the accepted ownership and authorization model.
 
 ## Decision Drivers
 
@@ -39,11 +39,11 @@ The platform therefore needs one proposed trust and credential direction that al
 * SAML federation for users plus static API keys or long-lived client secrets for automation
 * Local platform-managed credentials for both users and service accounts
 
-## Proposed Decision Direction
+## Decision Outcome
 
-Leading option: "OIDC federation for users plus OAuth 2.0 style short-lived tokens for service accounts", because it aligns cleanly with modern identity-provider capabilities, reduces reliance on long-lived shared secrets, and produces claims that fit the accepted ownership and authorization boundaries.
+Chosen option: "OIDC federation for users plus OAuth 2.0 style short-lived tokens for service accounts", because it aligns cleanly with modern identity-provider capabilities, reduces reliance on long-lived shared secrets, and produces claims that fit the accepted ownership and authorization boundaries.
 
-### Proposed Trust Profile
+### Normative Trust Profile
 
 * Human users authenticate through an external OpenID Connect-compatible identity provider.
 * The platform accepts signed short-lived bearer tokens that carry issuer, subject, audience, expiry, and stable identity claims for the user or service account.
@@ -51,19 +51,12 @@ Leading option: "OIDC federation for users plus OAuth 2.0 style short-lived toke
 * Workload identity or private-key-based client authentication is preferred over shared client secrets where the runtime environment supports it.
 * Identity and Access maps external token claims to platform identities and then evaluates memberships, grants, roles, permissions, and policy.
 
-### Public Behavior Expected From This Direction
+### Public Behavior Locked by This Decision
 
 * The platform must validate issuer trust, signature, audience, expiry, and token freshness before authorization begins.
 * Claims used for authorization and audit must be stable enough to correlate a request to one platform identity.
 * Group, tenant, or organization claims from the external identity provider may inform mapping, but platform grants remain internal source-of-truth records.
 * Long-lived static API keys should not be the primary automation credential model in the first implementation.
-
-### Questions To Resolve Before Acceptance
-
-* Whether the first implementation should require JWT access tokens specifically or allow opaque tokens with introspection
-* Which claim names become the primary subject, display, and tenant-correlation inputs at the platform boundary
-* Whether service accounts use one uniform machine credential flow or a small approved set depending on execution environment
-* How revocation, emergency disablement, and key rotation should surface operationally
 
 ### Positive Consequences
 
@@ -84,19 +77,23 @@ Leading option: "OIDC federation for users plus OAuth 2.0 style short-lived toke
 * This ADR does not define detailed SCIM or directory synchronization behavior.
 * This ADR does not make the identity provider the source of truth for platform grants, roles, or memberships.
 * This ADR does not choose a vendor-specific identity product.
+* This ADR does not choose whether the first implementation requires JWT access tokens specifically or also allows opaque tokens with introspection.
+* This ADR does not choose the exact claim names used for subject, display, or tenant-correlation inputs at the platform boundary.
+* This ADR does not choose whether service accounts use one uniform machine credential flow or a small approved set depending on execution environment.
+* This ADR does not choose the detailed operational behavior for revocation, emergency disablement, or key rotation.
 
 ## Consequences
 
-* Section 3 should point to this ADR as the open concrete trust and credential decision behind the current logical identity integration.
+* Section 3 should point to this ADR as the accepted trust and credential direction behind the current logical identity integration.
 * Future interface and API work should assume short-lived bearer-token authentication rather than static API-key authentication.
-* Any proposal for local platform passwords, static machine keys, or SAML-first federation should justify why the proposed direction is insufficient.
+* Any proposal for local platform passwords, static machine keys, or SAML-first federation should justify why the accepted direction is insufficient.
 
-## Validation Questions
+## Validation Scenarios
 
-* Can human access be federated without moving platform grant ownership into the external identity provider?
-* Can automation authenticate without relying on long-lived shared API keys?
-* Does the token and claims model provide enough stable context for authorization and audit correlation?
-* Can issuer trust, audience validation, and token expiry be enforced consistently at the platform boundary?
+* A human user authenticates through an external OIDC-compatible identity provider without moving platform grant ownership into that provider.
+* Service-account-driven automation authenticates through short-lived OAuth-style bearer tokens without relying on long-lived shared API keys.
+* The token and claims model provides enough stable context to correlate authorization and audit activity to one platform identity.
+* Issuer trust, audience validation, token expiry, and token freshness are enforced consistently at the platform boundary before authorization starts.
 
 ## Pros and Cons of the Options
 

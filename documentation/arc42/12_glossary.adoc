@@ -29,6 +29,15 @@
 |Service Account
 |Machine actor used for automation or service-to-platform access.
 
+|OIDC
+|OpenID Connect. In this architecture it is the external federation approach used for user sign-in.
+
+|Bearer Token
+|Short-lived access token presented with a request so the platform can validate identity and trust before authorization begins.
+
+|Workload Identity
+|Machine authentication approach where a running workload receives short-lived credentials from its execution environment instead of using a long-lived shared secret.
+
 |Group
 |Collection of users and service accounts used to manage access at scale.
 

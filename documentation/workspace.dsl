@@ -3,8 +3,8 @@ workspace "Platform Control Plane" "C4 model for the platform control plane arch
     model {
         user = person "User" "Human user that operates within tenant, workspace, workload, and environment scopes." "Human User"
 
-        automationClient = softwaresystem "Automation Client" "Machine-driven client that acts through service accounts." "External System"
-        identityProvider = softwaresystem "Identity Provider" "Provides authentication and identity claims for users and service accounts." "External System"
+        automationClient = softwaresystem "Automation Client" "Machine-driven client that acts through service accounts and short-lived access tokens." "External System"
+        identityProvider = softwaresystem "Identity Provider" "Provides OIDC-compatible federation and identity claims for users and service accounts." "External System"
         observabilityStack = softwaresystem "Observability Stack" "Collects audit and operational telemetry from the platform control plane." "External System"
 
         foundation = softwaresystem "Platform Control Plane" "Provides hierarchical scoping, authorization, inherited rules and guardrails, auditability, and isolation control for the Product Platform." {
@@ -30,7 +30,7 @@ workspace "Platform Control Plane" "C4 model for the platform control plane arch
         adminShell -> authApp "Delegates sign-in and session establishment to"
         appShell -> foundationApi "Supports tenant browser journeys through"
         adminShell -> foundationApi "Supports administrative browser journeys through"
-        authApp -> identityProvider "Uses identity federation with"
+        authApp -> identityProvider "Uses OIDC-compatible federation with"
 
         automationClient -> identityAccess "Authenticates service-account access through"
         appShell -> identityAccess "Starts sign-in, access, and membership journeys through"
@@ -44,7 +44,7 @@ workspace "Platform Control Plane" "C4 model for the platform control plane arch
         appShell -> isolationPlacement "Reviews resolved environment boundaries through"
         adminShell -> isolationPlacement "Reviews resolved environment boundaries through"
 
-        foundationApi -> identityProvider "Delegates authentication and identity claims to"
+        foundationApi -> identityProvider "Delegates token validation and identity claims to"
         foundationApi -> observabilityStack "Emits audit and operational telemetry to"
         identityAccess -> identityProvider "Validates actor identity with"
         identityAccess -> scopeManagement "Resolves memberships and grant scopes with"

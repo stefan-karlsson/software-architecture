@@ -19,13 +19,13 @@ include::../adrs/0006-define-foundation-state-ownership-and-consistency-boundari
 
 include::../adrs/0007-define-hybrid-isolation-resolution-rules.adoc[leveloffset=+2]
 
-include::../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[leveloffset=+2]
-
 include::../adrs/0008-select-platform-access-interface-and-automation-protocol-profile.adoc[leveloffset=+2]
 
-=== Proposed Decisions To Resolve Next
-
 include::../adrs/0009-select-identity-federation-and-service-account-credential-model.adoc[leveloffset=+2]
+
+include::../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[leveloffset=+2]
+
+=== Proposed Decisions To Resolve Next
 
 include::../adrs/0011-select-authoritative-state-integration-and-projection-technology-profile.adoc[leveloffset=+2]
 
