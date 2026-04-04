@@ -78,8 +78,8 @@ The hierarchy applies inherited policy rules, access scope interpretation, audit
 
 === Ownership and Consistency Model
 
-Each governed record type has one write owner that serves as the system of record, and owner reads are used when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain secondary copies and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.
-The next concrete implementation decision for owner-state propagation and projection technology is tracked in link:../adrs/0011-select-authoritative-state-integration-and-projection-technology-profile.adoc[ADR 0011].
+Each governed record type has one write owner that serves as the system of record, and direct owner reads are used when freshness matters. Derived read models, caches, and projections are allowed to support cross-capability queries, but they remain secondary copies and may lag behind owner state. Cross-capability consistency is eventual by default and is recovered through durable asynchronous integration and reconciliation rather than by treating projections as shared write authorities.
+link:../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc[ADR 0011] defines the accepted propagation pattern for that model: owner-managed state is committed first, the same transaction captures a transactional outbox entry or equivalent durable change record, downstream consumers update their own projections asynchronously, and freshness-sensitive flows still read the owner directly.
 
 === Audit Model
 

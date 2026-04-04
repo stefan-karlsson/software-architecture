@@ -113,8 +113,14 @@
 |Audit Archive
 |Immutable object-storage copy of audit evidence used for long-term retention and recovery.
 
+|Projection
+|Secondary read model built from owner-managed state or replayable change notifications to support cross-capability queries without taking over write ownership.
+
 |Runtime Allocation
 |Resolution of where an environment actually runs.
+
+|Transactional Outbox
+|Durable change record captured with the owner commit so downstream propagation can be retried or replayed without losing the original change.
 
 |Data Boundary
 |Resolution of how environment data is isolated.

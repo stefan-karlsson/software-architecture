@@ -25,9 +25,9 @@ include::../adrs/0009-select-identity-federation-and-service-account-credential-
 
 include::../adrs/0010-select-authoritative-audit-store-and-evidence-export-technology-profile.adoc[leveloffset=+2]
 
-=== Proposed Decisions To Resolve Next
+include::../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc[leveloffset=+2]
 
-include::../adrs/0011-select-authoritative-state-integration-and-projection-technology-profile.adoc[leveloffset=+2]
+=== Proposed Decisions To Resolve Next
 
 include::../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[leveloffset=+2]
 

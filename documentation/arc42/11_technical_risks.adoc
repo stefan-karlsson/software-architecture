@@ -36,8 +36,8 @@ This section captures the main architecture risks in the Platform Control Plane 
 |5
 |R-05
 |Concrete infrastructure ambiguity
-|The architecture now fixes the audit storage direction, but it still leaves runtime platform, exact state-integration technology, and network implementation open, which can cause teams to make divergent assumptions.
-|Capture the remaining concrete infrastructure decisions in future ADRs once those choices are made and align sections 6 and 7 accordingly.
+|The architecture now fixes the audit storage direction and the owner-managed state propagation pattern, but it still leaves broker product choice, projection-store choice, runtime platform, and network implementation open, which can cause teams to make divergent assumptions.
+|Use ADR 0010 and ADR 0011 as fixed baselines, then capture the remaining product and hosting choices in future ADRs and align sections 6 and 7 accordingly.
 
 |6
 |R-06
@@ -80,16 +80,11 @@ The following action backlog turns the open architectural gaps into concrete nex
 |The platform gains one scalable browser-application model for cross-team frontend delivery.
 
 |A-02
-|Resolve the authoritative state integration and projection technology profile.
-|link:../adrs/0011-select-authoritative-state-integration-and-projection-technology-profile.adoc[ADR 0011], Sections 6, 7, and 8
-|The accepted ownership model gains one concrete propagation, replay, and projection direction for implementation planning.
-
-|A-03
 |Resolve the runtime topology and network isolation implementation profile.
 |link:../adrs/0012-select-runtime-topology-and-network-isolation-implementation-profile.adoc[ADR 0012], Sections 6 and 7
 |The accepted isolation model gains one concrete hosting and network-boundary direction for shared, silo, and hybrid placement.
 
-|A-04
+|A-03
 |Add one concrete end-to-end governed runtime scenario that exercises authorization, policy, audit, and isolation together.
 |Sections 6 and 10
 |The runtime and quality chapters gain one implementation-oriented example that can be used for design review and later test planning.

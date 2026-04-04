@@ -6,7 +6,7 @@
 
 This section shows three representative flows that are architecturally relevant for the Platform Control Plane: authorization, inherited rules and guardrails, and environment isolation.
 
-Across these flows, authoritative state remains owner-first: authoritative updates happen inside the owning capability boundary, while downstream projections and cross-capability read models may be updated asynchronously and can lag behind owner state.
+Across these flows, owner-managed state follows the accepted propagation pattern from link:../adrs/0011-select-owner-managed-state-integration-and-projection-technology-profile.adoc[ADR 0011]: owner updates happen inside the owning capability boundary, the same change captures a transactional outbox entry or equivalent durable change record, and downstream projections plus cross-capability read models are updated asynchronously and can lag behind owner state.
 
 === Authorization Decision Flow
 
@@ -59,7 +59,7 @@ flowchart TD
 . Allow lower scopes to tighten controls, such as requiring approval or restricting production access to a narrower group.
 . Use the resulting combined effective policy during authorization and execution decisions.
 
-Derived policy-aware read models may assist downstream consumers, but authoritative policy state remains with Policy and downstream projections may lag.
+Derived policy-aware read models may assist downstream consumers, but Policy remains the system of record and downstream projections may lag.
 
 === Environment Isolation Resolution
 
@@ -93,4 +93,4 @@ flowchart TD
 . Accept placement only when every resolved boundary complies with policy and does not weaken a stricter default.
 . Produce the effective isolation outcome for the environment without changing the business hierarchy.
 
-Runtime and placement state are committed by the owning capability first and then propagated to downstream consumers or projections through asynchronous reconciliation as needed.
+Runtime and placement state are committed by the owning capability first, recorded with a durable change record, and then propagated to downstream consumers or projections through asynchronous reconciliation as needed.
